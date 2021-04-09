@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="@dimen/_10sdp">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:background="@color/view_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.comix.rounded.RoundedCornerImageView
+        android:id="@+id/imageView_round"
+        android:layout_width="@dimen/_115sdp"
+        android:layout_height="@dimen/_80sdp"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:scaleType="fitXY"
+         android:src="@drawable/adj_wrd"
+        app:cornerBottomDisable="false"
+        app:cornerColor="@android:color/white"
+        app:cornerLeftDisable="false"
+        app:cornerRadius="2dp"
+        app:cornerRightDisable="false"
+        app:cornerTopDisable="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
+    <TextView
+        android:id="@+id/tv_main"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:fontFamily="@font/lato_semibold"
+        android:text="Away"
+        android:lines="2"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintStart_toEndOf="@+id/imageView_round"
+        app:layout_constraintEnd_toStartOf="@+id/img_arrow"
+        app:layout_constraintTop_toTopOf="@+id/imageView_round"
+        app:layout_constraintHorizontal_bias="0.0"/>
+
+    <TextView
+        android:id="@+id/tv_translate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+         android:fontFamily="@font/jameelnoorinastaleeqregular"
+        tools:text="پرے"
+         android:textColor="@color/black"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toStartOf="@+id/img_arrow"
+        app:layout_constraintStart_toStartOf="@id/tv_main"
+        app:layout_constraintTop_toBottomOf="@+id/tv_main"
+      />
+
+    <TextView
+        android:id="@+id/tv_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:fontFamily="@font/lato_regular"
+        android:text="00:09"
+        android:visibility="gone"
+        android:textColor="@color/text_grey"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintStart_toStartOf="@id/tv_main"
+        app:layout_constraintTop_toBottomOf="@+id/tv_translate" />
+
+
+
+    <ImageButton
+        android:id="@+id/img_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
+         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@null"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/ic_more_vert" />
+</androidx.constraintlayout.widget.ConstraintLayout>

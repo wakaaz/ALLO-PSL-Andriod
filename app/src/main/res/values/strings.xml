@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">PSLApllication</string>
+    <string name="signup_string"><u>Signup</u></string>
+    <string name="login_string"><u>Login</u></string>
+
+    <!--  Remove or change this placeholder text -->
+    <string name="facebook_app_id">1287905188207142</string>
+    <string name="try_again"><u>Try Again</u></string>
+    <string name="no_internet_text"><u>No Internet Available</u></string>
+    <string name="email_error"> Enter valid Email Address</string>
+    <string name="downloading_1_video">Downloading 1 Video…</string>
+    <string name="download_comp_cat">Download Complete Category</string>
+    <string name="downloaded">"Downloaded"</string>
+    <string name="download">"Download"</string>
+    <string name="downloads">"Downloads"</string>
+    <string name="alreadydownloaded">"Already Downloaded"</string>
+    <string name="words">" Words"</string>
+    <string name="subjects">" Subjects"</string>
+    <string name="sortedByDefault">" Sorted By Default"</string>
+    <string name="sortedByDescending">" Sorted By Descending"</string>
+    <string name="sortedByAscending">" Sorted By Ascending"</string>
+    <string name="download_complete_category">Download Complete Category</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="usama_gmail_com">usama@gmail.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--App Secret________716a4d461d6f59404c8c1cbb3d9f32d2-->
+
+
+</resources>

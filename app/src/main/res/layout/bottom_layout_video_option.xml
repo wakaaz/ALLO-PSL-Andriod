@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    app:background="@color/white"
+    app:behavior_hideable="false"
+    android:paddingBottom="@dimen/_15sdp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet_quality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_quality_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:drawableLeft="@drawable/ic_baseline_settings"
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/lato_semibold"
+            android:paddingStart="@dimen/_19sdp"
+            android:paddingBottom="@dimen/_5sdp"
+            android:text="Quality"
+            android:textAlignment="center"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/_12ssp"
+            />
+
+        <TextView
+            android:id="@+id/tv_down_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/lato_semibold"
+            android:paddingStart="@dimen/_10sdp"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_12ssp"
+            android:text="Auto(480p)" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_sheet_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_quality">
+
+        <TextView
+            android:id="@+id/tv_speed_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_baseline_slow_motion_video"
+            android:drawablePadding="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/lato_semibold"
+            android:paddingStart="@dimen/_19sdp"
+            android:text="PlaybackSpeed"
+            android:textAlignment="center"
+            android:textColor="@color/text_grey"
+            android:textSize="@dimen/_12ssp"
+             />
+
+        <TextView
+            android:id="@+id/tv_selected_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/lato_semibold"
+            android:paddingStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/_12ssp"
+            android:text="Normal" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

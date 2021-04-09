@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraint_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingStart="@dimen/_5sdp"
+    android:paddingEnd="@dimen/_5sdp"
+    android:paddingBottom="@dimen/_5sdp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_single_word"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/_4sdp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="@dimen/_4sdp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/ripple_effect_drawable">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_98sdp"
+            >
+
+            <com.comix.rounded.RoundedCornerImageView
+                android:id="@+id/imageViewRecent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitXY"
+                android:src="@drawable/profile"
+                app:cornerBottomDisable="false"
+                app:cornerColor="@android:color/white"
+                app:cornerLeftDisable="false"
+                app:cornerRadius="2dp"
+                android:visibility="visible"
+                app:cornerRightDisable="false"
+                app:cornerTopDisable="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/profilegradient"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_word"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:fontFamily="@font/lato_semibold"
+                android:includeFontPadding="false"
+                android:text="Away"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_word2"
+                app:layout_constraintEnd_toStartOf="@+id/tv_translate"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_translate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                 android:layout_marginEnd="@dimen/_8sdp"
+                android:fontFamily="@font/jameelnoorinastaleeqregular"
+                android:includeFontPadding="true"
+                android:text="کَنٹرول ٹاور"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingTop="@dimen/_7sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_word"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_word" />
+
+            <TextView
+                android:id="@+id/tv_word2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:fontFamily="@font/lato_regular"
+                android:paddingBottom="@dimen/_8sdp"
+                android:text="00:10"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageViewTick"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_margin="@dimen/_3sdp"
+                android:visibility="gone"
+                android:src="@drawable/ic_video_downloaded"
+                app:layout_constraintEnd_toEndOf="@+id/imageViewRecent"
+                app:layout_constraintTop_toTopOf="@+id/imageViewRecent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint_click"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_98sdp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/ripple_effect_drawable_transparent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

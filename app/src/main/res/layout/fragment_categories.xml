@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_colour"
+        android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/section_title"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/ic_alphabets_picker"
+        android:fontFamily="@font/lato_medium"
+        android:gravity="center"
+        android:paddingRight="@dimen/_6sdp"
+        android:text="A"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:visibility="invisible" />
+
+    <com.net.pslapllication.util.FastScroller
+        android:id="@+id/scroller"
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_marginTop="60dp"
+        android:background="@color/bg_colour"
+        android:layout_marginBottom="60dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp" />
+
+</FrameLayout>

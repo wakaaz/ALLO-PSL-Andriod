@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraint_quality"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/_15sdp">
+
+    <ImageView
+        android:id="@+id/Image_quality_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_19sdp"
+        android:src="@drawable/ic_delete"
+         app:layout_constraintBottom_toBottomOf="@+id/tv_video_quality_option"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_video_quality_option" />
+
+    <TextView
+        android:id="@+id/tv_video_quality_option"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:drawablePadding="@dimen/_5sdp"
+        android:fontFamily="@font/lato_medium"
+        android:paddingStart="@dimen/_10sdp"
+        android:text="Delete Downloaded Video"
+        android:textAlignment="center"
+        android:textColor="@color/text_grey"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintStart_toEndOf="@+id/Image_quality_video"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0C9F56</color>
+    <color name="colorPrimaryDark">#009E4F</color>
+    <color name="colorAccent">#009E4F</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#2D2D2D</color>
+    <color name="colorPrimarytransparent">#600C9F56</color>
+    <color name="blacklight">#402D2D2D</color>
+    <color name="separater">#008B45</color>
+    <color name="view_grey">#E3E3E3</color>
+    <color name="text_grey">#5D5D5D</color>
+    <color name="text_grey1">#6D6D6D</color>
+    <color name="text_grey2">#B2B2B2</color>
+    <color name="text_grey3">#515253</color>
+    <color name="ripple_grey">#AFAFAF</color>
+    <color name="ripple_grey1">#000000</color>
+    <color name="transpant">#25090909</color>
+    <color name="text_grey_videp">#848484</color>
+    <color name="text_video_option_grey">#8F8F8F</color>
+    <color name="bg_grey">#F8F8F8</color>
+    <color name="bg_grey_dark">#F2F2F2</color>
+    <color name="bg_grey1">#FAF9F9</color>
+    <color name="bg_grey2">#E8E8E8</color>
+    <color name="progress_color_light">#E9E9E9</color>
+    <color name="view_light">#E5E5E5</color>
+    <color name="pure_white">#FAFAFA</color>
+    <color name="nav_light">#80CFA7</color>
+    <color name="pin_bg">#01743A</color>
+    <color name="red">#C90821</color>
+    <color name="bg_colour">#F8F8F8</color>
+
+    <!-- dots colors -->
+    <color name="dot_inactive_screen">#33B272</color>
+    <color name="dot_active_screen">#FFFFFF</color>
+    <array name="array_dot_inactive">
+        <item>@color/dot_inactive_screen</item>
+        <item>@color/dot_inactive_screen</item>
+        <item>@color/dot_inactive_screen</item>
+    </array>
+    <array name="array_dot_active">
+        <item>@color/dot_active_screen</item>
+        <item>@color/dot_active_screen</item>
+        <item>@color/dot_active_screen</item>
+    </array>
+    <!-- dots colors -->
+</resources>

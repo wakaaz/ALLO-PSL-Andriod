@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainConstraints"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+      >
+
+    <com.comix.rounded.RoundedCornerImageView
+        android:id="@+id/imageViewDownload"
+        android:layout_width="68dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:scaleType="fitXY"
+        android:src="@drawable/profile"
+        app:cornerBottomDisable="false"
+        app:cornerColor="@android:color/white"
+        app:cornerLeftDisable="false"
+        app:cornerRadius="2dp"
+        app:cornerRightDisable="false"
+        app:cornerTopDisable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBar1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvVideoName" />
+
+    <TextView
+        android:id="@+id/tvVideoName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:fontFamily="@font/lato_semibold"
+        android:includeFontPadding="false"
+        tools:text="A Carrot, an Egg and Tea Leaves"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_12ssp"
+        app:layout_constraintEnd_toStartOf="@+id/imgbtn_menu"
+        app:layout_constraintStart_toEndOf="@+id/imageViewDownload"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_medium"
+        tools:text="Downloading Video...60%"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/_10ssp"
+        app:layout_constraintStart_toStartOf="@+id/tvVideoName"
+        app:layout_constraintTop_toBottomOf="@+id/tvVideoName" />
+
+    <ImageButton
+        android:visibility="gone"
+        android:id="@+id/imgbtn_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/transparent"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_15sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_more_vert" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_5ssp"
+        android:layout_marginEnd="@dimen/_15sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:max="100"
+        android:minWidth="200dp"
+        android:progress="70"
+        android:progressDrawable="@drawable/progress_bar_round"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/tvVideoName"
+        app:layout_constraintTop_toBottomOf="@+id/tvDownload" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@color/view_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDownload" />
+
+    <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="0.75"
+                android:background="@color/white"
+                android:gravity="center">
+                <com.comix.rounded.RoundedCornerImageView
+                    android:id="@+id/imageViewRecent"
+                    android:layout_width="68dp"
+                    android:layout_height="47dp"
+                     android:scaleType="fitXY"
+                    android:src="@drawable/profile"
+                    app:cornerBottomDisable="false"
+                    app:cornerColor="@android:color/white"
+                    app:cornerLeftDisable="false"
+                    app:cornerRadius="2dp"
+                    app:cornerRightDisable="false"
+                    app:cornerTopDisable="false"
+                     />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="3.25"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_10ssp"
+                    android:layout_marginTop="@dimen/_10ssp"
+                    android:layout_marginRight="@dimen/_10ssp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/tvItemName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_medium"
+                            android:text="A Carrot, an Egg and Tea Leaves"
+                            android:textAllCaps="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_12ssp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvPercent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_regular"
+                            android:text="155 - 13.84%"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/_12ssp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressBar1"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5ssp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:max="100"
+                    android:minWidth="200dp"
+                    android:progress="70"
+                    android:progressDrawable="@drawable/progress_bar_round" />
+            </LinearLayout>
+        </LinearLayout>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

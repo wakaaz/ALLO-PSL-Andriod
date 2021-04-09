@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <group android:id="@+id/group1">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_view_profile"
+            android:title="View Profile" />
+        </group>
+
+        <group android:id="@+id/group3">
+        <item
+            android:id="@+id/nav_recommend_in"
+            android:icon="@drawable/ic_recommend_a_word"
+            android:title="Recommend A Word" />
+        </group>
+        <group android:id="@+id/group4">
+        <item
+            android:id="@+id/nav_psl"
+            android:icon="@drawable/ic_info"
+            android:title="About PSL" />
+        </group>
+ <group android:id="@+id/group5">
+        <item
+            android:id="@+id/nav_signout"
+            android:icon="@drawable/ic_info"
+            android:title="Signout" />
+        </group>
+        <group android:id="@+id/group6">
+        <item
+             android:title="" />
+        </group>
+</menu>

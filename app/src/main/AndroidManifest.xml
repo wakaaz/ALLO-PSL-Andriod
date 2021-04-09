@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.net.pslapllication">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
+    <application
+        android:name=".util.MainClass"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".activities.dictionary.VideoPreviewFavouriteActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.dictionary.VideoPreviewDownloadActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.dictionary.VideoPreviewOfflineActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.dictionary.VideoPreviewStoryActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.dictionary.VideoPreviewLearningTutorialActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.SearchResultActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.dictionary.VideoPreviewTutorialActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.dictionary.DictionaryTabListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.authentication.ForgotPasswordStep3Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.authentication.ForgotPasswordStep2Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.authentication.ForgotPasswordStep1Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.CatDownloadsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity android:name=".activities.BaseActivity" />
+        <activity android:name=".activities.DownloadProgressActivity" />
+        <activity
+            android:name=".activities.dictionary.SubjectTopicListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.dictionary.ClassSubjectListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.MainListing"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.PlaylistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.FavouriteActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.DownloadActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.RecommendAWordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.authentication.SignUpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.dictionary.VideoPreviewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme">
+
+            <!--
+                <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="node.am7.studio"
+                    android:scheme="http" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name=".activities.dictionary.DictionarySingleWordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.authentication.LoginScreen"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.IntroSliderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme" />
+        <activity
+            android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/StatusBarScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" /> <!-- The below code is for android OS version below N -->
+        <receiver
+            android:name=".networkconnection.ConnectivityReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".broadcastReceiver.DownloadVideoBroadcastReceiver" />
+    </application>
+
+</manifest>

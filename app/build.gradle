@@ -1,0 +1,112 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'kotlin-kapt'
+/*apply plugin: 'maven-publish'*/
+android {
+    compileSdkVersion 30
+    buildToolsVersion "29.0.2"
+
+    defaultConfig {
+        applicationId "com.net.pslapllication"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.work:work-runtime:2.4.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.github.zjywill:roundedcornerimageview:1.1.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+    /*Client ID  618175796229-p9upto3q9nfk9m9lf8fuk260j9grsa1m.apps.googleusercontent.com
+    Client Secret  6gKYbziQBk7-__Pz29M2V3Cw*/
+    //google login
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
+    //fb login
+    implementation 'com.facebook.android:facebook-login:5.15.3'
+    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.android.support:multidex:1.0.3'
+    //LifeCycle
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0' ////////////
+    kapt "androidx.room:room-compiler:2.2.5"       //////////////////
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0" ///////////
+    kapt "androidx.lifecycle:lifecycle-compiler:2.2.0"         ////////////////
+
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.6.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    //Coroutines
+
+    //implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19.2"
+
+    implementation 'com.github.oatrice:internet-speed-testing:1.0.1'
+    implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.antonKozyriatskyi:CircularProgressIndicator:1.3.0'
+    implementation 'com.chaos.view:pinview:1.4.4'
+    implementation 'com.appspell.wild-scroll:wild-scroll:0.90'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    /**
+     * Room Database
+     */
+    implementation "androidx.room:room-runtime:2.2.5"    //////////////
+    implementation 'androidx.room:room-ktx:2.2.5'        ///////////////
+    androidTestImplementation "androidx.room:room-testing:2.2.5" ////////////
+    /**
+     * Kotlin components
+     */
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5"
+
+    /**************************
+     * qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+     *
+     */
+}
