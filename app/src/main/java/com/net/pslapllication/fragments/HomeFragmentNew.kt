@@ -7,6 +7,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -42,7 +49,8 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
         var view: View = inflater.inflate(R.layout.fragment_home_new, container, false)
         setClickListener(view)
         searchBarSetting(view)
-
+          setTitle(view)
+          setViewAll(view)
          if (activity!=null ) {
              if (ProgressHelper.getInstance(activity!!)!= null && ProgressHelper.getInstance(activity!!).getViewModel()!=null){
              Log.d("datasetNew", "datasetNew1")
@@ -109,9 +117,9 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
                 ReuseFunctions.preventTwoClick(v)
 
                 ReuseFunctions.startNewActivityTaskWithParameter(
-                    activity!!.applicationContext,
-                    MainListing::class.java,
-                    Constants.TYPE_DICTIONARY
+                        activity!!.applicationContext,
+                        MainListing::class.java,
+                        Constants.TYPE_TEACHER_TUTORIAL
                 )
             }
             R.id.constraint_tea_tutorial -> {
@@ -123,11 +131,10 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
                         Uri.parse("http://player.vimeo.com/video/"+"78329998")
                     )
                 )*/
-
                 ReuseFunctions.startNewActivityTaskWithParameter(
-                    activity!!.applicationContext,
-                    MainListing::class.java,
-                    Constants.TYPE_TEACHER_TUTORIAL
+                        activity!!.applicationContext,
+                        MainListing::class.java,
+                        Constants.TYPE_LEARNING_TUTORIAL_REAL
                 )
             }
             R.id.constraint_stories -> {
@@ -223,6 +230,46 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
                 return false
             }
         })
+    }
+
+    fun  setTitle(view: View){
+        val myTextView: TextView =
+                view.findViewById(R.id.tvHeading)
+        val text1: String = "SEARCH FROM\nMORE THAN "
+       val text2: String = "3,000\nPSL DICTIONARY\n"
+        val text3: String = "WORDS";
+        val mainTxt: String = text1 +text2+text3
+
+        val spannable: Spannable = SpannableString(mainTxt)
+
+        spannable.setSpan(ForegroundColorSpan(Color.BLACK), 0, text1.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(ForegroundColorSpan(resources.getColor(R.color.colorPrimary)), 22, 43, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.setSpan(ForegroundColorSpan(Color.BLACK), 44, 48, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        myTextView.setText(spannable, TextView.BufferType.SPANNABLE)
+    }
+
+    fun setViewAll(view: View){
+        val textView:TextView = view.findViewById(R.id.tvViewAll)
+        val text = resources.getString(R.string.view_all)
+        val ss = SpannableString(text)
+        val clickableSpan1 = object:ClickableSpan() {
+            override fun onClick(widget:View) {
+                ReuseFunctions.preventTwoClick(widget)
+                ReuseFunctions.startNewActivity(
+                        activity!!,
+                        DictionaryTabListActivity::class.java
+                )
+            }
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+
+            }
+        }
+
+        ss.setSpan(clickableSpan1, 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        textView.setText(ss)
+        textView.setMovementMethod(LinkMovementMethod.getInstance())
     }
     fun watchYoutubeVideo(context: Context, id: String) {
         val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
