@@ -246,6 +246,7 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@drawable/ripple_effect_drawable"
                             android:paddingBottom="@dimen/_10sdp">
 
                             <ImageView
@@ -253,7 +254,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_12sdp"
-                                android:src="@drawable/ic_learning_tutorials"
+                                android:src="@drawable/ic_teacher_tutorials"
+
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -326,7 +328,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_12sdp"
-                                android:src="@drawable/ic_teacher_tutorials"
+                                android:src="@drawable/ic_learning_tutorials"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -337,7 +339,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_15sdp"
                                 android:fontFamily="@font/lato_bold"
-                                android:text="Students"
+                                android:text="Student"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12ssp"
                                 app:layout_constraintEnd_toStartOf="@id/tv_tuutorial"

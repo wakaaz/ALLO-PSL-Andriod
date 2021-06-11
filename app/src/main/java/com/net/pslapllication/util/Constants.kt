@@ -10,9 +10,9 @@ class Constants {
     companion object {
         //home
         const val TYPE_DICTIONARY: String = "DICTIONARY"
-        const val TYPE_TEACHER_TUTORIAL: String = "TEACHER TUTORIAL"
+        const val TYPE_TEACHER_TUTORIAL: String = "TEACHER TUTORIALS"
         const val TYPE_LEARNING_TUTORIAL: String = "LIFE SKILLS"
-        const val TYPE_LEARNING_TUTORIAL_REAL: String = "LEARNING TUTORIAL"
+        const val TYPE_LEARNING_TUTORIAL_REAL: String = "STUDENT TUTORIALS"
         const val TYPE_STORIES: String = "STORIES"
 
         //user type

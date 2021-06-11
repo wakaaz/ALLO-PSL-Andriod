@@ -19,6 +19,8 @@
     <color name="text_grey_videp">#848484</color>
     <color name="text_video_option_grey">#8F8F8F</color>
     <color name="bg_grey">#F8F8F8</color>
+    <color name="tf_color">#EEEEEE</color>
+
     <color name="bg_grey_dark">#F2F2F2</color>
     <color name="bg_grey1">#FAF9F9</color>
     <color name="bg_grey2">#E8E8E8</color>
@@ -29,6 +31,9 @@
     <color name="pin_bg">#01743A</color>
     <color name="red">#C90821</color>
     <color name="bg_colour">#F8F8F8</color>
+    <color name="shimmer_background_color">#f3f3f3</color>
+    <color name="shimmer_anim">#c7c7c7</color>
+    <color name="shimmer_anim_color">#e2e2e2</color>
 
     <!-- dots colors -->
     <color name="dot_inactive_screen">#33B272</color>

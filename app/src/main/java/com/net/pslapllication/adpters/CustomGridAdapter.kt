@@ -81,6 +81,8 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
             when (type) {
                 Constants.TYPE_DICTIONARY -> {
                     //set data
+
+                    
                     tv_title.text = dicwordlistFilter[position].title
                     tv_count.text =
                         (dicwordlistFilter[position].videos.toString()) + context.getString(R.string.words)
@@ -488,8 +490,9 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                 .thumbnail(Glide.with(context).load("video_url"))
                 .into(imageViewRecent)*/
             tv_word.typeface = ResourcesCompat.getFont(context, R.font.lato_semibold)
-
-            tv_word.text = downloadlistFilter[position].wordName
+            var name = downloadlistFilter[position].wordName
+            name = name.replace("_", " ")
+            tv_word.text = name
 
 
             gridView.setOnClickListener {

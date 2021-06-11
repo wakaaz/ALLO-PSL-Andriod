@@ -44,7 +44,9 @@ class VideoPreviewDownloadAdapter(var context: Context, var type: String, var na
 
         //set data
         holder.img_arrow.setImageResource(R.drawable.ic_keyboard_arrow_right)
-        holder.tv_main?.text = diclist[position].wordName
+        var name = diclist[position].wordName
+        name = name.replace("_", " ")
+        holder.tv_main?.text = name
 
         //set font
         holder.tv_main?.typeface = ResourcesCompat.getFont(context, R.font.lato_semibold)

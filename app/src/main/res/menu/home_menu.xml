@@ -10,7 +10,7 @@
     <item
         android:id="@+id/favourite"
         android:icon="@drawable/bottom_nav_fav_selector"
-        android:title="Favourites"
+        android:title="Favorites"
         app:showAsAction="always" />
     <item
         android:id="@+id/downloads"

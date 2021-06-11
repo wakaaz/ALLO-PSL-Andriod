@@ -17,9 +17,9 @@ class ConnectivityReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
          if (connectivityReceiverListener != null) {
             connectivityReceiverListener!!.onNetworkConnectionChanged(
-                isConnectedOrConnecting(
-                    context!!
-                )
+                    isConnectedOrConnecting(
+                            context!!
+                    )
             )
             connectivityReceiverListener!!.onNetworkQualityChanged(ConnectionQuality(context))
         }
@@ -65,8 +65,11 @@ class ConnectivityReceiver : BroadcastReceiver() {
         if (networkInfo != null && networkInfo.isConnectedOrConnecting) {
             if (networkInfo.isConnectedOrConnecting) {
                // isConnected = internetConnectionAvailable(1500)
-                isConnected = isConnected()
-
+               // isConnected = isConnected()
+                /// if no network is available networkInfo will be null
+                if (networkInfo != null && networkInfo.isConnected) {
+                    return true
+                }
             }
         }
         return isConnected

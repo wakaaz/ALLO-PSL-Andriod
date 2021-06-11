@@ -30,6 +30,8 @@ import com.net.pslapllication.util.SharedPreferenceClass
 import kotlinx.android.synthetic.main.activity_main_listing_new.*
 import kotlinx.android.synthetic.main.activity_main_listing_new.tv_sort
 import kotlinx.android.synthetic.main.bottom_layout_video_quality_list.view.*
+import kotlinx.android.synthetic.main.activity_main_listing_new.shimmer_layout
+
 import kotlinx.android.synthetic.main.toolbaar_layout.*
 import retrofit2.Call
 
@@ -53,6 +55,7 @@ class MainListing : BaseActivity(), View.OnClickListener, RetrofitResponseListen
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_listing_new)
+        shimmer_layout.startShimmerAnimation()
         checkIntent()
         initializeViews()
         setListener()
@@ -194,6 +197,9 @@ class MainListing : BaseActivity(), View.OnClickListener, RetrofitResponseListen
                 adapter.notifyDataSetChanged()
             }
         }
+        shimmer_layout.stopShimmerAnimation()
+        shimmer_layout.visibility =  View.GONE
+
     }
 
     override fun onClick(v: View?) {
@@ -426,10 +432,17 @@ class MainListing : BaseActivity(), View.OnClickListener, RetrofitResponseListen
                         } else {
                             ReuseFunctions.snackMessage(constraint_main_listing, "Nothing to Sort")
                         }
-                    } else if (type == Constants.TYPE_LEARNING_TUTORIAL || type == Constants.TYPE_LEARNING_TUTORIAL_REAL) {
+                    } else if (type == Constants.TYPE_LEARNING_TUTORIAL) {
                         if (listLearningTut != null && listLearningTut?.size != 0) {
                             val sortedAppsList1 = listLearningTut!!.sortedBy { it.title }
                             adapter.setLearningTut(sortedAppsList1)
+                        } else {
+                            ReuseFunctions.snackMessage(constraint_main_listing, "Nothing to Sort")
+                        }
+                    }else if (type == Constants.TYPE_LEARNING_TUTORIAL_REAL){
+                        if (listTeacherTut != null && listTeacherTut?.size != 0) {
+                            val sortedAppsList1 = listTeacherTut!!.sortedBy { it.grade }
+                            adapter.setTutGrades(sortedAppsList1)
                         } else {
                             ReuseFunctions.snackMessage(constraint_main_listing, "Nothing to Sort")
                         }
@@ -471,10 +484,17 @@ class MainListing : BaseActivity(), View.OnClickListener, RetrofitResponseListen
                         } else {
                             ReuseFunctions.snackMessage(constraint_main_listing, "Nothing to Sort")
                         }
-                    } else if (type == Constants.TYPE_LEARNING_TUTORIAL && type == Constants.TYPE_LEARNING_TUTORIAL_REAL) {
+                    } else if (type == Constants.TYPE_LEARNING_TUTORIAL) {
                         if (listLearningTut != null && listLearningTut?.size != 0) {
                             val sortedAppsList1 = listLearningTut!!.sortedByDescending { it.title }
                             adapter.setLearningTut(sortedAppsList1)
+                        } else {
+                            ReuseFunctions.snackMessage(constraint_main_listing, "Nothing to Sort")
+                        }
+                    }else if(type == Constants.TYPE_LEARNING_TUTORIAL_REAL){
+                        if (listTeacherTut != null && listTeacherTut?.size != 0) {
+                            val sortedAppsList1 = listTeacherTut!!.sortedByDescending { it.grade }
+                            adapter.setTutGrades(sortedAppsList1)
                         } else {
                             ReuseFunctions.snackMessage(constraint_main_listing, "Nothing to Sort")
                         }
@@ -501,7 +521,9 @@ class MainListing : BaseActivity(), View.OnClickListener, RetrofitResponseListen
                             adapter.setLearningTut(listLearningTut!!)
                         }
                         Constants.TYPE_LEARNING_TUTORIAL_REAL -> {
-                            adapter.setLearningTut(listLearningTut!!)
+                           // adapter.setLearningTut(listLearningTut!!)
+                            adapter.setTutGrades(listTeacherTut!!)
+
                         }
                     }
 

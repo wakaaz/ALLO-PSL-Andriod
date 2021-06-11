@@ -234,14 +234,19 @@ class VideoPreviewDownloadActivity : BaseActivity(), View.OnClickListener,
 
 
     private fun setTitleText(selectedModel: DownloadListModel) {
-        txt_title.text = ReuseFunctions.firstLetterCap(selectedModel.wordName)
-        tv_main.text = ReuseFunctions.firstLetterCap(selectedModel.wordName)
+        var name = selectedModel.wordName
+        name = name.replace("_", " ")
+        txt_title.text = ReuseFunctions.firstLetterCap(name)
+        tv_main.text = ReuseFunctions.firstLetterCap(name)
 
     }
 
     private fun setNextVideosList(list: List<DownloadListModel>) {
 
         if (adapter != null) {
+            if(list.size == 0){
+                layout_next.visibility =  View.GONE
+            }
             adapter!!.setWords(list)
             adapter!!.notifyDataSetChanged()
             nestedScrollView.smoothScrollTo(0, 0)
@@ -446,7 +451,7 @@ class VideoPreviewDownloadActivity : BaseActivity(), View.OnClickListener,
         img_btn_play_pause.setImageDrawable(this.resources.getDrawable(R.drawable.ic_baseline_pause_white))
 
         videoview.setOnPreparedListener(MediaPlayer.OnPreparedListener {
-            image_btn_menu.visibility = View.VISIBLE
+     //       image_btn_menu.visibility = View.VISIBLE
 
             mediaPlayer = it
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -500,7 +505,8 @@ class VideoPreviewDownloadActivity : BaseActivity(), View.OnClickListener,
                 if (playToggle) {
                     constraint_dimview.visibility = View.VISIBLE
                     constraint_centerscreen.visibility = View.VISIBLE
-                     img_btn_play_pause_center.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white_large))
+
+                    img_btn_play_pause_center.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white_large))
                     img_btn_play_pause.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white))
                     constraint_centerscreen.postDelayed(Runnable {
                         constraint_centerscreen.visibility = View.GONE

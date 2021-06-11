@@ -23,6 +23,8 @@ import com.net.pslapllication.util.ListSorting
 import com.net.pslapllication.util.ReuseFunctions
 import kotlinx.android.synthetic.main.fragment_categories.*
 import kotlinx.android.synthetic.main.fragment_categories.view.*
+import kotlinx.android.synthetic.main.fragment_words.shimmer_layout
+
 import java.net.URLDecoder
 import java.util.*
 import kotlin.collections.ArrayList
@@ -41,6 +43,8 @@ class WordsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_words, container, false)
+        view.shimmer_layout.startShimmerAnimation()
+
         act = activity
         view.scroller!!.setTextView(view.section_title)
         view.scroller!!.setOnTouchingLetterChangedListener { s ->
@@ -70,6 +74,10 @@ class WordsFragment : Fragment() {
             items = list
             adapter = Adapter(act!!, items, mainDictionaryList!!)
             view!!.list!!.adapter = adapter
+
+
+            view!!.shimmer_layout.stopShimmerAnimation()
+            view!!.shimmer_layout.visibility =  View.GONE
 
         }
     }

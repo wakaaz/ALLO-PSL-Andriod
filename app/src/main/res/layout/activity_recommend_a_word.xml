@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/_10sdp"
+    android:id="@+id/main_layout"
     android:background="@color/bg_colour"
     tools:context=".activities.RecommendAWordActivity">
 
@@ -12,36 +13,108 @@
         android:id="@+id/constraint_toolbaar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/bg_colour"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <include layout="@layout/toolbaar_layout_menu" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     <TextView
-        android:id="@+id/tv_recommend_title"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/lato_semibold"
+        android:text="Name"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraint_toolbaar" />
+
+
+    <EditText
+        android:id="@+id/tf_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+
+        android:background="@drawable/loginp_textview_bg_grey"
+        android:fontFamily="@font/lato_regular"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:hint=""
+        android:lines="1"
+        android:singleLine="true"
+        android:textColor="@color/text_grey1"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/lato_semibold"
+        android:text="Email"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tf_name" />
+
+
+    <EditText
+        android:id="@+id/tf_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
+
+        android:background="@drawable/loginp_textview_bg_grey"
+        android:fontFamily="@font/lato_regular"
+        android:paddingStart="@dimen/_15sdp"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:hint=""
+        android:lines="1"
+        android:singleLine="true"
+        android:textColor="@color/text_grey1"
+        android:textSize="@dimen/_14ssp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_email" />
+    <TextView
+        android:id="@+id/tv_recommend_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/lato_semibold"
         android:text="Enter Recommended Word"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraint_toolbaar" />
+        app:layout_constraintTop_toBottomOf="@id/tf_email" />
 
     <EditText
         android:id="@+id/tv_recommend_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_15sdp"
+        android:layout_marginRight="@dimen/_15sdp"
         android:background="@drawable/loginp_textview_bg_grey"
         android:fontFamily="@font/lato_regular"
         android:paddingStart="@dimen/_15sdp"
-        android:paddingTop="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_12sdp"
-        android:hint="Word"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
+        android:hint=""
         android:lines="1"
         android:singleLine="true"
         android:textColor="@color/text_grey1"
@@ -56,8 +129,8 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:background="@drawable/loginp_textview_bg_gradient"
         android:fontFamily="@font/lato_bold"
-         android:paddingTop="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_12sdp"
+         android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
         android:text="Submit"
         android:textAllCaps="false"
         android:textAlignment="center"

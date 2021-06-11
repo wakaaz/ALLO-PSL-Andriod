@@ -19,6 +19,8 @@ import com.net.pslapllication.util.FastScroller
 import com.net.pslapllication.util.ReuseFunctions
 import kotlinx.android.synthetic.main.fragment_categories.*
 import kotlinx.android.synthetic.main.fragment_categories.view.*
+import kotlinx.android.synthetic.main.fragment_categories.shimmer_layout
+
 import java.net.SocketException
 import java.net.URLDecoder
 import java.util.*
@@ -39,6 +41,7 @@ class CategoriesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_categories, container, false)
+        view.shimmer_layout.startShimmerAnimation()
         act = activity
         view.scroller!!.setTextView(view.section_title)
         view.scroller!!.setOnTouchingLetterChangedListener { s ->
@@ -67,6 +70,9 @@ class CategoriesFragment : Fragment() {
             items = list
             adapter = Adapter(act!!, items)
             view!!.list!!.adapter = adapter
+            view!!.shimmer_layout.stopShimmerAnimation()
+            view!!.shimmer_layout.visibility =  View.GONE
+
 
         }
     }

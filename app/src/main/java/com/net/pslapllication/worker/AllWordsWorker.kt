@@ -27,7 +27,7 @@ class AllWordsWorker(val context: Context, workerParams: WorkerParameters) :
 
             val call1: Call<DictionaryMainModelAPI> = apiService.getAllDictionaryDataDownload(
                 SharedPreferenceClass.getInstance(context)!!.getSession(),
-                SharedPreferenceClass.getInstance(context)?.getUserType().toString()
+                SharedPreferenceClass.getInstance(context)?.getUserType().toString(),""
             )
             call1.enqueue(object : Callback<DictionaryMainModelAPI?> {
                 override fun onResponse(
@@ -73,6 +73,7 @@ class AllWordsWorker(val context: Context, workerParams: WorkerParameters) :
                                                         dictionaryMainModel.data[i].indexPosition =
                                                             i
                                                     }
+
                                                     ProgressHelper.getInstance(context)!!
                                                         .getViewModel()
                                                         .insertWords(dictionaryMainModel.data)

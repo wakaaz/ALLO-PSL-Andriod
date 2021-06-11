@@ -427,7 +427,7 @@ class CustomGridLargeAdapter(private val context: Context, var type: String) : B
                     // val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
                     var newIndexSortedList = ListSorting.sortListTutorial(
                         isDecrement,
-                        tutGradeSubVideoListFilter[newPos].indexPosition,
+                        newPos,
                         tutGradeSubVideoListFilter
                     )
 

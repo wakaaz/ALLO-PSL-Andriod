@@ -139,7 +139,21 @@
         tools:listitem="@layout/row_dic_list">
 
     </androidx.recyclerview.widget.RecyclerView>
+    <io.supercharge.shimmerlayout.ShimmerLayout
+        android:id="@+id/shimmer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shimmer_color="@color/shimmer_anim_color"
+        android:visibility="visible"
 
+        app:shimmer_animation_duration="1200">
+        <include layout="@layout/shimmer_layout_grid"/>
+    </io.supercharge.shimmerlayout.ShimmerLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintInternet"
         android:layout_width="match_parent"

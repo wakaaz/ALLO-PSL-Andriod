@@ -37,7 +37,7 @@ class WordsRepository(private val wordsDao: WordsDao) {
     class insertWordsListAsyncTask(private var wordsDao: WordsDao) :
         AsyncTask<List<DictionaryDataAPI>, Void, Void>() {
         override fun doInBackground(vararg params: List<DictionaryDataAPI>?): Void? {
-             wordsDao.addAllWordsList(params[0]!!)
+             wordsDao.addAllWordsList(params[0])
             return null
         }
 

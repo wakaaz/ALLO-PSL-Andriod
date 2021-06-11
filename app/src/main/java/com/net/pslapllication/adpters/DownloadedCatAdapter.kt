@@ -46,7 +46,10 @@ class DownloadedCatAdapter(var context: Context, var onVideoDelete : onVideoDele
     override fun onBindViewHolder(holder: DownloadedCatAdapter.ViewHolder, position: Int) {
 
         holder.tv_main?.typeface = ResourcesCompat.getFont(context, R.font.lato_semibold)
-        holder.tv_main?.text = list!![position].wordName
+
+        var name = list!![position].wordName
+        name = name.replace("_", " ")
+        holder.tv_main?.text = name
         holder.tv_duration?.text = list!![position].wordDetail + " Video Downloaded"
 
 

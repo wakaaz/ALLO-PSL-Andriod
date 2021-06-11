@@ -51,6 +51,7 @@ import com.net.pslapllication.reetrofit.RetrofitClientInstance
 import com.net.pslapllication.room.datamodel.DictionaryDataAPI
  import com.net.pslapllication.util.*
 import kotlinx.android.synthetic.main.activity_video_preview.*
+import kotlinx.android.synthetic.main.activity_video_preview_offline.*
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.*
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.btn_replay
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.constraint_bottom_options
@@ -83,6 +84,8 @@ import kotlinx.android.synthetic.main.bottom_layout_video_quality_list.view.*
 import kotlinx.android.synthetic.main.layout_videoview_error.*
 import kotlinx.android.synthetic.main.playerbarlayout.*
 import kotlinx.android.synthetic.main.toolbaar_layout.*
+import  kotlinx.android.synthetic.main.activity_video_preview_tutorial.layout_next
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -435,6 +438,9 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
     private fun setNextVideosList(list: List<StoryData>) {
 
         if (adapter != null) {
+            if(list.isEmpty()){
+                layout_next.visibility =  View.GONE
+            }
             adapter!!.setWords(list)
             adapter!!.notifyDataSetChanged()
             nestedScrollView.smoothScrollTo(0, 0)
@@ -1032,7 +1038,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
         img_btn_play_pause.setImageDrawable(this.resources.getDrawable(R.drawable.ic_baseline_pause_white))
 
         videoview.setOnPreparedListener(MediaPlayer.OnPreparedListener {
-            image_btn_menu.visibility = View.VISIBLE
+            //image_btn_menu.visibility = View.VISIBLE
             mediaPlayer = it
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 //works only from api 23
@@ -1084,7 +1090,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
                 if (playToggle) {
                     constraint_dimview.visibility = View.VISIBLE
                     constraint_centerscreen.visibility = View.VISIBLE
-                    image_btn_menu.visibility = View.GONE
+                    image_btn_menu.visibility = View.VISIBLE
                     img_btn_play_pause_center.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white_large))
                     img_btn_play_pause.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white))
                     constraint_centerscreen.postDelayed(Runnable {
@@ -1111,7 +1117,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
                     if (pauseToggle) {
                         constraint_dimview.visibility = View.VISIBLE
                         constraint_centerscreen.visibility = View.VISIBLE
-                        image_btn_menu.visibility = View.GONE
+                        image_btn_menu.visibility = View.VISIBLE
                         img_btn_play_pause_center.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_play_white_large))
                         img_btn_play_pause.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_play_white))
                         constraint_centerscreen.postDelayed(Runnable {

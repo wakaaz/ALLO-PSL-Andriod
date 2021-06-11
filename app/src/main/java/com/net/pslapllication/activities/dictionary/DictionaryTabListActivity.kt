@@ -68,7 +68,7 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
             } else if (fragment is WordsFragment) {
                 val call = ApiCallClass.apiService.getAllDictionaryData(
                     SharedPreferenceClass.getInstance(this)!!.getSession(),
-                    SharedPreferenceClass.getInstance(this)?.getUserType().toString()
+                    SharedPreferenceClass.getInstance(this)?.getUserType().toString(),""
                 )
                 ApiCallClass.retrofitCall(this, call as Call<Any>)
             }
@@ -107,7 +107,7 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
         if (isInternetConnected) {
                callWords = ApiCallClass.apiService.getAllDictionaryData(
                 SharedPreferenceClass.getInstance(this)!!.getSession(),
-                        SharedPreferenceClass.getInstance(this)?.getUserType().toString()
+                        SharedPreferenceClass.getInstance(this)?.getUserType().toString(),""
             )
             ApiCallClass.retrofitCall(this, callWords as Call<Any>)
         } else {
@@ -454,7 +454,7 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
             } else if (fragment is WordsFragment) {
                 val call = ApiCallClass.apiService.getAllDictionaryData(
                     SharedPreferenceClass.getInstance(this)!!.getSession(),
-                    SharedPreferenceClass.getInstance(this)?.getUserType().toString()
+                    SharedPreferenceClass.getInstance(this)?.getUserType().toString(),""
                 )
                 ApiCallClass.retrofitCall(this, call as Call<Any>)
             }

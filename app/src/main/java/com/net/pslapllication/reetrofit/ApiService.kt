@@ -31,9 +31,9 @@ interface ApiService {
     fun getLogIn(@Body loginParamModel: LoginParamModel): Call<LoginMainModel>
 
     /********Guest login******************/
-
+    @FormUrlEncoded
     @POST("GuestLogin")
-    fun getLogInGuest(): Call<LoginMainModel>
+    fun  getLogInGuest(@Field("sample") sample: String): Call<LoginMainModel>
 
     /********dictionary detail******************/
     @FormUrlEncoded
@@ -45,17 +45,19 @@ interface ApiService {
     ): Call<DictionaryMainModel>
 
  /********dictionary detail without category id******************/
-     @POST("Dictionary")
+ @FormUrlEncoded
+ @POST("Dictionary")
     fun getAllDictionaryData(
         @Header("session") session: String,
-        @Header("userType") userType: String
+        @Header("userType") userType: String,@Field("sample") sample: String
     ): Call<DictionaryMainModel>
 
 /********dictionary detail without category id download******************/
+     @FormUrlEncoded
      @POST("Dictionary")
     fun getAllDictionaryDataDownload(
         @Header("session") session: String,
-        @Header("userType") userType: String
+        @Header("userType") userType: String,@Field("sample") sample: String
     ): Call<DictionaryMainModelAPI>
 
      /********Tutorial Grade-Sub detail******************/
@@ -160,5 +162,15 @@ interface ApiService {
 
     @GET("Logout")
     fun getLogout(@Header("session") session: String): Call<RecoveryEmailModel>
+
+
+    /*
+      Recommeded Word Endpoint
+     */
+
+    @FormUrlEncoded
+    @POST("RecommendAWord")
+    fun postRecomendation(@Header("session") session: String,
+                          @Header("userType") userType: String,@Field("email") email :String,@Field("name") name :String,@Field("word") word :String): Call<RecoveryEmailModel>
 
 }

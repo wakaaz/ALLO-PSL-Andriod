@@ -441,6 +441,9 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
     private fun setNextVideosList(list: List<DictionaryData>) {
 
         if (adapter != null) {
+            if(list.size == 0){
+                layout_next.visibility =  View.GONE
+            }
             adapter!!.setWords(list)
             adapter!!.notifyDataSetChanged()
             nestedScrollView.smoothScrollTo(0, 0)
@@ -1039,7 +1042,7 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
         img_btn_play_pause.setImageDrawable(this.resources.getDrawable(R.drawable.ic_baseline_pause_white))
 
         videoview.setOnPreparedListener(MediaPlayer.OnPreparedListener {
-            image_btn_menu.visibility = View.VISIBLE
+           // image_btn_menu.visibility = View.VISIBLE
             mediaPlayer = it
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 //works only from api 23

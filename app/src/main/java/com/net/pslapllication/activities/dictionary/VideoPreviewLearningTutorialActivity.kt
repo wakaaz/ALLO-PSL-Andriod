@@ -78,9 +78,12 @@ import kotlinx.android.synthetic.main.bottom_layout_download_video.view.tv_down_
 import kotlinx.android.synthetic.main.bottom_layout_video_option.view.*
 import kotlinx.android.synthetic.main.bottom_layout_video_option.view.bottom_sheet_quality
 import kotlinx.android.synthetic.main.bottom_layout_video_quality_list.view.*
+import  kotlinx.android.synthetic.main.activity_video_preview_tutorial.layout_next
+
 import kotlinx.android.synthetic.main.layout_videoview_error.*
 import kotlinx.android.synthetic.main.playerbarlayout.*
 import kotlinx.android.synthetic.main.toolbaar_layout.*
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -433,6 +436,9 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
     private fun setNextVideosList(list: List<LearningData>) {
 
         if (adapter != null) {
+            if(list.size == 0){
+                layout_next.visibility =  View.GONE
+            }
             adapter!!.setWords(list)
             adapter!!.notifyDataSetChanged()
             nestedScrollView.smoothScrollTo(0, 0)
@@ -1014,7 +1020,7 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
         img_btn_play_pause.setImageDrawable(this.resources.getDrawable(R.drawable.ic_baseline_pause_white))
 
         videoview.setOnPreparedListener(MediaPlayer.OnPreparedListener {
-            image_btn_menu.visibility = View.VISIBLE
+            //image_btn_menu.visibility = View.VISIBLE
             mediaPlayer = it
             setVideoProgress()
             progress.visibility = View.GONE
@@ -1056,7 +1062,7 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
                 if (playToggle) {
                     constraint_dimview.visibility = View.VISIBLE
                     constraint_centerscreen.visibility = View.VISIBLE
-                    image_btn_menu.visibility = View.GONE
+                    image_btn_menu.visibility = View.VISIBLE
                     img_btn_play_pause_center.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white_large))
                     img_btn_play_pause.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white))
                     constraint_centerscreen.postDelayed(Runnable {
@@ -1083,7 +1089,7 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
                     if (pauseToggle) {
                         constraint_dimview.visibility = View.VISIBLE
                         constraint_centerscreen.visibility = View.VISIBLE
-                        image_btn_menu.visibility = View.GONE
+                        image_btn_menu.visibility = View.VISIBLE
                         img_btn_play_pause_center.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_play_white_large))
                         img_btn_play_pause.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_play_white))
                         constraint_centerscreen.postDelayed(Runnable {

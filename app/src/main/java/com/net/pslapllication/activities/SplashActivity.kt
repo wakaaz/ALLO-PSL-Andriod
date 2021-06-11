@@ -28,8 +28,8 @@ class SplashActivity : BaseActivity() {
             DictionaryListCarrierDataModel()
         ProgressHelper.getInstance(this).setModelInstance(dictionaryListCarrierDataModel!!)
         var session =  SharedPreferenceClass.getInstance(this)!!.getSession()
-Log.d("sessiondata",""+session)
-//getDefaultViewModelProviderFactory
+        Log.d("sessiondata",""+session)
+        //getDefaultViewModelProviderFactory
         val context: Context = applicationContext
 
         val viewModelFactory = WordViewModelFactory(applicationContext)

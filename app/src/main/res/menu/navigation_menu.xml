@@ -4,6 +4,7 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_view_profile"
+            android:visible="false"
             android:title="View Profile" />
         </group>
 
@@ -23,10 +24,10 @@
         <item
             android:id="@+id/nav_signout"
             android:icon="@drawable/ic_info"
+            android:visible="false"
             android:title="Signout" />
         </group>
         <group android:id="@+id/group6">
-        <item
-             android:title="" />
+
         </group>
 </menu>

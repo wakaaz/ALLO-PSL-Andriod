@@ -171,6 +171,7 @@ class LoginScreen : BaseActivity(), View.OnClickListener, RetrofitResponseListen
                 // signIn()
             }
             R.id.constraint_skip -> {
+                Log.e("data","click" +"")
                 userType = Constants.USERTYPE_GUEST
                 SharedPreferenceClass.getInstance(this)
                     ?.setUserType(userType)
@@ -188,7 +189,7 @@ class LoginScreen : BaseActivity(), View.OnClickListener, RetrofitResponseListen
     private fun setGuestLogin() {
         if (isInternetConnected) {
 
-            val call = ApiCallClass.apiService.getLogInGuest()
+            val call = ApiCallClass.apiService.getLogInGuest("")
             ApiCallClass.retrofitCall(this, call as Call<Any>)
         } else {
             if (!this.isDestroyed) {

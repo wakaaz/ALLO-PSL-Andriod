@@ -72,26 +72,30 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
     }
 
     private fun autoCompleteSearch(view: View) {
-        val adapter =
-            AutoCompleteAdapter(activity!!, android.R.layout.simple_list_item_1, listData!!)
-        view.autoCompleteTextView.setAdapter(adapter)
-        view.autoCompleteTextView.threshold = 1
-        view.autoCompleteTextView.setTextColor(Color.BLACK)
-        view.autoCompleteTextView.setOnItemClickListener() { parent, _, position, id ->
-            val selectedPoi = parent.adapter.getItem(position) as DictionaryDataAPI?
-            view.autoCompleteTextView.setText(selectedPoi?.english_word)
-            newActivity(selectedPoi?.english_word.toString())
+        if (view != null && activity != null){
+            val adapter =
+                    AutoCompleteAdapter(activity!!, android.R.layout.simple_list_item_1, listData!!)
+            view.autoCompleteTextView.setAdapter(adapter)
+            view.autoCompleteTextView.threshold = 1
+            view.autoCompleteTextView.setTextColor(Color.BLACK)
+            view.autoCompleteTextView.setOnItemClickListener() { parent, _, position, id ->
+                val selectedPoi = parent.adapter.getItem(position) as DictionaryDataAPI?
+                view.autoCompleteTextView.setText(selectedPoi?.english_word)
+                newActivity(selectedPoi?.english_word.toString())
 
 
-        }//click end
-        view.autoCompleteTextView.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            }//click end
+            view.autoCompleteTextView.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
-                  newActivity(v.text.toString())
-                 return@OnEditorActionListener true
-            }
-            false
-        })
+                    newActivity(v.text.toString())
+                    return@OnEditorActionListener true
+                }
+                false
+            })
+        }
+
+
 
     }
     private fun newActivity(searchString :String){
@@ -114,7 +118,19 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.constraint_dic -> {
+
                 ReuseFunctions.preventTwoClick(v)
+                if (view != null){
+                    ReuseFunctions.preventTwoClick(view!!.imageview)
+                    ReuseFunctions.preventTwoClick(view!!.tvViewAll)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_tea_tutorial)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_stories)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_learning_tutorial_real)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_lea_tutorial)
+
+
+                }
+
 
                 ReuseFunctions.startNewActivityTaskWithParameter(
                         activity!!.applicationContext,
@@ -124,7 +140,17 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
             }
             R.id.constraint_tea_tutorial -> {
                 ReuseFunctions.preventTwoClick(v)
+                if (view != null){
+                    ReuseFunctions.preventTwoClick(view!!.imageview)
+                    ReuseFunctions.preventTwoClick(view!!.tvViewAll)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_dic)
 
+                    ReuseFunctions.preventTwoClick(view!!.constraint_stories)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_learning_tutorial_real)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_lea_tutorial)
+
+
+                }
                 /*startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
@@ -139,6 +165,15 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
             }
             R.id.constraint_stories -> {
                 ReuseFunctions.preventTwoClick(v)
+                if (view != null){
+                    ReuseFunctions.preventTwoClick(view!!.imageview)
+                    ReuseFunctions.preventTwoClick(view!!.tvViewAll)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_dic)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_tea_tutorial)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_learning_tutorial_real)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_lea_tutorial)
+
+                }
                 ReuseFunctions.startNewActivityTaskWithParameter(
                     activity!!.applicationContext,
                     MainListing::class.java,
@@ -151,6 +186,15 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
             }
             R.id.constraint_lea_tutorial -> {
                 ReuseFunctions.preventTwoClick(v)
+                if (view != null){
+                    ReuseFunctions.preventTwoClick(view!!.imageview)
+                    ReuseFunctions.preventTwoClick(view!!.tvViewAll)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_dic)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_tea_tutorial)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_stories)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_learning_tutorial_real)
+
+                }
                 ReuseFunctions.startNewActivityTaskWithParameter(
                     activity!!.applicationContext,
                     MainListing::class.java,
@@ -159,12 +203,22 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
 
             }
             R.id.constraint_learning_tutorial_real -> {
-                ReuseFunctions.preventTwoClick(v)
+                if (view != null){
+                    ReuseFunctions.preventTwoClick(view!!.imageview)
+                    ReuseFunctions.preventTwoClick(view!!.tvViewAll)
+
+                    ReuseFunctions.preventTwoClick(view!!.constraint_dic)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_tea_tutorial)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_stories)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_lea_tutorial)
+
+                }
+                /*ReuseFunctions.preventTwoClick(v)
                 ReuseFunctions.startNewActivityTaskWithParameter(
                     activity!!.applicationContext,
                     MainListing::class.java,
                     Constants.TYPE_LEARNING_TUTORIAL_REAL
-                )
+                )*/
             }
  R.id.autoCompleteTextView -> {
 
@@ -172,6 +226,12 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
             R.id.imageview -> {
                 if(activity!=null) {
                     ReuseFunctions.preventTwoClick(v)
+                    ReuseFunctions.preventTwoClick(view!!.tvViewAll)
+
+                    ReuseFunctions.preventTwoClick(view!!.constraint_dic)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_tea_tutorial)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_stories)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_lea_tutorial)
                     ReuseFunctions.startNewActivity(
                         activity!!,
                         DictionaryTabListActivity::class.java
@@ -283,4 +343,7 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
             context.startActivity(webIntent)
         }
     }
+
+
+
 }

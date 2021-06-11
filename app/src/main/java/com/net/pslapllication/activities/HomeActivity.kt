@@ -140,6 +140,8 @@ class HomeActivity : BaseActivity(), RetrofitResponseListener {
     }
 
     private fun setBottomNavigation() {
+        bottom_navigation_view.itemTextAppearanceActive = R.style.BottomNavigationView
+
         mBottomNavigationView =
             BottomNavigationView.OnNavigationItemSelectedListener { item: MenuItem ->
                 when (item.itemId) {
@@ -173,10 +175,10 @@ class HomeActivity : BaseActivity(), RetrofitResponseListener {
                     }
                     R.id.menutab -> {
                         drawer_layout.openDrawer(Gravity.RIGHT)
-                        bottom_navigation_view.itemTextColor =
-                            ContextCompat.getColorStateList(this, R.color.color_bnv3)
-                        bottom_navigation_view.itemIconTintList = null
-                        return@OnNavigationItemSelectedListener true
+                        //bottom_navigation_view.itemTextColor =
+                         //   ContextCompat.getColorStateList(this, R.color.color_bnv3)
+                       // bottom_navigation_view.itemIconTintList = null
+                        return@OnNavigationItemSelectedListener false
                     }
                 }
                 false
