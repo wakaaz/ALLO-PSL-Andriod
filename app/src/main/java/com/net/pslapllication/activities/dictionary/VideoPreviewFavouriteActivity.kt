@@ -844,6 +844,9 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
 
 
             dialogView.tv_main.text = (selectedModel as Data?)!!.videoname
+            if((selectedModel as DictionaryData?)!!.urdu_word.isEmpty()){
+                dialogView.tv_translate.visibility = View.GONE
+            }
             //dialogView.tv_translate.text = (selectedModel as Data?)!!.urdu_word
            /* dialogView.tv_high.text = p720url.filesize
             dialogView.tv_medium.text = (selectedModel as Data?)!!.p480p.filesize
@@ -1810,6 +1813,9 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
                 var nextVideo = (selectedModel as Data?)?.indexPosition
 
                 nextVideo = nextVideo!!.plus(value)
+                if (nextVideo == list?.size){
+                    nextVideo = 0;
+                }
                 if (list?.size != null) {
                     var DataTemp: Data? = null
 

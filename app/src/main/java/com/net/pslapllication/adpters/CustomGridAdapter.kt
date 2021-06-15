@@ -456,7 +456,7 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                         VideoPreviewTutorialActivity::class.java,
                         tutGradeSubVideoListFilter[position],
                         tutorialType!!,
-                        type
+                        type,false
                     )
                 } catch (e: IndexOutOfBoundsException) {
                     e.printStackTrace()
@@ -492,7 +492,7 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
             tv_word.typeface = ResourcesCompat.getFont(context, R.font.lato_semibold)
             var name = downloadlistFilter[position].wordName
             name = name.replace("_", " ")
-            tv_word.text = name
+            tv_word.text = name.capitalize()
 
 
             gridView.setOnClickListener {

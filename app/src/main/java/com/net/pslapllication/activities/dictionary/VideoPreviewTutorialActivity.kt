@@ -165,6 +165,19 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
                 constraint_download.text = resources.getString(R.string.downloaded)
 
+            }else{
+                val download = getIntent().getBooleanExtra("isdownload",false)
+                if(download){
+                    constraint_download.setCompoundDrawablesWithIntrinsicBounds(
+                            null,
+                            resources.getDrawable(R.drawable.ic_video_downloaded),
+                            null,
+                            null
+                    );
+
+                    constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+                    constraint_download.text = resources.getString(R.string.downloaded)
+                }
             }
         }, 500)
         registerReceiver(onDownloadComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
@@ -243,6 +256,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 val uri = intent.data
                 if (uri != null && videoview != null) {
                     setplayer(uri.toString())
+
                     videoview.start()
                 }
             }
@@ -803,6 +817,9 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
 
             dialogView.tv_main.text = (selectedModel as TutorialData?)!!.title
+          //  if((selectedModel as DictionaryData?)!!.urdu_word.isEmpty()){
+                dialogView.tv_translate.visibility = View.GONE
+           // }
             //dialogView.tv_translate.text = (selectedModel as TutorialData?)!!.urdu_word
             dialogView.tv_high.text = (selectedModel as TutorialData?)!!.p720p!!.url
             dialogView.tv_medium.text = (selectedModel as TutorialData?)!!.p480p.url
@@ -1758,6 +1775,9 @@ override fun onVideoSelect(selectedModel: LearningData) {
                 var nextVideo = (selectedModel as TutorialData?)?.indexPosition
 
                 nextVideo = nextVideo!!.plus(value)
+                if (nextVideo == list?.size){
+                    nextVideo = 0;
+                }
                 if (list?.size != null) {
                     var TutorialDataTemp: TutorialData? =  null
 

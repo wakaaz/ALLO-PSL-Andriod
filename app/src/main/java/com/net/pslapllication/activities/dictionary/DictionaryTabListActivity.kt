@@ -42,6 +42,7 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
     private var isInternetConnected: Boolean = false
     public var callCat: Call<PreferenceMainModel>?=null
     public var callWords: Call<DictionaryMainModel>?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dictionary_tab_list)
@@ -61,14 +62,14 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
             var fragment = supportFragmentManager.findFragmentById(R.id.frameLayout)
             if (fragment is CategoriesFragment) {
                 val call = ApiCallClass.apiService.getPreferenceData(
-                    SharedPreferenceClass.getInstance(this)!!.getSession(),
-                    SharedPreferenceClass.getInstance(this)?.getUserType().toString()
+                        SharedPreferenceClass.getInstance(this)!!.getSession(),
+                        SharedPreferenceClass.getInstance(this)?.getUserType().toString()
                 )
                 ApiCallClass.retrofitCall(this, call as Call<Any>)
             } else if (fragment is WordsFragment) {
                 val call = ApiCallClass.apiService.getAllDictionaryData(
-                    SharedPreferenceClass.getInstance(this)!!.getSession(),
-                    SharedPreferenceClass.getInstance(this)?.getUserType().toString(),""
+                        SharedPreferenceClass.getInstance(this)!!.getSession(),
+                        SharedPreferenceClass.getInstance(this)?.getUserType().toString(), ""
                 )
                 ApiCallClass.retrofitCall(this, call as Call<Any>)
             }
@@ -76,8 +77,8 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
         } else {
             if (!this.isDestroyed) {
                 ReuseFunctions.snackMessage(
-                    constrainrt_main,
-                    this.resources.getString(R.string.no_internet_text)
+                        constrainrt_main,
+                        this.resources.getString(R.string.no_internet_text)
                 )
             }
         }
@@ -87,16 +88,16 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
     private fun requestDataCat() {
         if (isInternetConnected){
               callCat = ApiCallClass.apiService.getPreferenceData(
-                SharedPreferenceClass.getInstance(this)!!.getSession(),
-                SharedPreferenceClass.getInstance(this)?.getUserType().toString()
-            )
+                      SharedPreferenceClass.getInstance(this)!!.getSession(),
+                      SharedPreferenceClass.getInstance(this)?.getUserType().toString()
+              )
             ApiCallClass.retrofitCall(this, callCat as Call<Any>)
 
         } else {
             if (!this.isDestroyed) {
                 ReuseFunctions.snackMessage(
-                    constrainrt_main,
-                    this.resources.getString(R.string.no_internet_text)
+                        constrainrt_main,
+                        this.resources.getString(R.string.no_internet_text)
                 )
             }
         }
@@ -106,15 +107,15 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
     private fun requestDataWords() {
         if (isInternetConnected) {
                callWords = ApiCallClass.apiService.getAllDictionaryData(
-                SharedPreferenceClass.getInstance(this)!!.getSession(),
-                        SharedPreferenceClass.getInstance(this)?.getUserType().toString(),""
-            )
+                       SharedPreferenceClass.getInstance(this)!!.getSession(),
+                       SharedPreferenceClass.getInstance(this)?.getUserType().toString(), ""
+               )
             ApiCallClass.retrofitCall(this, callWords as Call<Any>)
         } else {
             if (!this.isDestroyed) {
                 ReuseFunctions.snackMessage(
-                    constrainrt_main,
-                    this.resources.getString(R.string.no_internet_text)
+                        constrainrt_main,
+                        this.resources.getString(R.string.no_internet_text)
                 )
             }
         }
@@ -168,10 +169,10 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
             if (nextChild is TextView) {
                 nextChild.setTextColor(resources.getColor(R.color.red))
                 nextChild.setTypeface(
-                    ResourcesCompat.getFont(
-                        this,
-                        R.font.lato_heavy
-                    )
+                        ResourcesCompat.getFont(
+                                this,
+                                R.font.lato_heavy
+                        )
                 )
             }
         }
@@ -209,7 +210,8 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
     override fun onSuccess(model: Any?) {
         var fragment = supportFragmentManager.findFragmentById(R.id.frameLayout)
         if (fragment is CategoriesFragment) {
-            if (model as PreferenceMainModel? != null) {
+            if (model is PreferenceMainModel) {
+                if (model as PreferenceMainModel? != null) {
                 when (model?.code) {
                     Constants.SUCCESS_CODE -> {
                         if (model?.object1?.dictionary_categories != null && model?.object1.dictionary_categories.isNotEmpty()) {
@@ -226,19 +228,23 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
                     }
                 }
             }
-        } else if (fragment is WordsFragment) {
-            if (model as DictionaryMainModel? != null) {
-                when (model?.code) {
-                    Constants.SUCCESS_CODE -> {
-                        if (model?.data != null && model?.data.isNotEmpty()) {
-                            setData(model?.data)
-                        }
-                    }
 
-                    Constants.SESSION_ERROR_CODE -> {
-                        if (!this.isDestroyed) {
-                            ReuseFunctions.startNewActivityTaskTop(this, LoginScreen::class.java)
-                            finish()
+            }
+        } else if (fragment is WordsFragment) {
+            if (model is DictionaryMainModel) {
+                if (model as DictionaryMainModel? != null) {
+                    when (model?.code) {
+                        Constants.SUCCESS_CODE -> {
+                            if (model?.data != null && model?.data.isNotEmpty()) {
+                                setData(model?.data)
+                            }
+                        }
+
+                        Constants.SESSION_ERROR_CODE -> {
+                            if (!this.isDestroyed) {
+                                ReuseFunctions.startNewActivityTaskTop(this, LoginScreen::class.java)
+                                finish()
+                            }
                         }
                     }
                 }
@@ -267,45 +273,45 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
                 if (i == 0) {
                     alphabetString = dictionaryCategoriesList[0].title.substring(0, 1)
                     list.add(
-                        Data(i,
-                            dictionaryCategoriesList[0].title.substring(0, 1)
-                                .toUpperCase(Locale.ROOT),
-                            dictionaryCategoriesList[0].title,
-                            true,
-                            dictionaryCategoriesList[0].id,
-                            dictionaryCategoriesList[0].image,
-                            dictionaryCategoriesList[0].videos.toString()
-                        )
+                            Data(i,
+                                    dictionaryCategoriesList[0].title.substring(0, 1)
+                                            .toUpperCase(Locale.ROOT),
+                                    dictionaryCategoriesList[0].title,
+                                    true,
+                                    dictionaryCategoriesList[0].id,
+                                    dictionaryCategoriesList[0].image,
+                                    dictionaryCategoriesList[0].videos.toString()
+                            )
                     )
                 } else {
 
                     if (alphabetString!!.equals(
-                            dictionaryCategoriesList[i].title.substring(0, 1),
-                            true
-                        )
+                                    dictionaryCategoriesList[i].title.substring(0, 1),
+                                    true
+                            )
                     ) {
                         list.add(
-                            Data(i,
-                                dictionaryCategoriesList[i].title.substring(0, 1)
-                                    .toUpperCase(Locale.ROOT),
-                                dictionaryCategoriesList[i].title,
-                                false,
-                                dictionaryCategoriesList[i].id,
-                                dictionaryCategoriesList[i].image,
-                                dictionaryCategoriesList[i].videos.toString()
-                            )
+                                Data(i,
+                                        dictionaryCategoriesList[i].title.substring(0, 1)
+                                                .toUpperCase(Locale.ROOT),
+                                        dictionaryCategoriesList[i].title,
+                                        false,
+                                        dictionaryCategoriesList[i].id,
+                                        dictionaryCategoriesList[i].image,
+                                        dictionaryCategoriesList[i].videos.toString()
+                                )
                         )
                     } else {
                         list.add(
-                            Data(i,
-                                dictionaryCategoriesList[i].title.substring(0, 1)
-                                    .toUpperCase(Locale.ROOT),
-                                dictionaryCategoriesList[i].title,
-                                true,
-                                dictionaryCategoriesList[i].id,
-                                dictionaryCategoriesList[i].image,
-                                dictionaryCategoriesList[i].videos.toString()
-                            )
+                                Data(i,
+                                        dictionaryCategoriesList[i].title.substring(0, 1)
+                                                .toUpperCase(Locale.ROOT),
+                                        dictionaryCategoriesList[i].title,
+                                        true,
+                                        dictionaryCategoriesList[i].id,
+                                        dictionaryCategoriesList[i].image,
+                                        dictionaryCategoriesList[i].videos.toString()
+                                )
                         )
                         alphabetString = dictionaryCategoriesList[i].title.substring(0, 1)
                     }
@@ -332,52 +338,52 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
                 if (i == 0) {
                     alphabetString = dictionaryCategoriesList[0].english_word.substring(0, 1)
                     list.add(
-                        Data(i,
-                            dictionaryCategoriesList[0].english_word.substring(0, 1)
-                                .toUpperCase(Locale.ROOT),
-                            dictionaryCategoriesList[0].english_word,
-                            true,
-                            dictionaryCategoriesList[0].id,
-                            "",
-                            dictionaryCategoriesList[0].urdu_word
-                        )
+                            Data(i,
+                                    dictionaryCategoriesList[0].english_word.substring(0, 1)
+                                            .toUpperCase(Locale.ROOT),
+                                    dictionaryCategoriesList[0].english_word,
+                                    true,
+                                    dictionaryCategoriesList[0].id,
+                                    "",
+                                    dictionaryCategoriesList[0].urdu_word
+                            )
                     )
                 } else {
 
                     if (alphabetString!!.equals(
-                            dictionaryCategoriesList[i].english_word.substring(0, 1),
-                            true
-                        )
+                                    dictionaryCategoriesList[i].english_word.substring(0, 1),
+                                    true
+                            )
                     ) {
                         list.add(
-                            Data(i,
-                                dictionaryCategoriesList[i].english_word.substring(0, 1)
-                                    .toUpperCase(Locale.ROOT),
-                                dictionaryCategoriesList[i].english_word,
-                                false,
-                                dictionaryCategoriesList[i].id,
-                                "",
-                                dictionaryCategoriesList[i].urdu_word
-                            )
+                                Data(i,
+                                        dictionaryCategoriesList[i].english_word.substring(0, 1)
+                                                .toUpperCase(Locale.ROOT),
+                                        dictionaryCategoriesList[i].english_word,
+                                        false,
+                                        dictionaryCategoriesList[i].id,
+                                        "",
+                                        dictionaryCategoriesList[i].urdu_word
+                                )
                         )
                     } else {
                         list.add(
-                            Data(i,
-                                dictionaryCategoriesList[i].english_word.substring(0, 1)
-                                    .toUpperCase(Locale.ROOT),
-                                dictionaryCategoriesList[i].english_word,
-                                true,
-                                dictionaryCategoriesList[i].id,
-                                "",
-                                dictionaryCategoriesList[i].urdu_word
-                            )
+                                Data(i,
+                                        dictionaryCategoriesList[i].english_word.substring(0, 1)
+                                                .toUpperCase(Locale.ROOT),
+                                        dictionaryCategoriesList[i].english_word,
+                                        true,
+                                        dictionaryCategoriesList[i].id,
+                                        "",
+                                        dictionaryCategoriesList[i].urdu_word
+                                )
                         )
                         alphabetString = dictionaryCategoriesList[i].english_word.substring(0, 1)
                     }
                 }
 
             }
-            fragment.setAdapter(list,dictionaryCategoriesList)
+            fragment.setAdapter(list, dictionaryCategoriesList)
         }
 
 
@@ -395,8 +401,8 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
             searchView.findViewById(androidx.appcompat.R.id.search_src_text) as TextView
         searchText.setTypeface(ResourcesCompat.getFont(this, R.font.lato_regular))
         searchText.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX,
-            resources.getDimensionPixelSize(R.dimen._13ssp).toFloat()
+                TypedValue.COMPLEX_UNIT_PX,
+                resources.getDimensionPixelSize(R.dimen._13ssp).toFloat()
         )
         //searchText.currentHintTextColor =activity!!.resources.getColor(R.color.black)
         searchText.setTextColor(this.resources.getColor(R.color.text_grey2))
@@ -405,12 +411,12 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
             this.getSystemService(Context.SEARCH_SERVICE) as SearchManager?
         if (searchManager != null) {
             searchView.setSearchableInfo(
-                searchManager
-                    .getSearchableInfo(this.componentName)
+                    searchManager
+                            .getSearchableInfo(this.componentName)
             )
         }
         searchView.setOnQueryTextListener(object :
-            SearchView.OnQueryTextListener {
+                SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 var fragment = supportFragmentManager.findFragmentById(R.id.frameLayout)
                 if (fragment is CategoriesFragment) {
@@ -418,9 +424,9 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
                         fragment.adapter!!.filter.filter(query)
                     }
                 } else if (fragment is WordsFragment) {
-                     if (fragment.adapter != null) {
-                         fragment.adapter!!.getFilter().filter(query)
-                     }
+                    if (fragment.adapter != null) {
+                        fragment.adapter!!.getFilter().filter(query)
+                    }
                 }
 
                 return false
@@ -433,9 +439,9 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
                         fragment.adapter!!.filter.filter(query)
                     }
                 } else if (fragment is WordsFragment) {
-                     if (fragment.adapter != null) {
-                         fragment.adapter!!.getFilter().filter(query)
-                     }
+                    if (fragment.adapter != null) {
+                        fragment.adapter!!.getFilter().filter(query)
+                    }
                 }
                 return false
             }
@@ -447,16 +453,22 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
             var fragment = supportFragmentManager.findFragmentById(R.id.frameLayout)
             if (fragment is CategoriesFragment) {
                 val call = ApiCallClass.apiService.getPreferenceData(
-                    SharedPreferenceClass.getInstance(this)!!.getSession(),
-                    SharedPreferenceClass.getInstance(this)?.getUserType().toString()
+                        SharedPreferenceClass.getInstance(this)!!.getSession(),
+                        SharedPreferenceClass.getInstance(this)?.getUserType().toString()
                 )
                 ApiCallClass.retrofitCall(this, call as Call<Any>)
+                searchView_tab.setQuery("", false);
+                searchView_tab.clearFocus()
+
+
             } else if (fragment is WordsFragment) {
                 val call = ApiCallClass.apiService.getAllDictionaryData(
-                    SharedPreferenceClass.getInstance(this)!!.getSession(),
-                    SharedPreferenceClass.getInstance(this)?.getUserType().toString(),""
+                        SharedPreferenceClass.getInstance(this)!!.getSession(),
+                        SharedPreferenceClass.getInstance(this)?.getUserType().toString(), ""
                 )
                 ApiCallClass.retrofitCall(this, call as Call<Any>)
+                searchView_tab.setQuery("", false);
+                searchView_tab.clearFocus()
             }
 
         }

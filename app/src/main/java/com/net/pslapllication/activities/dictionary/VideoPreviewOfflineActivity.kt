@@ -796,6 +796,9 @@ class VideoPreviewOfflineActivity : BaseActivity(), View.OnClickListener,
 
 
             dialogView.tv_main.text = (selectedModel as DictionaryDataAPI?)!!.english_word
+            if((selectedModel as DictionaryData?)!!.urdu_word.isEmpty()){
+                dialogView.tv_translate.visibility = View.GONE
+            }
             dialogView.tv_translate.text = (selectedModel as DictionaryDataAPI?)!!.urdu_word
             dialogView.tv_high.text = (selectedModel as DictionaryDataAPI?)!!.p720p!!.filesizep720
             dialogView.tv_medium.text = (selectedModel as DictionaryDataAPI?)!!.p480p.filesizep480
@@ -1745,6 +1748,9 @@ class VideoPreviewOfflineActivity : BaseActivity(), View.OnClickListener,
                 var nextVideo = (selectedModel as DictionaryDataAPI?)?.indexPosition
 
                 nextVideo = nextVideo!!.plus(value)
+                if (nextVideo == list?.size){
+                    nextVideo = 0;
+                }
                 if (list?.size != null) {
                     var DictionaryDataAPITemp: DictionaryDataAPI? =  null
 

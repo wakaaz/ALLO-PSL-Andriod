@@ -800,6 +800,9 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
 
 
             dialogView.tv_main.text = (selectedModel as DictionaryData?)!!.english_word
+            if((selectedModel as DictionaryData?)!!.urdu_word.isEmpty()){
+                dialogView.tv_translate.visibility = View.GONE
+            }
             dialogView.tv_translate.text = (selectedModel as DictionaryData?)!!.urdu_word
             dialogView.tv_high.text = (selectedModel as DictionaryData?)!!.p720p.filesize
             dialogView.tv_medium.text = (selectedModel as DictionaryData?)!!.p480p.filesize
@@ -1787,6 +1790,9 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
                 var nextVideo = (selectedModel as DictionaryData?)?.indexPosition
 
                 nextVideo = nextVideo!!.plus(value)
+                if (nextVideo == list?.size){
+                    nextVideo = 0;
+                }
                 if (list?.size != null) {
                     var dictionaryDataTemp: DictionaryData? = null
 

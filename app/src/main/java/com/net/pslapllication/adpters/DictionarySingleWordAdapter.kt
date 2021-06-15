@@ -415,7 +415,7 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                         //model.setModelList(diclistFilter)
                         //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
                         var newIndexSortedList = ListSorting.sortList(isDecrement,
-                            diclistFilter[newPos].indexPosition,
+                            position,
                             diclistFilter
                         )
 
@@ -423,7 +423,12 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                         if (5 >= diclist.size) {
                             //not index found
                         } else {
-                            newIndexSortedList = newIndexSortedList.subList(0, 6)
+                            if (newIndexSortedList.size >= 7){
+                                newIndexSortedList = newIndexSortedList.subList(0, 6)
+
+                            }else{
+
+                            }
                         }
                         //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                         ProgressHelper.getInstance(context)?.setList(newIndexSortedList)

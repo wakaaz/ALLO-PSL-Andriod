@@ -796,6 +796,9 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
 
 
             dialogView.tv_main.text = (selectedModel as StoryData?)!!.title
+           // if((selectedModel as DictionaryData?)!!.urdu_word.isEmpty()){
+                dialogView.tv_translate.visibility = View.GONE
+           // }
              dialogView.tv_high.text = (selectedModel as StoryData?)!!.p720p.filesize
             dialogView.tv_medium.text = (selectedModel as StoryData?)!!.p480p.filesize
             dialogView.tv_low.text = (selectedModel as StoryData?)!!.p240p.filesize
@@ -1018,6 +1021,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setplayer(uriString: String) {
+        Log.e("videourl",uriString+"")
         if (error_layout.visibility == View.VISIBLE) {
             error_layout.visibility = View.GONE
         }
@@ -1279,7 +1283,10 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
         super.onResume()
 
         if ((selectedModel as StoryData?) != null && (selectedModel as StoryData?)?.p720p?.url != null) {
-            val videoUrl: String = URLDecoder.decode((selectedModel as StoryData?)!!.p720p.url)
+            var videoUrl: String = URLDecoder.decode((selectedModel as StoryData?)!!.p720p.url)
+            if(videoUrl.isEmpty()){
+                videoUrl =  URLDecoder.decode((selectedModel as StoryData?)!!.p480p.url)
+            }
             setplayer(videoUrl)
             videoview.start()
         }
@@ -1772,6 +1779,9 @@ override fun onVideoSelect(selectedModel: Data) {
                 var nextVideo = (selectedModel as StoryData?)?.indexPosition
 
                 nextVideo = nextVideo!!.plus(value)
+                if (nextVideo == list?.size){
+                    nextVideo = 0;
+                }
                 if (list?.size != null) {
                     var StoryDataTemp: StoryData? = null
 

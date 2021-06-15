@@ -115,7 +115,7 @@ class VideoPreviewDownloadActivity : BaseActivity(), View.OnClickListener,
         SharedPreferenceClass.getInstance(this@VideoPreviewDownloadActivity)
             ?.setPos("0.0")
         getIntentUrl()
-         nestedScrollView.isEnableScrolling = false
+        nestedScrollView.isEnableScrolling = false
         setAdapter()
         getIntentData()
         setListener()
@@ -157,6 +157,7 @@ class VideoPreviewDownloadActivity : BaseActivity(), View.OnClickListener,
                 intent.getSerializableExtra(Constants.SELECTED_DICTIONARY_LIST_MODEL) as DownloadListModel
             if (selectedModel != null) {
                 setTitleText((selectedModel as DownloadListModel))
+                tv_translate.visibility =  View.GONE
             }
 
             /********get complete list data*********/
@@ -866,6 +867,9 @@ class VideoPreviewDownloadActivity : BaseActivity(), View.OnClickListener,
                 var nextVideo = (selectedModel as DownloadListModel?)?.indexPosition
 
                 nextVideo = nextVideo!!.plus(value)
+                if (nextVideo == list?.size){
+                    nextVideo = 0;
+                }
                 if (list?.size != null) {
                     var DownloadListModelTemp: DownloadListModel? = null
 

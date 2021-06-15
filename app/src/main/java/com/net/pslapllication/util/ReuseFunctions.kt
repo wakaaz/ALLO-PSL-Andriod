@@ -119,7 +119,8 @@ class ReuseFunctions {
             nextClass: Class<out Any>,
             tutorialData: TutorialData,
             tutorialType: String,
-            type: String
+            type: String,
+            isDownload:Boolean
         ) {
             val bundle = Bundle()
             bundle.putSerializable(Constants.SELECTED_DICTIONARY_LIST_MODEL, tutorialData)
@@ -127,6 +128,8 @@ class ReuseFunctions {
             intent.putExtras(bundle)
             intent.putExtra(Constants.CETAGORY_TYPE, type)
             intent.putExtra(Constants.TUTORIAL_TYPE, tutorialType)
+            intent.putExtra("isdownload", isDownload)
+
             context.startActivity(intent)
         }
 

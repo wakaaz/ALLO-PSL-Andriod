@@ -446,7 +446,7 @@ class CustomGridLargeAdapter(private val context: Context, var type: String) : B
                         VideoPreviewTutorialActivity::class.java,
                         tutGradeSubVideoListFilter[position],
                         tutorialType!!,
-                        type
+                        type,isDownloaded
                     )
                 } catch (e: IndexOutOfBoundsException) {
                     e.printStackTrace()

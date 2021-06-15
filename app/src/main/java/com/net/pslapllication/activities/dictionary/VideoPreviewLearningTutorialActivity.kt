@@ -794,6 +794,9 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
 
 
             dialogView.tv_main.text = (selectedModel as LearningData?)!!.title
+           // if((selectedModel as DictionaryData?)!!.urdu_word.isEmpty()){
+                dialogView.tv_translate.visibility = View.GONE
+          //  }
             //dialogView.tv_translate.text = (selectedModel as LearningData?)!!.urdu_word
             dialogView.tv_high.text = (selectedModel as LearningData?)!!.p720p!!.url
             dialogView.tv_medium.text = (selectedModel as LearningData?)!!.p480p.url
@@ -1745,6 +1748,9 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
                 var nextVideo = (selectedModel as LearningData?)?.indexPosition
 
                 nextVideo = nextVideo!!.plus(value)
+                if (nextVideo == list?.size){
+                    nextVideo = 0;
+                }
                 if (list?.size != null) {
                     var LearningDataTemp: LearningData? =  null
 

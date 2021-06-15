@@ -63,11 +63,12 @@ class SubjectTopicListActivity : BaseActivity(), View.OnClickListener, RetrofitR
     private var selectedSortyId: Int = 0
     private var isSorted: Boolean = true
     private var tutorialType:String? = null
-
+    private var isloadedActivity: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_subject_topic_list)
+        isloadedActivity =  true
         checkIntent()
         setListener()
         setSearchView()
@@ -91,6 +92,7 @@ class SubjectTopicListActivity : BaseActivity(), View.OnClickListener, RetrofitR
     }
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
+        isInternetConnected =  isConnected
         if (isConnected) {
 
             if(type == Constants.TYPE_TEACHER_TUTORIAL  ){
@@ -487,7 +489,33 @@ class SubjectTopicListActivity : BaseActivity(), View.OnClickListener, RetrofitR
         }
         super.onPause()
     }
+    override fun onResume() {
+        super.onResume()
+        if(isloadedActivity){
+            if (isInternetConnected){
+                if(type == Constants.TYPE_TEACHER_TUTORIAL  ){
+                    tutorialType = "TEACHER"
+                    val call = ApiCallClass.apiService.getTutorialData(
+                            SharedPreferenceClass.getInstance(this)?.getSession().toString(),
+                            SharedPreferenceClass.getInstance(this)?.getUserType().toString(),
+                            grade_id, sub_id
+                    )
+                    ApiCallClass.retrofitCall(this, call as Call<Any>)
 
+                }else if( type == Constants.TYPE_LEARNING_TUTORIAL_REAL ){
+                    tutorialType = "LEARNING"
+                    val call = ApiCallClass.apiService.getLearningTutorialData(
+                            SharedPreferenceClass.getInstance(this)?.getSession().toString(),
+                            SharedPreferenceClass.getInstance(this)?.getUserType().toString(),
+                            grade_id, sub_id
+                    )
+                    ApiCallClass.retrofitCall(this, call as Call<Any>)
+
+                }
+            }
+        }
+
+    }
     override fun onSpeedChangeSelected(speedId: String) {
     }
 }
