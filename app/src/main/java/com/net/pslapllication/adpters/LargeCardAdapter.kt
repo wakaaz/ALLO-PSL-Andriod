@@ -459,11 +459,13 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                             storyListFilter
                         )
 
-
+                        var model:StoryData?
                         if (5 >= storyListFilter.size) {
                             //not index found
+
                         } else {
                             newIndexSortedList = newIndexSortedList.subList(0, 6)
+
                         }
                         //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                         ProgressHelper.getInstance(context)?.setListStory(newIndexSortedList)

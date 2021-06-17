@@ -1216,7 +1216,8 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
                 //seekBar.progress = seekbaarProgress
                 try {
                     //tv_played_time.text = timeConversion(seekBar.progress.toLong())
-                    // videoview.seekTo(seekbaarProgress)
+                    //                    //tv_played_time.text = timeConversion(seekBar.progress.toLong())
+                    //                    // videoview.seekTo(seekbaarProgress)videoview.seekTo(seekbaarProgress)
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -1759,7 +1760,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
     override fun onVideoSelect(selectedModel: DictionaryData) {
 
     }
-override fun onVideoSelect(selectedModel: Data) {
+    override fun onVideoSelect(selectedModel: Data) {
 
     }
 
@@ -1772,16 +1773,30 @@ override fun onVideoSelect(selectedModel: Data) {
     }
 
 
+    fun checkIndexExist(position:Int): Boolean{
+      var list =  list?.any{ it.indexPosition == position}
 
+        var check =  false
+        if(list != null){
+            check =  list
+        }
+        return  check
+    }
     private fun setNextPreVideo(value: Int) {
         if (selectedModel != null && (selectedModel as StoryData?)?.indexPosition != null) {
             try {
                 var nextVideo = (selectedModel as StoryData?)?.indexPosition
 
                 nextVideo = nextVideo!!.plus(value)
-                if (nextVideo == list?.size){
-                    nextVideo = 0;
+
+                if (checkIndexExist(nextVideo) == true){
+
+                }else{
+                    nextVideo = 0
+
                 }
+
+
                 if (list?.size != null) {
                     var StoryDataTemp: StoryData? = null
 
@@ -1865,6 +1880,8 @@ override fun onVideoSelect(selectedModel: Data) {
         unregisterReceiver(onDownloadComplete);
         super.onDestroy()
     }
+
+
 
 
     /**
@@ -2007,6 +2024,8 @@ override fun onVideoSelect(selectedModel: Data) {
             }
         }
     }
+
+
 }
 
 

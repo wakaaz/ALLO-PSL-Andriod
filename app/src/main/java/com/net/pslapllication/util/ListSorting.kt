@@ -310,6 +310,7 @@ fun sortListDownload(
             } else {
                 beforeIndexList = list.subList(0, indexPosition + 1)
                 afterIndexList = list.subList(indexPosition + 1, list.size)
+
             }
             return afterIndexList + beforeIndexList
         }

@@ -360,6 +360,7 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                     Constants.SUCCESS_CODE -> {
                         if (model?.data != null) {
                             for (i in model?.data.indices) {
+                                Log.e("word",i.toString()+"")
                                 model?.data[i].indexPosition = i
                             }
                             listStories = model?.data
