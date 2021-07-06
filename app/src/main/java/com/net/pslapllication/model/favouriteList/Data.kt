@@ -1,4 +1,5 @@
 package com.net.pslapllication.model.favouriteList
+import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -21,6 +22,7 @@ data class Data (
 	@SerializedName("dictionary") val dictionary : Dictionary,
 	@SerializedName("lesson") val lesson : Lesson,
 	@SerializedName("learning_tutorial") val learningTutorial : LearningTutorial,
+	@SerializedName("shareablURL") var shareablURL: String,
 	var indexPosition: Int,
 	var videoname : String,
 	var postermain : String,

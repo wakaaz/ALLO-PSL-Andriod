@@ -794,7 +794,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
     private fun shareSheet() {
         val sharingIntent = Intent(Intent.ACTION_SEND)
         sharingIntent.type = "text/plain"
-        val shareBody = URLDecoder.decode((selectedModel as TutorialData?)!!.p720p!!.url)
+        val shareBody = URLDecoder.decode((selectedModel as TutorialData?)!!.shareablURL)
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
         sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
         startActivity(Intent.createChooser(sharingIntent, "Share via"))

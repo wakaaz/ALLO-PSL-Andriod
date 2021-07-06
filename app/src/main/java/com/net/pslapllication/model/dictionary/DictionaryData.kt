@@ -33,6 +33,7 @@ data class DictionaryData(
     @SerializedName("240p") val p240p: p240p,
     @ColumnInfo
     @SerializedName("poster") var poster: String,
+
     @ColumnInfo
     @SerializedName("favorite") val favorite: Int,
     @ColumnInfo
@@ -44,13 +45,15 @@ data class DictionaryData(
     @ColumnInfo
     var isDownloaded: Boolean = false,
     @ColumnInfo
-    var catName: String
+    var catName: String,
+    @ColumnInfo
+    @SerializedName("shareablURL") var shareablURL: String
 ) : Serializable {
     constructor() : this(
         0, 0,
         "", "", "", "", "", p1080p("", ""),
         p720p("", ""), p480p("", ""),
         p360p("", ""), p240p("", ""),
-        "", 0, 0, 0, 0, false, ""
+        "", 0, 0, 0, 0, false, "",""
     )
 }

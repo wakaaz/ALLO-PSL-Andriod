@@ -19,17 +19,19 @@ data class StoryData (
 	@SerializedName("filename") val filename : String,
 	@SerializedName("poster") val poster : String,
 	@SerializedName("favorite") val favorite : Int,
+
 	var indexPosition: Int,
 	var downloadReference: Long,
 	var downloadprogress: Int = 0,
 	var isDownloaded: Boolean = false,
-	var catName: String
+	var catName: String,
+	@SerializedName("shareablURL") var shareablURL: String
 ): Serializable {
 	constructor() : this(
 		0, 0,
 		"", "", "", "", p1080p("", ""),
 		p720p("", ""), p480p("", ""),
 		p360p("", ""), p240p("", ""),
-		"", "", 0, 0, 0, 0, false, ""
+		"", "", 0, 0, 0, 0, false, "",""
 	)
 }

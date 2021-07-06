@@ -21,5 +21,7 @@ data class Tutorial(
     @SerializedName("created_at") val created_at : String,
     @SerializedName("created_by") val created_by : Int,
     @SerializedName("updated_at") val updated_at : String,
-    @SerializedName("updated_by") val updated_by : String
+    @SerializedName("updated_by") val updated_by : String,
+    @SerializedName("shareablURL") var shareablURL: String
+
 ) : Serializable

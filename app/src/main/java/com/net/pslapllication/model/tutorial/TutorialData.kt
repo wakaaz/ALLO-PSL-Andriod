@@ -20,5 +20,6 @@ data class TutorialData(
     @SerializedName("filename") val filename : String,
     @SerializedName("poster") val poster : String,
     @SerializedName("favorite") val favorite : Int,
+    @SerializedName("shareablURL") var shareablURL: String,
     var indexPosition: Int
 ):Serializable
