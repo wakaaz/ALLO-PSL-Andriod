@@ -183,7 +183,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
     }
     /************lifecycles related*************/
     private fun requestWorker() {
-        if (  isInternetConnected) {
+        if (isInternetConnected) {
             val constraint: Constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()

@@ -85,7 +85,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/StatusBarScreenTheme" />
         <activity android:name=".activities.BaseActivity" />
-        <activity android:name=".activities.DownloadProgressActivity" />
         <activity
             android:name=".activities.dictionary.SubjectTopicListActivity"
             android:screenOrientation="portrait"

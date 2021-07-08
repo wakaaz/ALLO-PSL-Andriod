@@ -96,7 +96,7 @@ class IntroSliderActivity : AppCompatActivity() {
     //dots[currentPage].setTextSize(40);
 }
 
-    private fun getItem(i: Int): Int {
+         private fun getItem(i: Int): Int {
             return view_pager!!.currentItem + i
         }
 

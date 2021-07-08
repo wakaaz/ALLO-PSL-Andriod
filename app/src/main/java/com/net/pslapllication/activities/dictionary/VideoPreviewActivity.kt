@@ -50,6 +50,31 @@ import com.net.pslapllication.reetrofit.RetrofitClientInstance
 import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 import com.net.pslapllication.util.*
 import kotlinx.android.synthetic.main.activity_video_preview.*
+import kotlinx.android.synthetic.main.activity_video_preview.btn_replay
+import kotlinx.android.synthetic.main.activity_video_preview.constraint_bottom_options
+import kotlinx.android.synthetic.main.activity_video_preview.constraint_centerscreen
+import kotlinx.android.synthetic.main.activity_video_preview.constraint_dimview
+import kotlinx.android.synthetic.main.activity_video_preview.constraint_download
+import kotlinx.android.synthetic.main.activity_video_preview.constraint_favourite
+import kotlinx.android.synthetic.main.activity_video_preview.constraint_share
+import kotlinx.android.synthetic.main.activity_video_preview.constraint_toolbaar
+import kotlinx.android.synthetic.main.activity_video_preview.constraint_vimeo
+import kotlinx.android.synthetic.main.activity_video_preview.constraint_youtube
+import kotlinx.android.synthetic.main.activity_video_preview.error_layout
+import kotlinx.android.synthetic.main.activity_video_preview.image_btn_menu
+import kotlinx.android.synthetic.main.activity_video_preview.img_btn_play_next
+import kotlinx.android.synthetic.main.activity_video_preview.img_btn_play_pause_center
+import kotlinx.android.synthetic.main.activity_video_preview.img_btn_pre
+import kotlinx.android.synthetic.main.activity_video_preview.layout_next
+import kotlinx.android.synthetic.main.activity_video_preview.mainlayout
+import kotlinx.android.synthetic.main.activity_video_preview.nestedScrollView
+import kotlinx.android.synthetic.main.activity_video_preview.progress
+import kotlinx.android.synthetic.main.activity_video_preview.recycler_next
+import kotlinx.android.synthetic.main.activity_video_preview.reload_layout
+import kotlinx.android.synthetic.main.activity_video_preview.switch_next
+import kotlinx.android.synthetic.main.activity_video_preview.tv_main
+import kotlinx.android.synthetic.main.activity_video_preview.videoview
+import kotlinx.android.synthetic.main.activity_video_preview_tutorial.*
 import kotlinx.android.synthetic.main.bottom_layout_download_video.view.*
 import kotlinx.android.synthetic.main.bottom_layout_download_video.view.tv_down_video
 import kotlinx.android.synthetic.main.bottom_layout_video_option.*
@@ -124,6 +149,7 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
         getIntentData()
         setListener()
         setAlreadyFavourite()
+        setDownloadLesson()
         checkAutoPlaySwitch()
         Handler().postDelayed({
             if (isVideoAlreadyExist((selectedModel as DictionaryData?)!!.filename)) {
@@ -421,6 +447,18 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
         }
     }
 
+    private  fun setDownloadLesson(){
+        if (selectedModel != null) {
+            if ((selectedModel as TutorialData?)!!.documents != null && (selectedModel as DictionaryData?)!!.documents.size  > 0) {
+                li_download.visibility =  View.VISIBLE
+
+            }else{
+                li_download.visibility =  View.GONE
+
+            }
+
+        }
+    }
     private fun checkAutoPlaySwitch() {
         switch_next.isChecked = SharedPreferenceClass.getInstance(this)?.getAutoPLayToggle()!!
         autoPlayStatus = SharedPreferenceClass.getInstance(this)?.getAutoPLayToggle()!!

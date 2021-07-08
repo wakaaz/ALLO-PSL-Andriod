@@ -18,7 +18,6 @@ import android.media.MediaPlayer
 import android.media.PlaybackParams
 import android.net.Uri
 import android.os.*
-import androidx.appcompat.app.AppCompatActivity
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.MotionEvent
@@ -27,11 +26,13 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.net.pslapllication.R
 import com.net.pslapllication.activities.BaseActivity
- import com.net.pslapllication.adpters.VideoPreviewTutorialAdapter
+import com.net.pslapllication.adpters.DownloadDocAdapter
+import com.net.pslapllication.adpters.VideoPreviewTutorialAdapter
 import com.net.pslapllication.adpters.VideoQualityOptionAdapter
 import com.net.pslapllication.adpters.VideoSpeedOptionAdapter
 import com.net.pslapllication.broadcastReceiver.DownloadVideoBroadcastReceiver
@@ -40,6 +41,7 @@ import com.net.pslapllication.data.DownloadListModel
 import com.net.pslapllication.helperClass.ProgressHelper
 import com.net.pslapllication.interfaces.OnVideoSelectedListener
 import com.net.pslapllication.interfaces.onQualityChangSelectedListener
+import com.net.pslapllication.model.VideoDocuments
 import com.net.pslapllication.model.addToFavourite.AddToFvouriteModel
 import com.net.pslapllication.model.dictionary.DictionaryData
 import com.net.pslapllication.model.favouriteList.Data
@@ -67,6 +69,7 @@ import kotlinx.android.synthetic.main.activity_video_preview_tutorial.image_btn_
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.img_btn_play_next
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.img_btn_play_pause_center
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.img_btn_pre
+import kotlinx.android.synthetic.main.activity_video_preview_tutorial.layout_next
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.mainlayout
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.nestedScrollView
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.progress
@@ -83,8 +86,6 @@ import kotlinx.android.synthetic.main.bottom_layout_video_quality_list.view.*
 import kotlinx.android.synthetic.main.layout_videoview_error.*
 import kotlinx.android.synthetic.main.playerbarlayout.*
 import kotlinx.android.synthetic.main.toolbaar_layout.*
-import  kotlinx.android.synthetic.main.activity_video_preview_tutorial.layout_next
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -131,6 +132,8 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
     //others
     private lateinit var dialog_quality: BottomSheetDialog
     private var dialogDownloadBottom: BottomSheetDialog? = null
+    private var dialogDownloadPDF: BottomSheetDialog? = null
+
     private var downloadDialog: Dialog? = null
     private var bnp: ProgressBar? = null
     private var tv_progress_txt: TextView? = null
@@ -152,22 +155,23 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
         setListener()
         setAlreadyFavourite()
+        setDownloadLesson()
         checkAutoPlaySwitch()
         Handler().postDelayed({
             if (isVideoAlreadyExist((selectedModel as TutorialData?)!!.filename)) {
                 constraint_download.setCompoundDrawablesWithIntrinsicBounds(
-                    null,
-                    resources.getDrawable(R.drawable.ic_video_downloaded),
-                    null,
-                    null
+                        null,
+                        resources.getDrawable(R.drawable.ic_video_downloaded),
+                        null,
+                        null
                 );
 
                 constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
                 constraint_download.text = resources.getString(R.string.downloaded)
 
-            }else{
-                val download = getIntent().getBooleanExtra("isdownload",false)
-                if(download){
+            } else {
+                val download = getIntent().getBooleanExtra("isdownload", false)
+                if (download) {
                     constraint_download.setCompoundDrawablesWithIntrinsicBounds(
                             null,
                             resources.getDrawable(R.drawable.ic_video_downloaded),
@@ -191,7 +195,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
         else{
             isNetworkAvailable = isConnected
 
-            ReuseFunctions.snackMessage(mainlayout,   this.resources.getString(R.string.no_internet_text))
+            ReuseFunctions.snackMessage(mainlayout, this.resources.getString(R.string.no_internet_text))
         }
         super.onNetworkConnectionChanged(isConnected)
     }
@@ -211,7 +215,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
             /********get categoty type*********/
             categoryType =
                 intent.getStringExtra(Constants.CETAGORY_TYPE)!!
- tutorialType =
+            tutorialType =
                 intent.getStringExtra(Constants.TUTORIAL_TYPE)!!
 
             /********get selected video list data*********/
@@ -225,12 +229,12 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
             Handler().postDelayed({
                 list = ProgressHelper.getInstance(context)?.getTutorialList()
-                if (list?.size!=0){
+                if (list?.size != 0) {
                     val recyclerList = list!!.drop(1)
 
                     setNextVideosList(recyclerList)
                 }
-            },500)
+            }, 500)
 
             /* Handler().postDelayed({
                 var TutorialData: TutorialData? = null
@@ -277,8 +281,8 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                                 ) {
                                     //do nothing when quality doesn't change..
                                     ReuseFunctions.showToast(
-                                        this@VideoPreviewTutorialActivity,
-                                        "do nothing"
+                                            this@VideoPreviewTutorialActivity,
+                                            "do nothing"
                                     )
                                 } else {
 
@@ -294,8 +298,8 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                                 ) {
                                     //do nothing when quality doesn't change..
                                     ReuseFunctions.showToast(
-                                        this@VideoPreviewTutorialActivity,
-                                        "do nothing"
+                                            this@VideoPreviewTutorialActivity,
+                                            "do nothing"
                                     )
                                 } else {
                                     if (SharedPreferenceClass.getInstance(this@VideoPreviewTutorialActivity)
@@ -321,11 +325,11 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
             "POOR" -> {
                 if ((selectedModel as TutorialData?) != null && (selectedModel as TutorialData?)?.p240p?.url != null) {
                     var videoUrl: String =
-                        URLDecoder.decode((selectedModel as TutorialData?)!!.p240p.url)
+                            URLDecoder.decode((selectedModel as TutorialData?)!!.p240p.url)
                     setUrlBasedOnQuality(videoUrl)
                     ReuseFunctions.showToast(
-                        this@VideoPreviewTutorialActivity,
-                        "  " + isStatusChabge
+                            this@VideoPreviewTutorialActivity,
+                            "  " + isStatusChabge
                     )
                     selectedQualityId = Constants.p240p
                 }
@@ -333,40 +337,40 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
             "MODERATE" -> {
                 if ((selectedModel as TutorialData?) != null && (selectedModel as TutorialData?)?.p360p?.url != null) {
                     var videoUrl: String =
-                        URLDecoder.decode((selectedModel as TutorialData?)!!.p360p.url)
+                            URLDecoder.decode((selectedModel as TutorialData?)!!.p360p.url)
                     setUrlBasedOnQuality(videoUrl)
                 }
                 selectedQualityId = Constants.p360p
 
                 ReuseFunctions.showToast(
-                    this@VideoPreviewTutorialActivity,
-                    "  " + isStatusChabge
+                        this@VideoPreviewTutorialActivity,
+                        "  " + isStatusChabge
                 )
 
             }
             "GOOD" -> {
                 if (selectedModel != null && (selectedModel as TutorialData?)?.p480p?.url != null) {
                     var videoUrl: String =
-                        URLDecoder.decode((selectedModel as TutorialData?)!!.p480p.url)
+                            URLDecoder.decode((selectedModel as TutorialData?)!!.p480p.url)
                     setUrlBasedOnQuality(videoUrl)
                 }
                 selectedQualityId = Constants.p480p
 
                 ReuseFunctions.showToast(
-                    this@VideoPreviewTutorialActivity,
-                    "  " + isStatusChabge
+                        this@VideoPreviewTutorialActivity,
+                        "  " + isStatusChabge
                 )
             }
             "EXCELLENT" -> {
                 if ((selectedModel as TutorialData?) != null && (selectedModel as TutorialData?)?.p720p?.url != null) {
                     var videoUrl: String =
-                        URLDecoder.decode((selectedModel as TutorialData?)!!.p720p!!.url)
+                            URLDecoder.decode((selectedModel as TutorialData?)!!.p720p!!.url)
                     setUrlBasedOnQuality(videoUrl)
                 }
                 selectedQualityId = Constants.p720p
                 ReuseFunctions.showToast(
-                    this@VideoPreviewTutorialActivity,
-                    "  " + isStatusChabge
+                        this@VideoPreviewTutorialActivity,
+                        "  " + isStatusChabge
                 )
             }
         }
@@ -383,7 +387,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 val temp = roundedBalance?.substringBefore(".")
                 if (temp != null) {
                     videoview.seekTo(
-                        temp.toInt()
+                            temp.toInt()
                     )
                 }
                 videoview.start()
@@ -408,6 +412,8 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
         img_btn_play_next.setOnClickListener(this)
         layout_click.setOnClickListener(this)
         btn_replay.setOnClickListener(this)
+        btn_download_lesson.setOnClickListener(this)
+        btn_view_lesson.setOnClickListener(this)
     }
 
     private fun setAlreadyFavourite() {
@@ -416,24 +422,36 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 //do nothing default UI
             } else {
                 setButtonTextColors(
-                    constraint_favourite,
-                    constraint_share,
+                        constraint_favourite,
+                        constraint_share,
 
-                    constraint_vimeo,
-                    constraint_youtube
+                        constraint_vimeo,
+                        constraint_youtube
                 )
                 setImageDrawables(
-                    R.drawable.ic_favorite_green,
-                    R.drawable.ic_share_grey,
-                    R.drawable.ic_file_download_grey,
-                    R.drawable.ic_vimeo_grey,
-                    R.drawable.ic_youtube_grey
+                        R.drawable.ic_favorite_green,
+                        R.drawable.ic_share_grey,
+                        R.drawable.ic_file_download_grey,
+                        R.drawable.ic_vimeo_grey,
+                        R.drawable.ic_youtube_grey
                 )
                 favClick = true
             }
         }
     }
 
+    private  fun setDownloadLesson(){
+        if (selectedModel != null) {
+            if ((selectedModel as TutorialData?)!!.documents != null && (selectedModel as TutorialData?)!!.documents.size  > 0) {
+                li_lesson.visibility =  View.VISIBLE
+
+            }else{
+                li_lesson.visibility =  View.GONE
+
+            }
+
+            }
+    }
     private fun checkAutoPlaySwitch() {
         switch_next.isChecked = SharedPreferenceClass.getInstance(this)?.getAutoPLayToggle()!!
         autoPlayStatus = SharedPreferenceClass.getInstance(this)?.getAutoPLayToggle()!!
@@ -485,7 +503,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                     try {
                         isReload = false
                         var videoUrl: String =
-                            URLDecoder.decode((selectedModel as TutorialData?)!!.p720p!!.url)
+                                URLDecoder.decode((selectedModel as TutorialData?)!!.p720p!!.url)
                         videoview.visibility = View.VISIBLE
                         image_btn_menu.visibility = View.GONE
                         progress.visibility = View.VISIBLE
@@ -517,7 +535,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 progress.visibility = View.VISIBLE
                 if (selectedModel != null) {
                     val videoUrl: String =
-                        URLDecoder.decode((selectedModel as TutorialData?)!!.p720p!!.url)
+                            URLDecoder.decode((selectedModel as TutorialData?)!!.p720p!!.url)
                     setplayer(videoUrl)
                 }
                 videoview.start()
@@ -534,17 +552,17 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                     val metrics = DisplayMetrics()
                     windowManager.defaultDisplay.getMetrics(metrics)
                     val params =
-                        videoview.layoutParams
+                            videoview.layoutParams
                     params.width = ViewGroup.LayoutParams.MATCH_PARENT
                     params.height = metrics.heightPixels
                     videoview.layoutParams = params
                     val paramsDim =
-                        constraint_dimview.layoutParams
+                            constraint_dimview.layoutParams
                     paramsDim.width = metrics.widthPixels
                     paramsDim.height = metrics.heightPixels
                     //constraint_dimview.layoutParams. = paramsDim
                     val paramsdimView =
-                        constraint_dimview.layoutParams
+                            constraint_dimview.layoutParams
                     paramsdimView.width = ViewGroup.LayoutParams.MATCH_PARENT
                 } else {
                     requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
@@ -553,12 +571,12 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                     img_btn_full_screen.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_fullscreen_white))
 
                     val paramsdim =
-                        constraint_dimview.layoutParams
+                            constraint_dimview.layoutParams
                     paramsdim.height = 250.px
                     paramsdim.width = ViewGroup.LayoutParams.MATCH_PARENT
                     constraint_dimview.layoutParams = paramsdim
                     val paramsvideo =
-                        videoview.layoutParams
+                            videoview.layoutParams
                     paramsvideo.height = 250.px
                     paramsvideo.width = ViewGroup.LayoutParams.MATCH_PARENT
                     videoview.layoutParams = paramsvideo
@@ -566,17 +584,17 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
             }
             R.id.constraint_favourite -> {
                 setButtonTextColors(
-                    constraint_favourite,
-                    constraint_share,
-                    constraint_vimeo,
-                    constraint_youtube
+                        constraint_favourite,
+                        constraint_share,
+                        constraint_vimeo,
+                        constraint_youtube
                 )
                 setImageDrawables(
-                    R.drawable.ic_favorite_green,
-                    R.drawable.ic_share_grey,
-                    R.drawable.ic_file_download_grey,
-                    R.drawable.ic_vimeo_grey,
-                    R.drawable.ic_youtube_grey
+                        R.drawable.ic_favorite_green,
+                        R.drawable.ic_share_grey,
+                        R.drawable.ic_file_download_grey,
+                        R.drawable.ic_vimeo_grey,
+                        R.drawable.ic_youtube_grey
                 )
                 if (selectedModel != null)
                     if (!favClick) {
@@ -589,18 +607,18 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
             R.id.constraint_share -> {
                 if (selectedModel != null) {
                     setDefaultTextColors(
-                        constraint_favourite,
-                        constraint_share,
-                        constraint_download,
-                        constraint_vimeo,
-                        constraint_youtube
+                            constraint_favourite,
+                            constraint_share,
+                            constraint_download,
+                            constraint_vimeo,
+                            constraint_youtube
                     )
                     setImageDrawables(
-                        R.drawable.ic_favorite_grey,
-                        R.drawable.ic_share_grey,
-                        R.drawable.ic_file_download_grey,
-                        R.drawable.ic_vimeo_grey,
-                        R.drawable.ic_youtube_grey
+                            R.drawable.ic_favorite_grey,
+                            R.drawable.ic_share_grey,
+                            R.drawable.ic_file_download_grey,
+                            R.drawable.ic_vimeo_grey,
+                            R.drawable.ic_youtube_grey
                     )
 
                     shareSheet()
@@ -613,6 +631,19 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
             }
 
+            R.id.btn_download_lesson -> {
+                ReuseFunctions.preventTwoClick(btn_download_lesson)
+                if ((selectedModel as TutorialData?)!!.documents != null && (selectedModel as TutorialData?)!!.documents.size > 0) {
+                    openPDF("Download")
+                }
+
+            }
+            R.id.btn_view_lesson -> {
+                ReuseFunctions.preventTwoClick(btn_download_lesson)
+                if ((selectedModel as TutorialData?)!!.documents != null && (selectedModel as TutorialData?)!!.documents.size > 0) {
+                    openPDF("View")
+                }
+            }
             R.id.opsBackBtn -> {
                 onBackPressed()
             }
@@ -624,10 +655,10 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
             if (isDownloadClick)
                 ReuseFunctions.snackMessage(mainlayout, "Already downloaded")
             constraint_download.setCompoundDrawablesWithIntrinsicBounds(
-                null,
-                resources.getDrawable(R.drawable.ic_video_downloaded),
-                null,
-                null
+                    null,
+                    resources.getDrawable(R.drawable.ic_video_downloaded),
+                    null,
+                    null
             );
 
             constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
@@ -636,20 +667,20 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
         } else {
             if (!isFromAutoNext) {
                 setButtonTextColors(
-                    constraint_download,
-                    constraint_favourite,
-                    constraint_vimeo,
-                    constraint_youtube
+                        constraint_download,
+                        constraint_favourite,
+                        constraint_vimeo,
+                        constraint_youtube
                 )
 
                 constraint_download.setTextColor(resources.getColor(R.color.text_video_option_grey))
 
                 setImageDrawables(
-                    R.drawable.ic_favorite_grey,
-                    R.drawable.ic_share_grey,
-                    R.drawable.ic_file_download_grey,
-                    R.drawable.ic_vimeo_grey,
-                    R.drawable.ic_youtube_grey
+                        R.drawable.ic_favorite_grey,
+                        R.drawable.ic_share_grey,
+                        R.drawable.ic_file_download_grey,
+                        R.drawable.ic_vimeo_grey,
+                        R.drawable.ic_youtube_grey
                 )
                 constraint_download.text = resources.getString(R.string.download)
                 if (isDownloadClick)
@@ -660,76 +691,76 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
     private fun removeFromfav() {
         setDefaultTextColors(
-            constraint_favourite,
-            constraint_share,
-            constraint_favourite,//fav two times bcz no need to set the download as it will set by chking already download cndtn
-            constraint_vimeo,
-            constraint_youtube
+                constraint_favourite,
+                constraint_share,
+                constraint_favourite,//fav two times bcz no need to set the download as it will set by chking already download cndtn
+                constraint_vimeo,
+                constraint_youtube
         )
         setImageDrawables(
-            R.drawable.ic_favorite_grey,
-            R.drawable.ic_share_grey,
-            R.drawable.ic_file_download_grey,
-            R.drawable.ic_vimeo_grey,
-            R.drawable.ic_youtube_grey
+                R.drawable.ic_favorite_grey,
+                R.drawable.ic_share_grey,
+                R.drawable.ic_file_download_grey,
+                R.drawable.ic_vimeo_grey,
+                R.drawable.ic_youtube_grey
         )
         when (categoryType) {
             Constants.TYPE_DICTIONARY -> {
                 removeFromFavouriteCall(
-                    (selectedModel as DictionaryData?)!!.id.toString(),
-                    "0",
-                    "0",
-                    "0",
-                    "0"
+                        (selectedModel as DictionaryData?)!!.id.toString(),
+                        "0",
+                        "0",
+                        "0",
+                        "0"
                 )
             }
             Constants.TYPE_SUB_TOPIC -> {
-                if (tutorialType.equals("TEACHER")){
+                if (tutorialType.equals("TEACHER")) {
                     removeFromFavouriteCall(
-                    "0",
-                    (selectedModel as TutorialData?)!!.id.toString(),
-                    "0",
-                    "0",
-                    "0"
-                )
-                }
-                else if (tutorialType.equals("LEARNING")){
+                            "0",
+                            (selectedModel as TutorialData?)!!.id.toString(),
+                            "0",
+                            "0",
+                            "0"
+                    )
+                } else if (tutorialType.equals("LEARNING")) {
                     removeFromFavouriteCall(
-                        "0",
+                            "0",
 
-                        "0",
-                        "0",
-                        "0",
-                        (selectedModel as TutorialData?)!!.id.toString()
+                            "0",
+                            "0",
+                            "0",
+                            (selectedModel as TutorialData?)!!.id.toString()
                     )
                 }
 
-            }Constants.TYPE_LEARNING_TUTORIAL_REAL -> {
-            removeFromFavouriteCall(
-                "0",
-                "0",
-                "0",
-                "0",
-                (selectedModel as DictionaryData?)!!.id.toString()
-            )
-        }
+            }
+            Constants.TYPE_LEARNING_TUTORIAL_REAL -> {
+                removeFromFavouriteCall(
+                        "0",
+                        "0",
+                        "0",
+                        "0",
+                        (selectedModel as DictionaryData?)!!.id.toString()
+                )
+            }
             Constants.TYPE_LEARNING_TUTORIAL -> {
                 removeFromFavouriteCall(
-                    "0",
-                    "0",
-                    (selectedModel as DictionaryData?)!!.id.toString(),
-                    "0",
-                    "0"
+                        "0",
+                        "0",
+                        (selectedModel as DictionaryData?)!!.id.toString(),
+                        "0",
+                        "0"
                 )
 
             }
             Constants.TYPE_STORIES -> {
                 removeFromFavouriteCall(
-                    "0",
-                    "0",
-                    "0",
-                    (selectedModel as DictionaryData?)!!.id.toString(),
-                    "0"
+                        "0",
+                        "0",
+                        "0",
+                        (selectedModel as DictionaryData?)!!.id.toString(),
+                        "0"
                 )
 
             }
@@ -739,52 +770,53 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
     private fun addToFav() {
         //setTextColors(tv_detail, tv_pic, tv_tag)
         setImageDrawables(
-            R.drawable.ic_favorite_green,
-            R.drawable.ic_share_grey,
-            R.drawable.ic_file_download_grey,
-            R.drawable.ic_vimeo_grey,
-            R.drawable.ic_youtube_grey
+                R.drawable.ic_favorite_green,
+                R.drawable.ic_share_grey,
+                R.drawable.ic_file_download_grey,
+                R.drawable.ic_vimeo_grey,
+                R.drawable.ic_youtube_grey
         )
         when (categoryType) {
             Constants.TYPE_DICTIONARY -> {
 
                 addInFavouriteCall(
-                    (selectedModel as DictionaryData?)!!.id.toString(),
-                    "0",
-                    "0",
-                    "0",
-                    "0"
+                        (selectedModel as DictionaryData?)!!.id.toString(),
+                        "0",
+                        "0",
+                        "0",
+                        "0"
                 )
             }
             Constants.TYPE_SUB_TOPIC -> {
-                if (tutorialType.equals("TEACHER")){
+                if (tutorialType.equals("TEACHER")) {
                     addInFavouriteCall(
-                        "0",
-                        (selectedModel as TutorialData?)!!.id.toString(),
-                        "0",
-                        "0",
-                        "0")
-                } else if (tutorialType.equals("LEARNING")){
+                            "0",
+                            (selectedModel as TutorialData?)!!.id.toString(),
+                            "0",
+                            "0",
+                            "0")
+                } else if (tutorialType.equals("LEARNING")) {
                     addInFavouriteCall(
+                            "0",
+                            "0",
+                            "0",
+                            "0",
+                            (selectedModel as TutorialData?)!!.id.toString()
+                    )
+
+                }
+
+            }
+            Constants.TYPE_LEARNING_TUTORIAL_REAL -> {
+                addInFavouriteCall(
                         "0",
                         "0",
                         "0",
                         "0",
                         (selectedModel as TutorialData?)!!.id.toString()
-                    )
+                )
 
-                }
-
-            }Constants.TYPE_LEARNING_TUTORIAL_REAL -> {
-            addInFavouriteCall(
-                "0",
-                "0",
-                "0",
-                "0",
-                (selectedModel as TutorialData?)!!.id.toString()
-            )
-
-        }
+            }
 
 
         }
@@ -800,12 +832,54 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
         startActivity(Intent.createChooser(sharingIntent, "Share via"))
     }
 
+
+
+
+    private fun openPDF(name: String) {
+        if (selectedModel != null) {
+            dialogDownloadPDF = BottomSheetDialog(this)
+            var dialogView: View = layoutInflater.inflate(
+                    R.layout.bottom_layout_download_view_lesson,
+                    null
+            )
+            dialogView.btn_download.text = name
+            dialogView.tv_down_video.text = name+" Lesson Plan"
+             val  adapter = DownloadDocAdapter(this, (selectedModel as TutorialData?)!!.documents)
+            val rv = dialogView.findViewById(R.id.myRecycler) as RecyclerView
+            rv.layoutManager = LinearLayoutManager(this)
+
+            //SET ADAPTER
+            rv.adapter = adapter
+            dialogView.btn_download.setOnClickListener {
+              //  checkPermission()
+                val model : VideoDocuments? = adapter.teachers.find { it.isSelected == true }
+                if (model != null){
+                     if (name.equals("Download")){
+
+                }else if (name.equals("View")){
+                         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse( URLDecoder.decode(model.url)))
+                         startActivity(browserIntent)
+                }
+
+                }else{
+                    Toast.makeText(this, "Select the Lesson", Toast.LENGTH_SHORT).show()
+                }
+
+
+
+
+            }
+            dialogDownloadPDF!!.setContentView(dialogView)
+            dialogDownloadPDF!!.show()
+        }
+    }
+
     private fun openDownloadBottomSheet() {
         if (selectedModel != null) {
             dialogDownloadBottom = BottomSheetDialog(this)
             var dialogView: View = layoutInflater.inflate(
-                R.layout.bottom_layout_download_video,
-                null
+                    R.layout.bottom_layout_download_video,
+                    null
             )
             try {
                 Glide.with(context)
@@ -858,8 +932,8 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
         val dialog = BottomSheetDialog(this)
         val dialogView: View = layoutInflater.inflate(
-            R.layout.bottom_layout_video_option,
-            null
+                R.layout.bottom_layout_video_option,
+                null
         )
 
         dialogView.tv_down_video.text = getVideoQualityOfId(selectedQualityId)
@@ -881,24 +955,24 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
         var qualityList: List<DictionaryListModel> = ArrayList<DictionaryListModel>()
         qualityList = listOf(
 
-            DictionaryListModel(0, "Auto", "", ""),
-            DictionaryListModel(1, "240p", "", ""),
-            DictionaryListModel(2, "360p", "", ""),
-            DictionaryListModel(3, "480p", "", ""),
-            DictionaryListModel(4, "720p", "", "")
+                DictionaryListModel(0, "Auto", "", ""),
+                DictionaryListModel(1, "240p", "", ""),
+                DictionaryListModel(2, "360p", "", ""),
+                DictionaryListModel(3, "480p", "", ""),
+                DictionaryListModel(4, "720p", "", "")
         )
         dialog_quality = BottomSheetDialog(this)
         val dialogView: View = layoutInflater.inflate(
-            R.layout.bottom_layout_video_quality_list,
-            null
+                R.layout.bottom_layout_video_quality_list,
+                null
         )
 
         dialogView.recycler_video_quality_option.layoutManager = LinearLayoutManager(this)
         val adapter = VideoQualityOptionAdapter(
-            this,
-            Constants.TYPE_VIDEO_QUALITY,
-            selectedQualityId.toInt(),
-            this
+                this,
+                Constants.TYPE_VIDEO_QUALITY,
+                selectedQualityId.toInt(),
+                this
         )
         dialogView.recycler_video_quality_option.adapter = adapter
         adapter.setWords(qualityList)
@@ -914,27 +988,27 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
         var qualityList: List<DictionaryListModel> = ArrayList<DictionaryListModel>()
         qualityList = listOf(
 
-            DictionaryListModel(0, "0.25x", "", ""),
-            DictionaryListModel(1, "0.5x", "", ""),
-            DictionaryListModel(2, "0.75x", "", ""),
-            DictionaryListModel(3, "Normal", "", ""),
-            DictionaryListModel(4, "1.25x", "", ""),
-            DictionaryListModel(5, "1.5x", "", ""),
-            DictionaryListModel(6, "1.75x", "", ""),
-            DictionaryListModel(7, "2x", "", "")
+                DictionaryListModel(0, "0.25x", "", ""),
+                DictionaryListModel(1, "0.5x", "", ""),
+                DictionaryListModel(2, "0.75x", "", ""),
+                DictionaryListModel(3, "Normal", "", ""),
+                DictionaryListModel(4, "1.25x", "", ""),
+                DictionaryListModel(5, "1.5x", "", ""),
+                DictionaryListModel(6, "1.75x", "", ""),
+                DictionaryListModel(7, "2x", "", "")
         )
         dialog_quality = BottomSheetDialog(this)
         val dialogView: View = layoutInflater.inflate(
-            R.layout.bottom_layout_video_quality_list,
-            null
+                R.layout.bottom_layout_video_quality_list,
+                null
         )
 
         dialogView.recycler_video_quality_option.layoutManager = LinearLayoutManager(this)
         val adapter = VideoSpeedOptionAdapter(
-            this,
-            Constants.TYPE_VIDEO_QUALITY,
-            selectedSpeedId.toInt(),
-            this
+                this,
+                Constants.TYPE_VIDEO_QUALITY,
+                selectedSpeedId.toInt(),
+                this
         )
         dialogView.recycler_video_quality_option.adapter = adapter
         adapter.setWords(qualityList)
@@ -946,10 +1020,10 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
     }
 
     private fun setButtonTextColors(
-        active: Button,
-        Inactive: Button,
-        Inactive1: Button,
-        Inactive2: Button
+            active: Button,
+            Inactive: Button,
+            Inactive1: Button,
+            Inactive2: Button
 
     ) {
         active.setTextColor(resources.getColor(R.color.colorPrimaryDark))
@@ -960,11 +1034,11 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
     }
 
     private fun setDefaultTextColors(
-        active: Button,
-        Inactive: Button,
-        Inactive1: Button,
-        Inactive2: Button,
-        Inactive3: Button
+            active: Button,
+            Inactive: Button,
+            Inactive1: Button,
+            Inactive2: Button,
+            Inactive3: Button
     ) {
         active.setTextColor(resources.getColor(R.color.text_video_option_grey))
         Inactive.setTextColor(resources.getColor(R.color.text_video_option_grey))
@@ -974,23 +1048,23 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
     }
 
     private fun setImageDrawables(
-        drawable1: Int,
-        drawable2: Int,
-        drawable3: Int,
-        drawable4: Int,
-        drawable5: Int
+            drawable1: Int,
+            drawable2: Int,
+            drawable3: Int,
+            drawable4: Int,
+            drawable5: Int
     ) {
         constraint_favourite.setCompoundDrawablesWithIntrinsicBounds(
-            null,
-            resources.getDrawable(drawable1),
-            null,
-            null
+                null,
+                resources.getDrawable(drawable1),
+                null,
+                null
         )
         constraint_share.setCompoundDrawablesWithIntrinsicBounds(
-            null,
-            resources.getDrawable(drawable2),
-            null,
-            null
+                null,
+                resources.getDrawable(drawable2),
+                null,
+                null
         )
         //checkAlreadyDownload(false,false)
         /*  constraint_download.setCompoundDrawablesWithIntrinsicBounds(
@@ -1000,25 +1074,25 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
               null
           )*/
         constraint_vimeo.setCompoundDrawablesWithIntrinsicBounds(
-            null,
-            resources.getDrawable(drawable4),
-            null,
-            null
+                null,
+                resources.getDrawable(drawable4),
+                null,
+                null
         )
         constraint_youtube.setCompoundDrawablesWithIntrinsicBounds(
-            null,
-            resources.getDrawable(drawable5),
-            null,
-            null
+                null,
+                resources.getDrawable(drawable5),
+                null,
+                null
         )
 
     }
 
     private fun setDefaultImageDrawables(
-        active: Int,
-        Inactive: Int,
-        Inactive1: Int,
-        Inactive2: Int
+            active: Int,
+            Inactive: Int,
+            Inactive1: Int,
+            Inactive2: Int
     ) {
         /* img_fav.setImageDrawable(resources.getDrawable(active))
          img_share.setImageDrawable(resources.getDrawable(Inactive))
@@ -1046,7 +1120,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
         img_btn_play_pause.setImageDrawable(this.resources.getDrawable(R.drawable.ic_baseline_pause_white))
 
         videoview.setOnPreparedListener(MediaPlayer.OnPreparedListener {
-           // image_btn_menu.visibility = View.VISIBLE
+            // image_btn_menu.visibility = View.VISIBLE
             mediaPlayer = it
             setVideoProgress()
             progress.visibility = View.GONE
@@ -1082,32 +1156,32 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
         }
 
         videoview.setOnTouchListener(View.OnTouchListener { _, motionEvent ->
-            if (videoview.isPlaying ) {
+            if (videoview.isPlaying) {
                 image_btn_menu.visibility = View.VISIBLE
                 if (!isReload) {
-                if (playToggle) {
-                    constraint_dimview.visibility = View.VISIBLE
-                    constraint_centerscreen.visibility = View.VISIBLE
-                    image_btn_menu.visibility = View.VISIBLE
-                    img_btn_play_pause_center.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white_large))
-                    img_btn_play_pause.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white))
-                    constraint_centerscreen.postDelayed(Runnable {
+                    if (playToggle) {
+                        constraint_dimview.visibility = View.VISIBLE
+                        constraint_centerscreen.visibility = View.VISIBLE
+                        image_btn_menu.visibility = View.VISIBLE
+                        img_btn_play_pause_center.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white_large))
+                        img_btn_play_pause.setImageDrawable(resources.getDrawable(R.drawable.ic_baseline_pause_white))
+                        constraint_centerscreen.postDelayed(Runnable {
+                            constraint_centerscreen.visibility = View.GONE
+                            image_btn_menu.visibility = View.GONE
+                            constraint_dimview.visibility = View.GONE
+                            playToggle = true
+
+                        }, 2000)
+                        playToggle = false
+                    } else {
+                        constraint_dimview.visibility = View.GONE
                         constraint_centerscreen.visibility = View.GONE
                         image_btn_menu.visibility = View.GONE
-                        constraint_dimview.visibility = View.GONE
                         playToggle = true
 
-                    }, 2000)
-                    playToggle = false
-                } else {
-                    constraint_dimview.visibility = View.GONE
-                    constraint_centerscreen.visibility = View.GONE
-                    image_btn_menu.visibility = View.GONE
-                    playToggle = true
-
+                    }
+                    false
                 }
-                false
- }
                 false
 
             } else {
@@ -1191,9 +1265,9 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
         handler.postDelayed(runner, 1000)
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(
-                seekBar: SeekBar?,
-                progress: Int,
-                fromUser: Boolean
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean
             ) {
             }
 
@@ -1292,7 +1366,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
             val temp = roundedBalance?.substringBefore(".")
             if (temp != null && temp != "") {
                 videoview.seekTo(
-                    temp.toInt()
+                        temp.toInt()
                 )
                 videoview.start()
             }
@@ -1409,9 +1483,9 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
     private fun checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(
-                arrayOf(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ), Constants.MY_PERMISSIONS_REQUEST_WRITE_STORAGE
+                    arrayOf(
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ), Constants.MY_PERMISSIONS_REQUEST_WRITE_STORAGE
             )
         } else {
             checkFolder()
@@ -1421,9 +1495,9 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 if ((selectedModel as TutorialData?) != null)
                     try {
                         newDownload(
-                            URLDecoder.decode(selected_url),
-                            (selectedModel as TutorialData?)!!.filename,
-                            (selectedModel as TutorialData?)!!.poster
+                                URLDecoder.decode(selected_url),
+                                (selectedModel as TutorialData?)!!.filename,
+                                (selectedModel as TutorialData?)!!.poster
                         )
                     } catch (e: UnsupportedEncodingException) {
                         e.printStackTrace()
@@ -1434,9 +1508,9 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        @NonNull permissions: Array<String>,
-        @NonNull grantResults: IntArray
+            requestCode: Int,
+            @NonNull permissions: Array<String>,
+            @NonNull grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -1449,9 +1523,9 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                     } else {
                         try {
                             newDownload(
-                                URLDecoder.decode(selected_url),
-                                (selectedModel as TutorialData?)!!.filename,
-                                (selectedModel as TutorialData?)!!.poster
+                                    URLDecoder.decode(selected_url),
+                                    (selectedModel as TutorialData?)!!.filename,
+                                    (selectedModel as TutorialData?)!!.poster
                             )
                         } catch (e: UnsupportedEncodingException) {
                             e.printStackTrace()
@@ -1515,52 +1589,52 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
         when (speedId) {
             "0" -> {
                 if (mediaPlayer != null) {
-                    setSpeed(0.25f,"0.25x")
+                    setSpeed(0.25f, "0.25x")
 
                 }
             }
             "1" -> {
                 if (mediaPlayer != null) {
-                    setSpeed(0.5f,"0.5x")
+                    setSpeed(0.5f, "0.5x")
 
                 }
             }
             "2" -> {
                 if (mediaPlayer != null) {
-                    setSpeed(0.75f,"0.75x")
+                    setSpeed(0.75f, "0.75x")
 
                 }
             }
             "3" -> {
                 if (mediaPlayer != null) {
-                    setSpeed(1.0f,"1.0x")
+                    setSpeed(1.0f, "1.0x")
                 }
             }
             "4" -> {
                 if (mediaPlayer != null) {
-                    setSpeed(1.25f,"1.25x")
+                    setSpeed(1.25f, "1.25x")
                 }
             }
             "5" -> {
                 if (mediaPlayer != null) {
-                    setSpeed(1.5f,"1.5x")
+                    setSpeed(1.5f, "1.5x")
                 }
             }
             "6" -> {
                 if (mediaPlayer != null) {
-                    setSpeed(1.75f,"1.75x")
+                    setSpeed(1.75f, "1.75x")
                 }
             }
             "7" -> {
                 if (mediaPlayer != null) {
-                    setSpeed(2.0f,"2.0x")
+                    setSpeed(2.0f, "2.0x")
                 }
             }
 
         }
     }
 
-    private fun setSpeed(speed: Float,speedText: String) {
+    private fun setSpeed(speed: Float, speedText: String) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 //works only from api 23
@@ -1593,28 +1667,28 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
 
     private fun addInFavouriteCall(
-        dicId: String,
-        tutId: String,
-        lessonId: String,
-        storyId: String,
-        learning_tut_Id: String
+            dicId: String,
+            tutId: String,
+            lessonId: String,
+            storyId: String,
+            learning_tut_Id: String
     ) {
         if (isNetworkAvailable) {
             val mainListCall: Call<AddToFvouriteModel> =
                 apiService.addToFvourite(
-                    SharedPreferenceClass.getInstance(this)!!.getSession(),
-                    SharedPreferenceClass.getInstance(context)?.getUserType().toString(),
-                    dicId,
-                    tutId,
-                    lessonId,
-                    storyId,
-                    learning_tut_Id
+                        SharedPreferenceClass.getInstance(this)!!.getSession(),
+                        SharedPreferenceClass.getInstance(context)?.getUserType().toString(),
+                        dicId,
+                        tutId,
+                        lessonId,
+                        storyId,
+                        learning_tut_Id
                 )
 
             mainListCall.enqueue(object : Callback<AddToFvouriteModel?> {
                 override fun onResponse(
-                    call: Call<AddToFvouriteModel?>,
-                    response: Response<AddToFvouriteModel?>
+                        call: Call<AddToFvouriteModel?>,
+                        response: Response<AddToFvouriteModel?>
                 ) {
 
                     val addToFvouriteModel: AddToFvouriteModel = response.body()!!
@@ -1622,19 +1696,19 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                         if (addToFvouriteModel.data != null) {
                             if (!this@VideoPreviewTutorialActivity.isDestroyed) {
                                 ReuseFunctions.snackMessage(
-                                    mainlayout,
-                                    addToFvouriteModel.response_msg
+                                        mainlayout,
+                                        addToFvouriteModel.response_msg
                                 )
                                 constraint_favourite.setCompoundDrawablesWithIntrinsicBounds(
-                                    null,
-                                    applicationContext.resources.getDrawable(R.drawable.ic_favorite_green),
-                                    null,
-                                    null
+                                        null,
+                                        applicationContext.resources.getDrawable(R.drawable.ic_favorite_green),
+                                        null,
+                                        null
                                 )
                                 constraint_favourite.setTextColor(
-                                    applicationContext.resources.getColor(
-                                        R.color.colorPrimaryDark
-                                    )
+                                        applicationContext.resources.getColor(
+                                                R.color.colorPrimaryDark
+                                        )
                                 )
 
                                 favClick = true
@@ -1646,7 +1720,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
                 override fun onFailure(call: Call<AddToFvouriteModel?>, t: Throwable) {
                     Toast.makeText(applicationContext, "" + t?.localizedMessage, Toast.LENGTH_SHORT)
-                        .show()
+                            .show()
                     call.cancel()
                 }
             })
@@ -1657,30 +1731,30 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
 
     private fun removeFromFavouriteCall(
-        dicId: String,
-        tutId: String,
-        lessonId: String,
-        storyId: String,
-        learning_tut_Id: String
+            dicId: String,
+            tutId: String,
+            lessonId: String,
+            storyId: String,
+            learning_tut_Id: String
 
     ) {
         if (isNetworkAvailable) {
             var session =  SharedPreferenceClass.getInstance(this)!!.getSession()
             val mainListCall: Call<AddToFvouriteModel> =
                 apiService.RemoveFromFvourite(
-                    SharedPreferenceClass.getInstance(this)!!.getSession(),
-                    SharedPreferenceClass.getInstance(context)?.getUserType().toString(),
-                    dicId,
-                    tutId,
-                    lessonId,
-                    storyId,
-                    learning_tut_Id
+                        SharedPreferenceClass.getInstance(this)!!.getSession(),
+                        SharedPreferenceClass.getInstance(context)?.getUserType().toString(),
+                        dicId,
+                        tutId,
+                        lessonId,
+                        storyId,
+                        learning_tut_Id
                 )
 
             mainListCall.enqueue(object : Callback<AddToFvouriteModel?> {
                 override fun onResponse(
-                    call: Call<AddToFvouriteModel?>,
-                    response: Response<AddToFvouriteModel?>
+                        call: Call<AddToFvouriteModel?>,
+                        response: Response<AddToFvouriteModel?>
                 ) {
 
                     val addToFvouriteModel: AddToFvouriteModel = response.body()!!
@@ -1689,15 +1763,15 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                             if (!this@VideoPreviewTutorialActivity.isDestroyed) {
                                 ReuseFunctions.snackMessage(mainlayout, "Remove From Favourites")
                                 constraint_favourite.setCompoundDrawablesWithIntrinsicBounds(
-                                    null,
-                                    applicationContext.resources.getDrawable(R.drawable.ic_favorite_grey),
-                                    null,
-                                    null
+                                        null,
+                                        applicationContext.resources.getDrawable(R.drawable.ic_favorite_grey),
+                                        null,
+                                        null
                                 )
                                 constraint_favourite.setTextColor(
-                                    applicationContext.resources.getColor(
-                                        R.color.text_video_option_grey
-                                    )
+                                        applicationContext.resources.getColor(
+                                                R.color.text_video_option_grey
+                                        )
                                 )
 
                                 favClick = false
@@ -1709,7 +1783,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
                 override fun onFailure(call: Call<AddToFvouriteModel?>, t: Throwable) {
                     Toast.makeText(applicationContext, "" + t?.localizedMessage, Toast.LENGTH_SHORT)
-                        .show()
+                            .show()
                     call.cancel()
                 }
             })
@@ -1734,8 +1808,8 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 setTitleText((selectedModel as TutorialData))
                 if (list != null) {
                     val finalList = ListSorting.sortListTutorial(
-                        newIndex,
-                        list!!
+                            newIndex,
+                            list!!
                     )
                     setNextVideosList(finalList)
                 }
@@ -1749,7 +1823,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
 
     }
 
-override fun onVideoSelect(selectedModel: LearningData) {
+    override fun onVideoSelect(selectedModel: LearningData) {
 
     }
 
@@ -1794,8 +1868,8 @@ override fun onVideoSelect(selectedModel: LearningData) {
                         if (list != null) {
                             val finalList =
                                 ListSorting.sortListTutorial(
-                                    newIndex,
-                                    list!!
+                                        newIndex,
+                                        list!!
                                 )
                             setNextVideosList(finalList)
                         }
@@ -1868,8 +1942,8 @@ override fun onVideoSelect(selectedModel: LearningData) {
      * Fetches how many bytes have been downloaded so far and updates ProgressBar
      */
     public class DownloadProgressCounter(
-        private val manager: DownloadManager,
-        private val downloadId: Long
+            private val manager: DownloadManager,
+            private val downloadId: Long
 
     ) : Thread() {
         private val query: DownloadManager.Query
@@ -1935,18 +2009,18 @@ override fun onVideoSelect(selectedModel: LearningData) {
         var file: File
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             file = File(
-                context.getExternalFilesDir(null)!!.getAbsolutePath() +
-                        Constants.FOLDER_NAME, filename + ""
+                    context.getExternalFilesDir(null)!!.getAbsolutePath() +
+                            Constants.FOLDER_NAME, filename + ""
             )
         } else {
             file = File(
-                Environment.getExternalStorageDirectory().absolutePath +
-                        Constants.FOLDER_NAME, filename + ""
+                    Environment.getExternalStorageDirectory().absolutePath +
+                            Constants.FOLDER_NAME, filename + ""
             )
         }
         file = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            Constants.FOLDER_NAME + filename + ""
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                Constants.FOLDER_NAME + filename + ""
         )
         return file.exists()
     }
@@ -1963,31 +2037,31 @@ override fun onVideoSelect(selectedModel: LearningData) {
                 if (!this@VideoPreviewTutorialActivity.isDestroyed) {
                     try{
                         constraint_download.setCompoundDrawablesWithIntrinsicBounds(
-                            null,
-                            applicationContext. resources.getDrawable(R.drawable.ic_video_downloaded),
-                            null,
-                            null
+                                null,
+                                applicationContext.resources.getDrawable(R.drawable.ic_video_downloaded),
+                                null,
+                                null
                         )
 
                         constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
                         constraint_download.text = resources.getString(R.string.downloaded)
                         if ((selectedModel as TutorialData?)!!.favorite != null && (selectedModel as TutorialData?)!!.favorite == 0) {
                             constraint_favourite.setCompoundDrawablesWithIntrinsicBounds(
-                                null,
-                                applicationContext.resources.getDrawable(R.drawable.ic_favorite_grey),
-                                null,
-                                null)
+                                    null,
+                                    applicationContext.resources.getDrawable(R.drawable.ic_favorite_grey),
+                                    null,
+                                    null)
                             constraint_favourite.setTextColor(applicationContext.resources.getColor(R.color.text_video_option_grey))
                         }else {
                             constraint_favourite.setCompoundDrawablesWithIntrinsicBounds(
-                                null,
-                                applicationContext.resources.getDrawable(R.drawable.ic_favorite_green),
-                                null,
-                                null
+                                    null,
+                                    applicationContext.resources.getDrawable(R.drawable.ic_favorite_green),
+                                    null,
+                                    null
                             )
                             constraint_favourite.setTextColor(applicationContext.resources.getColor(R.color.colorPrimaryDark))
                         }
-                    }catch (e:Exception){
+                    }catch (e: Exception){
                         e.printStackTrace()
                     }
                 }

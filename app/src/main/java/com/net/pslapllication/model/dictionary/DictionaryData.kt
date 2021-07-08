@@ -1,9 +1,9 @@
 package com.net.pslapllication.model.dictionary
 
 import androidx.room.ColumnInfo
-import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.net.pslapllication.model.VideoDocuments
 import java.io.Serializable
 
 data class DictionaryData(
@@ -33,7 +33,6 @@ data class DictionaryData(
     @SerializedName("240p") val p240p: p240p,
     @ColumnInfo
     @SerializedName("poster") var poster: String,
-
     @ColumnInfo
     @SerializedName("favorite") val favorite: Int,
     @ColumnInfo
@@ -47,13 +46,13 @@ data class DictionaryData(
     @ColumnInfo
     var catName: String,
     @ColumnInfo
-    @SerializedName("shareablURL") var shareablURL: String
-) : Serializable {
+    @SerializedName("shareablURL") var shareablURL: String,
+    @SerializedName("documents") val documents : List<VideoDocuments>
+    ) : Serializable {
     constructor() : this(
         0, 0,
         "", "", "", "", "", p1080p("", ""),
         p720p("", ""), p480p("", ""),
         p360p("", ""), p240p("", ""),
-        "", 0, 0, 0, 0, false, "",""
-    )
+        "", 0, 0, 0, 0, false, "","",listOf( VideoDocuments( "", "" )))
 }

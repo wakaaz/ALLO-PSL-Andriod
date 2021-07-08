@@ -1,6 +1,7 @@
 package com.net.pslapllication.model.tutorial
 
 import com.google.gson.annotations.SerializedName
+import com.net.pslapllication.model.VideoDocuments
 import com.net.pslapllication.model.dictionary.*
 import java.io.Serializable
 
@@ -21,5 +22,7 @@ data class TutorialData(
     @SerializedName("poster") val poster : String,
     @SerializedName("favorite") val favorite : Int,
     @SerializedName("shareablURL") var shareablURL: String,
+    @SerializedName("documents") val documents : List<VideoDocuments>,
+
     var indexPosition: Int
 ):Serializable

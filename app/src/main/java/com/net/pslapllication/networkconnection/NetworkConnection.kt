@@ -2,6 +2,7 @@
 
 package com.net.pslapllication.networkconnection
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -247,6 +248,7 @@ class NetworkConnection(
         return getNetworkClass.invoke(null, networkType) as Int
     }
 
+    @SuppressLint("MissingPermission")
     fun getNetworkType(context: Context): Int {
         return (context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).networkType
     }

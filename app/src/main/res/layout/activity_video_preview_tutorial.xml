@@ -256,6 +256,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraint_name" />
 
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="View Lesson"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:id="@+id/btn_watch_version"
+                app:layout_constraintTop_toBottomOf="@+id/view"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                />
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
@@ -266,7 +285,7 @@
 
                 android:paddingBottom="@dimen/_8sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view">
+                app:layout_constraintTop_toBottomOf="@+id/btn_watch_version">
 
                 <Button
                     android:id="@+id/constraint_favourite"
@@ -535,13 +554,51 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tabs" />
 
+            <LinearLayout
+                android:id="@+id/li_lesson"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view1"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/_5sdp"
+                >
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:background="@color/colorPrimary"
+                    android:text="Download Lesson"
+                    android:textColor="@color/white"
+                    android:id="@+id/btn_download_lesson"
+
+                    />
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:text="View Lesson"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:id="@+id/btn_view_lesson"
+
+                    />
+
+            </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layout_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view1">
+                app:layout_constraintTop_toBottomOf="@id/li_lesson">
 
                 <TextView
                     android:id="@+id/tv_next"

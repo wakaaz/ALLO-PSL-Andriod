@@ -578,7 +578,7 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
         } else if (type == Constants.TYPE_STORIES) {
             carrierModel?.setStoryList(listStories)
         }
-else if (type == TYPE_LEARNING_TUTORIAL) {
+        else if (type == TYPE_LEARNING_TUTORIAL) {
             carrierModel?.setLeaningModelList(listLearningTutorial)
         }
 

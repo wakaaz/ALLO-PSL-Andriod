@@ -150,6 +150,7 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
 
         setListener()
         setAlreadyFavourite()
+        setDownloadLesson()
         checkAutoPlaySwitch()
         Handler().postDelayed({
             if (isVideoAlreadyExist((selectedModel as LearningData?)!!.filename)) {
@@ -416,6 +417,18 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
         }
     }
 
+    private  fun setDownloadLesson(){
+        if (selectedModel != null) {
+            if ((selectedModel as TutorialData?)!!.documents != null && (selectedModel as LearningData?)!!.documents.size  > 0) {
+                li_lesson.visibility =  View.VISIBLE
+
+            }else{
+                li_lesson.visibility =  View.GONE
+
+            }
+
+        }
+    }
     private fun checkAutoPlaySwitch() {
         switch_next.isChecked = SharedPreferenceClass.getInstance(this)?.getAutoPLayToggle()!!
         autoPlayStatus = SharedPreferenceClass.getInstance(this)?.getAutoPLayToggle()!!

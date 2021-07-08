@@ -1,5 +1,7 @@
 package com.net.pslapllication.model.stories
+
 import com.google.gson.annotations.SerializedName
+import com.net.pslapllication.model.VideoDocuments
 import com.net.pslapllication.model.dictionary.*
 import java.io.Serializable
 
@@ -25,13 +27,15 @@ data class StoryData (
 	var downloadprogress: Int = 0,
 	var isDownloaded: Boolean = false,
 	var catName: String,
-	@SerializedName("shareablURL") var shareablURL: String
+	@SerializedName("shareablURL") var shareablURL: String,
+	@SerializedName("documents") val documents : List<VideoDocuments>
+
 ): Serializable {
 	constructor() : this(
 		0, 0,
 		"", "", "", "", p1080p("", ""),
 		p720p("", ""), p480p("", ""),
 		p360p("", ""), p240p("", ""),
-		"", "", 0, 0, 0, 0, false, "",""
+		"", "", 0, 0, 0, 0, false, "","",listOf(VideoDocuments( "", "" ))
 	)
 }

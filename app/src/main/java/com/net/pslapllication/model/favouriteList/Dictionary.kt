@@ -1,6 +1,7 @@
 package com.net.pslapllication.model.favouriteList
 
 import com.google.gson.annotations.SerializedName
+import com.net.pslapllication.model.VideoDocuments
 import java.io.Serializable
 
 data class Dictionary(
@@ -22,6 +23,8 @@ data class Dictionary(
     @SerializedName("created_by") val created_by : Int,
     @SerializedName("updated_at") val updated_at : String,
     @SerializedName("updated_by") val updated_by : Int,
-    @SerializedName("shareablURL") var shareablURL: String
+    @SerializedName("shareablURL") var shareablURL: String,
+    @SerializedName("documents") val documents : List<VideoDocuments>
+
 
 ) : Serializable

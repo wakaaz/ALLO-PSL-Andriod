@@ -341,6 +341,7 @@ class ReuseFunctions {
 
         }
 
+        @SuppressLint("MissingPermission")
         fun getNetworkType(context: Context): Int {
             return (context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).networkType
         }
