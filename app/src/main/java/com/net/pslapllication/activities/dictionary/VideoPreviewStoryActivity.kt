@@ -106,6 +106,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
     private var favClick: Boolean = false
     private var isAutoQuality: Boolean = true
     private var isSeekBarClick: Boolean = false
+    private var isEnglishVersion: Boolean = true
 
     //double
     private var currentPos: Double = 0.0
@@ -125,7 +126,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
 
     //data model
     var selectedModel: Any? = null
-
+    var tempOrignalModel:Any? =  null
     //list
     public var list: List<StoryData>? = null
 
@@ -154,6 +155,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
         setAlreadyFavourite()
         setDownloadLesson()
         checkAutoPlaySwitch()
+        checkLanguageVersion()
         Handler().postDelayed({
             if (isVideoAlreadyExist((selectedModel as StoryData?)!!.filename)) {
                 constraint_download.setCompoundDrawablesWithIntrinsicBounds(
@@ -205,6 +207,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
             /********get selected video list data*********/
             selectedModel =
                 intent.getSerializableExtra(Constants.SELECTED_DICTIONARY_LIST_MODEL) as StoryData
+            tempOrignalModel =  selectedModel
             if (selectedModel != null) {
                 setTitleText((selectedModel as StoryData))
             }
@@ -220,17 +223,6 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
                 }
             }, 500)
 
-            /* Handler().postDelayed({
-                var StoryData: StoryData? = null
-                StoryData?.id = selectedId
-                if (list != null && list!!.size != 0 && selectedModel != null && (selectedModel!! as StoryData).id != null) {
-                    val finalList = ListSorting.sortList(
-                        (selectedModel!! as StoryData).indexPosition,
-                        list!!
-                    )
-                    setNextVideosList(list!!)
-                }
-            }, 2000)*/
         }
     }
 
@@ -421,7 +413,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
     }
     private  fun setDownloadLesson(){
         if (selectedModel != null) {
-            if ((selectedModel as TutorialData?)!!.documents != null && (selectedModel as StoryData?)!!.documents.size  > 0) {
+            if ((selectedModel as StoryData?)!!.documents != null && (selectedModel as StoryData?)!!.documents.size  > 0) {
                 li_lesson.visibility =  View.VISIBLE
 
             }else{
@@ -431,13 +423,24 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
 
         }
     }
-
     private fun checkAutoPlaySwitch() {
         switch_next.isChecked = SharedPreferenceClass.getInstance(this)?.getAutoPLayToggle()!!
         autoPlayStatus = SharedPreferenceClass.getInstance(this)?.getAutoPLayToggle()!!
         switch_next.setOnCheckedChangeListener { _, isChecked ->
             autoPlayStatus = isChecked
             SharedPreferenceClass.getInstance(this)?.setAutoPLayToggle(isChecked)
+        }
+    }
+    private fun checkLanguageVersion() {
+        if (selectedModel != null) {
+            if ((selectedModel as StoryData?)!!.linked_video != null) {
+                btn_watch_version.visibility =  View.VISIBLE
+                btn_watch_version.setOnClickListener(this)
+            }else{
+                li_lesson.visibility =  View.GONE
+
+            }
+
         }
     }
 
@@ -461,6 +464,32 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
         }
 
 
+    }
+
+    fun changeSelectVideoLanguage(){
+        if (isEnglishVersion){
+            selectedModel = tempOrignalModel
+        }else{
+            selectedModel = (selectedModel as StoryData?)?.linked_video
+
+        }
+
+        if (selectedModel != null && (selectedModel as StoryData?)?.p720p?.url != null) {
+            try {
+                var StoryDataTemp: StoryData? = null
+                StoryDataTemp = selectedModel as StoryData
+                var newIndex = list!!.indexOf(StoryDataTemp)
+                val videoUrl: String =
+                    URLDecoder.decode((selectedModel as StoryData?)!!.p720p.url)
+                setNormalVideoViews()
+                setplayer(videoUrl)
+                videoview.start()
+                setTitleText((selectedModel as StoryData))
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -521,6 +550,19 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
             }
             R.id.img_btn_play_pause -> {
                 setPlayPauseVideo()
+            }
+            R.id.btn_watch_version -> {
+                if(isEnglishVersion){
+                    isEnglishVersion =  false
+                    adapter?.changeVersion(isEnglishVersion)
+                    changeSelectVideoLanguage()
+                }else{
+                    isEnglishVersion =  true
+                    adapter?.changeVersion(isEnglishVersion)
+                    changeSelectVideoLanguage()
+
+
+                }
             }
             R.id.img_btn_full_screen -> {
                 if (this.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -1742,7 +1784,11 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
 
     }
     override fun onVideoSelect(selectedModelVideo: StoryData) {
+
         selectedModel = selectedModelVideo
+        if(!isEnglishVersion){
+            selectedModel = selectedModelVideo.linked_video
+        }
         if (selectedModel != null && (selectedModel as StoryData?)?.p720p?.url != null) {
             try {
                 var StoryDataTemp: StoryData? = null
@@ -1840,6 +1886,10 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
             }
         }
     }
+
+
+
+
 
     private fun setErrorAndReloadViews() {
         constraint_centerscreen.visibility = View.GONE

@@ -48,10 +48,15 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
     private var isDownloaded = false
     private var subjectName: String = ""
     private var fav_video_type: String = ""
+    private var isEnglishVersion: Boolean = true
+
     fun downloded(isDownloaded: Boolean) {
         this.isDownloaded = isDownloaded
     }
 
+    fun changeLanguage(isEnglishVersion: Boolean){
+        this.isEnglishVersion =  isEnglishVersion
+    }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
         var gridView: View? = convertView
@@ -174,6 +179,8 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
              }
         } else if (type == Constants.TYPE_STORIES) {
             //set text
+
+
             tv_word?.text = storyListFilter[position].title
             tv_word?.setLines(3)
             tv_word?.ellipsize = TextUtils.TruncateAt.END

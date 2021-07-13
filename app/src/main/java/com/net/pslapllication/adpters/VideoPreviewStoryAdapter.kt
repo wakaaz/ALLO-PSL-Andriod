@@ -2,6 +2,7 @@ package com.net.pslapllication.adpters
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +17,20 @@ import com.bumptech.glide.request.RequestListener
 import com.comix.rounded.RoundedCornerImageView
 import com.net.pslapllication.R
 import com.net.pslapllication.interfaces.OnVideoSelectedListener
- import com.net.pslapllication.model.stories.StoryData
+import com.net.pslapllication.model.favouriteList.Story
+import com.net.pslapllication.model.stories.StoryData
 import kotlinx.android.synthetic.main.row_video_preview.view.*
 import java.net.URLDecoder
 
 class VideoPreviewStoryAdapter(var context: Context, var type: String, var name: String, var onVideoSelectedListener: OnVideoSelectedListener) :
     RecyclerView.Adapter<VideoPreviewStoryAdapter.ViewHolder>() {
     private var diclist = emptyList<StoryData>()
+    private var isEnglishVersion: Boolean = true
+
+    fun changeVersion(isEnglishVersion: Boolean ){
+        this.isEnglishVersion  = isEnglishVersion
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -42,34 +50,74 @@ class VideoPreviewStoryAdapter(var context: Context, var type: String, var name:
 
         //set data
         holder.img_arrow.setImageResource(R.drawable.ic_keyboard_arrow_right)
-        holder.tv_main?.text = diclist[position].title
 
         //set font
-        holder.tv_main?.typeface = ResourcesCompat.getFont(context, R.font.lato_semibold)
-        holder.tv_duration?.typeface = ResourcesCompat.getFont(context, R.font.lato_regular)
-        holder.tv_translate?.typeface =
-            ResourcesCompat.getFont(context, R.font.jameelnoorinastaleeqregular)
-        if (diclist[position].poster.isNotEmpty()) {
-            var poster: String = URLDecoder.decode(diclist[position].poster)
-            Glide.with(context).load(poster)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        p0: GlideException?,
-                        p1: Any?,
-                        target: com.bumptech.glide.request.target.Target<Drawable>?,
-                        p3: Boolean
-                    ): Boolean {
-                       var errorString =  p0?.localizedMessage
-                        return false
-                     }
-                    override fun onResourceReady(p0: Drawable?, p1: Any?,target: com.bumptech.glide.request.target.Target<Drawable>?, p3: DataSource?, p4: Boolean): Boolean {
-                         //do something when picture already loaded
-                        return false
-                    }
-                })
-                .into(holder.imageView_round)
+
+        val model : StoryData =  diclist[position]
+
+
+        if (isEnglishVersion){
+            holder.tv_main?.text = model.title
+
+            holder.tv_main?.typeface = ResourcesCompat.getFont(context, R.font.lato_semibold)
+            holder.tv_duration?.typeface = ResourcesCompat.getFont(context, R.font.lato_regular)
+            holder.tv_translate?.typeface =
+                ResourcesCompat.getFont(context, R.font.jameelnoorinastaleeqregular)
+            if (model.poster.isNotEmpty()) {
+                var poster: String = URLDecoder.decode(model.poster)
+                Glide.with(context).load(poster)
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            p0: GlideException?,
+                            p1: Any?,
+                            target: com.bumptech.glide.request.target.Target<Drawable>?,
+                            p3: Boolean
+                        ): Boolean {
+                            var errorString =  p0?.localizedMessage
+                            return false
+                        }
+                        override fun onResourceReady(p0: Drawable?, p1: Any?,target: com.bumptech.glide.request.target.Target<Drawable>?, p3: DataSource?, p4: Boolean): Boolean {
+                            //do something when picture already loaded
+                            return false
+                        }
+                    })
+                    .into(holder.imageView_round)
+            }
+            holder.bind(model, type, name,onVideoSelectedListener)
+        }else{
+            val datmodel = diclist[position].linked_video
+
+            if(datmodel != null && datmodel.title != null){
+                Log.e("index",""+datmodel.title)
+
+                holder.tv_main?.text = datmodel.title
+
+            }
+            if (model.poster.isNotEmpty()) {
+                var poster: String = URLDecoder.decode(model.poster)
+                Glide.with(context).load(poster)
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            p0: GlideException?,
+                            p1: Any?,
+                            target: com.bumptech.glide.request.target.Target<Drawable>?,
+                            p3: Boolean
+                        ): Boolean {
+                            var errorString =  p0?.localizedMessage
+                            return false
+                        }
+                        override fun onResourceReady(p0: Drawable?, p1: Any?,target: com.bumptech.glide.request.target.Target<Drawable>?, p3: DataSource?, p4: Boolean): Boolean {
+                            //do something when picture already loaded
+                            return false
+                        }
+                    })
+                    .into(holder.imageView_round)
+            }
+            holder.bind(model, type, name,onVideoSelectedListener)
+
+
         }
-        holder.bind(diclist[position], type, name,onVideoSelectedListener)
+
 
     }
 

@@ -18,6 +18,33 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout_dic"
+        style="@style/MyTabLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:animateLayoutChanges="true"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraint_toolbaar"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorHeight="1dp"
+        app:tabInlineLabel="true"
+        app:tabMode="fixed"
+        android:visibility="gone"
+
+        app:tabPaddingBottom="0dp"
+
+
+        app:tabPaddingEnd="@dimen/_14sdp"
+
+        app:tabPaddingStart="@dimen/_14ssp"
+        app:tabSelectedTextColor="@color/colorPrimary"
+
+        app:tabTextColor="@color/text_video_option_grey" />
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_download"
         android:layout_width="match_parent"
@@ -26,7 +53,7 @@
         android:paddingBottom="@dimen/_10sdp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraint_toolbaar">
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout_dic">
 
         <ProgressBar
             android:id="@+id/progressBar"

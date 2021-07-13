@@ -14,8 +14,10 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.tabs.TabLayout
 import com.net.pslapllication.R
 import com.net.pslapllication.activities.BaseActivity
 import com.net.pslapllication.activities.authentication.LoginScreen
@@ -24,6 +26,8 @@ import com.net.pslapllication.adpters.LargeCardAdapter
 import com.net.pslapllication.adpters.VideoQualityOptionAdapter
 import com.net.pslapllication.broadcastReceiver.DownloadVideoBroadcastReceiver
 import com.net.pslapllication.data.DictionaryListModel
+import com.net.pslapllication.fragments.CategoriesFragment
+import com.net.pslapllication.fragments.WordsFragment
 import com.net.pslapllication.interfaces.RetrofitResponseListener
 import com.net.pslapllication.interfaces.onQualityChangSelectedListener
 import com.net.pslapllication.model.carrierModels.DictionaryListCarrierDataModel
@@ -43,18 +47,22 @@ import com.net.pslapllication.util.Constants.Companion.TYPE_LEARNING_TUTORIAL
 import com.net.pslapllication.util.ReuseFunctions
 import com.net.pslapllication.util.SharedPreferenceClass
 import kotlinx.android.synthetic.main.activity_dictionary_single_word.*
+import kotlinx.android.synthetic.main.activity_dictionary_single_word.tabLayout_dic
 import kotlinx.android.synthetic.main.activity_dictionary_single_word.tv_sort
+import kotlinx.android.synthetic.main.activity_dictionary_tab_list.*
 import kotlinx.android.synthetic.main.activity_main_listing_new.*
 import kotlinx.android.synthetic.main.bottom_layout_download_video.view.*
 import kotlinx.android.synthetic.main.bottom_layout_video_quality_list.view.*
 import kotlinx.android.synthetic.main.toolbaar_layout.*
+import kotlinx.android.synthetic.main.toolbaar_layout.opsBackBtn
+import kotlinx.android.synthetic.main.toolbaar_layout.txt_title
 import retrofit2.Call
 import java.io.File
 import java.io.Serializable
 import java.io.UnsupportedEncodingException
 
 class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
-    RetrofitResponseListener, onQualityChangSelectedListener {
+    RetrofitResponseListener, onQualityChangSelectedListener, TabLayout.OnTabSelectedListener {
     private var width: Int = 0
     private var selected_quality_type: Int = -1
     lateinit var apiService: ApiService
@@ -65,13 +73,22 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
     private var list: List<DictionaryData>? = ArrayList<DictionaryData>()
     private var listLearningTutorial: List<LearningData>? = ArrayList<LearningData>()
     private var listStories: List<StoryData>? = ArrayList<StoryData>()
+    private var listEnglishStories = ArrayList<StoryData>()
+    private var listUrduStories =  ArrayList<StoryData>()
+
     private var listSub: List<Subjects>? = ArrayList<Subjects>()
     private var dialogDownloadBottom: BottomSheetDialog? = null
     private var isSorted: Boolean = true
     private var adapter: DictionarySingleWordAdapter? = null
     private var adapterLarge: LargeCardAdapter? = null
+
+
     private var dialog_sort: BottomSheetDialog? = null
     private var selectedSortyId: Int = 0
+    private val tabIcons1 = intArrayOf(R.drawable.ic_categories_tab, R.drawable.ic_words_grey_tab)
+    private val tabIcons2 = intArrayOf(R.drawable.ic_categories_grey_tab, R.drawable.ic_words_tab)
+    private var isEnglishVersion: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dictionary_single_word)
@@ -80,6 +97,25 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
         initialization()
         setListener()
         setSearchView()
+        if (type == Constants.TYPE_STORIES){
+
+            setTabData()
+        }else{
+            tabLayout_dic.visibility = View.GONE
+
+        }
+    }
+    private fun setTabData() {
+        tabLayout_dic.visibility =View.VISIBLE
+        tabLayout_dic.addTab(tabLayout_dic.newTab().setText("English"))
+        tabLayout_dic.addTab(tabLayout_dic.newTab().setText("Urdu"))
+        setTabIcon(tabIcons1)
+        tabLayout_dic.addOnTabSelectedListener(this)
+    }
+
+    private fun setTabIcon(tabIcons: IntArray) {
+        tabLayout_dic.getTabAt(0)!!.setIcon(tabIcons[0])
+        tabLayout_dic.getTabAt(1)!!.setIcon(tabIcons[1])
     }
 
     private fun initialization() {
@@ -308,9 +344,16 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                     openDownloadBottomSheet()
                 }
             } else if (type == Constants.TYPE_STORIES) {
-                if (listStories!!.size != 0) {
+                if(isEnglishVersion){
+                  if (listEnglishStories!!.size != 0) {
                     openDownloadBottomSheet()
                 }
+                }else{
+                    if (listUrduStories!!.size != 0) {
+                    openDownloadBottomSheet()
+                }
+                }
+
             }else if (type == TYPE_LEARNING_TUTORIAL || type == TYPE_LEARNING_TUTORIAL) {
                 if (listLearningTutorial!!.size != 0) {
                     openDownloadBottomSheet()
@@ -364,7 +407,33 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                                 model?.data[i].indexPosition = i
                             }
                             listStories = model?.data
-                            setStoryRecycler(model?.data)
+                            if(listStories != null){
+                                for (i:StoryData in listStories!!) {
+                                Log.e("word",i.toString()+"")
+                                    if(i != null && i.language != null){
+                                      if(i.language.equals("english")){
+                                        listEnglishStories?.add(i)
+                                          if(i.linked_video != null && i.linked_video.language != null && i.linked_video.language.equals("english")){
+                                              listEnglishStories?.add(i)
+
+                                          }
+                                    } else if(i.language.equals("urdu")){
+                                        listUrduStories?.add(i)
+                                          if(i.linked_video != null && i.linked_video.language != null && i.linked_video.language.equals("urdu")){
+                                              listUrduStories?.add(i)
+
+                                          }
+                                    }else{
+                                          listEnglishStories?.add(i)
+                                      }
+                                    }
+
+                            }
+                            }
+
+
+
+                            setStoryRecycler(listEnglishStories)
                         }
                     }
                     Constants.SESSION_ERROR_CODE -> {
@@ -480,6 +549,7 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
     }
 
     override fun onFailure(error: String) {
+        Log.e("error",""+error)
         if (!this.isDestroyed) {
             ReuseFunctions.showToast(this, error)
         }
@@ -576,7 +646,11 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
         if (type == Constants.TYPE_DICTIONARY) {
             carrierModel?.setModelList(list)
         } else if (type == Constants.TYPE_STORIES) {
-            carrierModel?.setStoryList(listStories)
+            if(isEnglishVersion){
+                carrierModel?.setStoryList(listEnglishStories)
+            }else{
+                carrierModel?.setStoryList(listUrduStories)
+            }
         }
         else if (type == TYPE_LEARNING_TUTORIAL) {
             carrierModel?.setLeaningModelList(listLearningTutorial)
@@ -716,9 +790,17 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                         adapterLarge!!.notifyDataSetChanged()
                     } else if (type == Constants.TYPE_STORIES) {
                         if (listStories != null && listStories?.size != 0) {
-                            val sortedAppsList1: List<StoryData> =
-                                listStories!!.sortedBy { it.title }
-                            adapterLarge!!.setStories(sortedAppsList1)
+                            if (isEnglishVersion){
+                                val sortedAppsList1: List<StoryData> =
+                                    listEnglishStories!!.sortedBy { it.title }
+                                adapterLarge!!.setStories(sortedAppsList1)
+                            }else{
+                                val sortedAppsList1: List<StoryData> =
+                                    listUrduStories!!.sortedBy { it.title }
+                                adapterLarge!!.setStories(sortedAppsList1)
+                            }
+
+
                         } else {
                             ReuseFunctions.snackMessage(constraint_main_listing, "Nothing to Sort")
                         }
@@ -761,9 +843,18 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                         adapterLarge!!.notifyDataSetChanged()
                     } else if (type == Constants.TYPE_STORIES) {
                         if (listStories != null && listStories?.size != 0) {
-                            val reverseSortedAppsList: List<StoryData> =
-                                listStories!!.sortedByDescending { it.title }
-                            adapterLarge!!.setStories(reverseSortedAppsList)
+
+                            if (isEnglishVersion){
+                                val reverseSortedAppsList: List<StoryData> =
+                                    listEnglishStories!!.sortedByDescending { it.title }
+                                adapterLarge!!.setStories(reverseSortedAppsList)
+                            }else{
+                                val reverseSortedAppsList: List<StoryData> =
+                                    listUrduStories!!.sortedByDescending { it.title }
+                                adapterLarge!!.setStories(reverseSortedAppsList)
+                            }
+
+
                         } else {
                             ReuseFunctions.snackMessage(constraint_main_listing, "Nothing to Sort")
                         }
@@ -783,7 +874,12 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                         adapter!!.setSubjects(listSub!!)
                         adapter!!.notifyDataSetChanged()
                     } else if (type == Constants.TYPE_STORIES) {
-                        adapterLarge!!.setStories(listStories!!)
+                        if(isEnglishVersion){
+                            adapterLarge!!.setStories(listEnglishStories!!)
+                        }else{
+                            adapterLarge!!.setStories(listUrduStories!!)
+
+                        }
                         adapterLarge!!.notifyDataSetChanged()
                     }else if (type == TYPE_LEARNING_TUTORIAL ) {
                         adapterLarge!!.setLearningTutorial(listLearningTutorial!!)
@@ -851,6 +947,65 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
         )
         return file.exists()
     }
+
+
+    override fun onTabSelected(tab: TabLayout.Tab) {
+
+        if (tab.parent != null) {
+            /* val tv =
+                ((tabLayout_dic.getChildAt(0) as LinearLayout).getChildAt(tab.position) as LinearLayout).getChildAt(
+                   1) as TextView
+            tv.typeface = ResourcesCompat.getFont(
+                this ,R.font.lato_heavy)*/
+
+            if (tab.position == 0) {
+                isEnglishVersion =  true
+                setTabIcon(tabIcons1)
+                adapterLarge!!.setStories(listEnglishStories)
+
+            } else if (tab.position == 1) {
+                isEnglishVersion =  false
+
+                setTabIcon(tabIcons2)
+                adapterLarge!!.setStories(listUrduStories)
+
+            }
+
+
+            val nextChild = tab.parent!!.getChildAt(tab.position)
+            if (nextChild is TextView) {
+                nextChild.setTextColor(resources.getColor(R.color.red))
+                nextChild.setTypeface(
+                    ResourcesCompat.getFont(
+                        this,
+                        R.font.lato_heavy
+                    )
+                )
+            }
+        }
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab) {
+        if (tab.parent != null) {
+            /* val tv =
+                 ((tabLayout_dic.getChildAt(0) as LinearLayout).getChildAt(tab.position) as LinearLayout).getChildAt(
+                     1
+                 ) as TextView
+             tv.typeface = ResourcesCompat.getFont(
+                 this,
+                 R.font.lato_regular
+             )*/
+            val nextChild = tab.parent!!.getChildAt(tab.position)
+            if (nextChild is TextView) {
+                nextChild.setTypeface(ReuseFunctions.regularFont(this))
+            }
+        }
+    }
+
+    override fun onTabReselected(tab: TabLayout.Tab?) {
+
+    }
+
 }
 
 

@@ -18,24 +18,27 @@ data class StoryData (
 	@SerializedName("480p") val p480p : p480p,
 	@SerializedName("360p") val p360p : p360p,
 	@SerializedName("240p") val p240p : p240p,
+
 	@SerializedName("filename") val filename : String,
 	@SerializedName("poster") val poster : String,
 	@SerializedName("favorite") val favorite : Int,
-
 	var indexPosition: Int,
 	var downloadReference: Long,
 	var downloadprogress: Int = 0,
 	var isDownloaded: Boolean = false,
 	var catName: String,
 	@SerializedName("shareablURL") var shareablURL: String,
+	@SerializedName("linked_video") var linked_video: StoryData,
 	@SerializedName("documents") val documents : List<VideoDocuments>
 
-): Serializable {
-	constructor() : this(
+): Serializable /*{
+constructor() : this(
 		0, 0,
 		"", "", "", "", p1080p("", ""),
 		p720p("", ""), p480p("", ""),
 		p360p("", ""), p240p("", ""),
-		"", "", 0, 0, 0, 0, false, "","",listOf(VideoDocuments( "", "" ))
+		"", "", 0, 0, 0, 0, false, "","",LinkedVideo(0,0,"","",0,"","","",p1080p("", ""),
+			p720p("", ""), p480p("", ""),
+			p360p("", ""), p240p("", ""),"","",0),listOf(VideoDocuments( "", "" ))
 	)
-}
+}*/

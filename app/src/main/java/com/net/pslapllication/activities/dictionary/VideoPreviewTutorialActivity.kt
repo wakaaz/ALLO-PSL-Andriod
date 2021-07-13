@@ -855,9 +855,22 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 val model : VideoDocuments? = adapter.teachers.find { it.isSelected == true }
                 if (model != null){
                      if (name.equals("Download")){
+                        val downloadManager: DownloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager;
 
+                         val   Download_Uri = Uri.parse(URLDecoder.decode(model.url))
+
+                         val request = DownloadManager.Request(Download_Uri)
+                         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
+                         request.setAllowedOverRoaming(false)
+                         request.setTitle(" " + model.name )
+                         request.setDescription("Downloading " + model.name + ".pdf")
+                         request.setVisibleInDownloadsUi(true)
+                         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/PSL/" + "/" + model.name + ".pdf")
+
+
+                        val  refid = downloadManager.enqueue(request)
                 }else if (name.equals("View")){
-                         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse( URLDecoder.decode(model.url)))
+                         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(URLDecoder.decode(model.url)))
                          startActivity(browserIntent)
                 }
 

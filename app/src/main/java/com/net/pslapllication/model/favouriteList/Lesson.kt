@@ -24,6 +24,4 @@ data class Lesson(
     @SerializedName("updated_by") val updated_by : String,
     @SerializedName("shareablURL") var shareablURL: String,
     @SerializedName("documents") val documents : List<VideoDocuments>
-
-
 ) : Serializable

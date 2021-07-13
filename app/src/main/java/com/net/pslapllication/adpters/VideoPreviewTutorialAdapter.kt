@@ -16,9 +16,7 @@ import com.bumptech.glide.request.RequestListener
 import com.comix.rounded.RoundedCornerImageView
 import com.net.pslapllication.R
 import com.net.pslapllication.interfaces.OnVideoSelectedListener
-import com.net.pslapllication.model.dictionary.DictionaryData
 import com.net.pslapllication.model.tutorial.TutorialData
-import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 import kotlinx.android.synthetic.main.row_video_preview.view.*
 import java.net.URLDecoder
 
@@ -40,7 +38,8 @@ class VideoPreviewTutorialAdapter(var context: Context, var type: String, var na
         return diclist.size
     }
 
-    override fun onBindViewHolder(holder: VideoPreviewTutorialAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: VideoPreviewTutorialAdapter.ViewHolder, position: Int)
+    {
 
         //set data
         holder.img_arrow.setImageResource(R.drawable.ic_keyboard_arrow_right)
