@@ -21,6 +21,10 @@ class DictionaryListCarrierDataModel : Serializable {
     private var modelFavList: List<com.net.pslapllication.model.favouriteList.Data>? = null
     private var list: List<Data>? = null
     private var storyList: List<StoryData>? = null
+    private var englistStoriesList: List<StoryData>? = null
+    private var urduStoriesList: List<StoryData>? = null
+
+
     private var subjectList: List<Subjects>? = null
     private var wordsViewModel: WordsViewModel? = null
 
@@ -94,6 +98,21 @@ class DictionaryListCarrierDataModel : Serializable {
 
     fun setStoryList(storyList: List<StoryData>?) {
         this.storyList = storyList
+    }
+
+    fun getEnglishStoryList(): List<StoryData>? {
+        return englistStoriesList
+    }
+
+    fun setEnglishStoryList(storyList: List<StoryData>?) {
+        this.englistStoriesList = storyList
+    }
+    fun getUrduStoryList(): List<StoryData>? {
+        return urduStoriesList
+    }
+
+    fun setUrduStoryList(storyList: List<StoryData>?) {
+        this.urduStoriesList = storyList
     }
 
     fun getViewModel(): WordsViewModel {

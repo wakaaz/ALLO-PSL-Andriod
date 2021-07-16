@@ -52,6 +52,8 @@ class Constants {
         const val SELECTED_DICTIONARY_LIST_MODEL: String = "SELECTED_DICTIONARY_LIST_MODEL"
         const val CATEGORY_LIST: String = "CATEGORY_LIST"
         const val CETAGORY_TYPE: String = "CATAGORY_TYPE"
+        const val IS_LANGUAGE: String = "IS_LANGUAGE"
+
         const val TUTORIAL_TYPE: String = "TUTORIAL_TYPE"
         const val DOWNLOAD_TYPE: String = "DOWNLOAD_TYPE"
         const val DOWNLOAD_LIST_TYPE: String = "DOWNLOAD_LIST_TYPE"

@@ -27,7 +27,8 @@ class VideoPreviewStoryAdapter(var context: Context, var type: String, var name:
     private var diclist = emptyList<StoryData>()
     private var isEnglishVersion: Boolean = true
 
-    fun changeVersion(isEnglishVersion: Boolean ){
+    fun changeVersion(diclist:List<StoryData>,isEnglishVersion:Boolean){
+       this.diclist =  diclist
         this.isEnglishVersion  = isEnglishVersion
         notifyDataSetChanged()
     }
@@ -56,7 +57,7 @@ class VideoPreviewStoryAdapter(var context: Context, var type: String, var name:
         val model : StoryData =  diclist[position]
 
 
-        if (isEnglishVersion){
+
             holder.tv_main?.text = model.title
 
             holder.tv_main?.typeface = ResourcesCompat.getFont(context, R.font.lato_semibold)
@@ -84,39 +85,7 @@ class VideoPreviewStoryAdapter(var context: Context, var type: String, var name:
                     .into(holder.imageView_round)
             }
             holder.bind(model, type, name,onVideoSelectedListener)
-        }else{
-            val datmodel = diclist[position].linked_video
 
-            if(datmodel != null && datmodel.title != null){
-                Log.e("index",""+datmodel.title)
-
-                holder.tv_main?.text = datmodel.title
-
-            }
-            if (model.poster.isNotEmpty()) {
-                var poster: String = URLDecoder.decode(model.poster)
-                Glide.with(context).load(poster)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            p0: GlideException?,
-                            p1: Any?,
-                            target: com.bumptech.glide.request.target.Target<Drawable>?,
-                            p3: Boolean
-                        ): Boolean {
-                            var errorString =  p0?.localizedMessage
-                            return false
-                        }
-                        override fun onResourceReady(p0: Drawable?, p1: Any?,target: com.bumptech.glide.request.target.Target<Drawable>?, p3: DataSource?, p4: Boolean): Boolean {
-                            //do something when picture already loaded
-                            return false
-                        }
-                    })
-                    .into(holder.imageView_round)
-            }
-            holder.bind(model, type, name,onVideoSelectedListener)
-
-
-        }
 
 
     }

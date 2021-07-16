@@ -19,10 +19,8 @@ import com.net.pslapllication.R
 import com.net.pslapllication.activities.dictionary.*
 import com.net.pslapllication.helperClass.ProgressHelper
 import com.net.pslapllication.model.dictionary.DictionaryData
-import com.net.pslapllication.model.carrierModels.DictionaryListCarrierDataModel
 import com.net.pslapllication.model.favouriteList.Data
 import com.net.pslapllication.model.learningtutorial.LearningData
-import com.net.pslapllication.model.preferences.Story_types
 import com.net.pslapllication.model.preferences.Subjects
 import com.net.pslapllication.model.stories.StoryData
 import com.net.pslapllication.util.Constants
@@ -49,6 +47,7 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
     private var subjectName: String = ""
     private var fav_video_type: String = ""
     private var isEnglishVersion: Boolean = true
+    private var overAllstoryList = emptyList<StoryData>()
 
     fun downloded(isDownloaded: Boolean) {
         this.isDownloaded = isDownloaded
@@ -56,6 +55,10 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
 
     fun changeLanguage(isEnglishVersion: Boolean){
         this.isEnglishVersion =  isEnglishVersion
+    }
+
+    fun setAllStories(overAllstoryList: List<StoryData>){
+        this.overAllstoryList =  overAllstoryList
     }
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
 
@@ -155,21 +158,21 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                  Glide.with(context).load(poster)
                      .listener(object : RequestListener<Drawable> {
                          override fun onLoadFailed(
-                             p0: GlideException?,
-                             p1: Any?,
-                             target: com.bumptech.glide.request.target.Target<Drawable>?,
-                             p3: Boolean
+                                 p0: GlideException?,
+                                 p1: Any?,
+                                 target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                 p3: Boolean
                          ): Boolean {
                              var errorString = p0?.localizedMessage
                              return false
                          }
 
                          override fun onResourceReady(
-                             p0: Drawable?,
-                             p1: Any?,
-                             target: com.bumptech.glide.request.target.Target<Drawable>?,
-                             p3: DataSource?,
-                             p4: Boolean
+                                 p0: Drawable?,
+                                 p1: Any?,
+                                 target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                 p3: DataSource?,
+                                 p4: Boolean
                          ): Boolean {
                              //do something when picture already loaded
                              return false
@@ -191,21 +194,21 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                 Glide.with(context).load(poster)
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(
-                            p0: GlideException?,
-                            p1: Any?,
-                            target: com.bumptech.glide.request.target.Target<Drawable>?,
-                            p3: Boolean
+                                p0: GlideException?,
+                                p1: Any?,
+                                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                p3: Boolean
                         ): Boolean {
                             var errorString = p0?.localizedMessage
                             return false
                         }
 
                         override fun onResourceReady(
-                            p0: Drawable?,
-                            p1: Any?,
-                            target: com.bumptech.glide.request.target.Target<Drawable>?,
-                            p3: DataSource?,
-                            p4: Boolean
+                                p0: Drawable?,
+                                p1: Any?,
+                                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                p3: DataSource?,
+                                p4: Boolean
                         ): Boolean {
                             //do something when picture already loaded
                             return false
@@ -225,21 +228,21 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                 Glide.with(context).load(poster)
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(
-                            p0: GlideException?,
-                            p1: Any?,
-                            target: com.bumptech.glide.request.target.Target<Drawable>?,
-                            p3: Boolean
+                                p0: GlideException?,
+                                p1: Any?,
+                                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                p3: Boolean
                         ): Boolean {
                             var errorString = p0?.localizedMessage
                             return false
                         }
 
                         override fun onResourceReady(
-                            p0: Drawable?,
-                            p1: Any?,
-                            target: com.bumptech.glide.request.target.Target<Drawable>?,
-                            p3: DataSource?,
-                            p4: Boolean
+                                p0: Drawable?,
+                                p1: Any?,
+                                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                p3: DataSource?,
+                                p4: Boolean
                         ): Boolean {
                             //do something when picture already loaded
                             return false
@@ -258,21 +261,21 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                 Glide.with(context).load(poster)
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(
-                            p0: GlideException?,
-                            p1: Any?,
-                            target: com.bumptech.glide.request.target.Target<Drawable>?,
-                            p3: Boolean
+                                p0: GlideException?,
+                                p1: Any?,
+                                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                p3: Boolean
                         ): Boolean {
                             var errorString = p0?.localizedMessage
                             return false
                         }
 
                         override fun onResourceReady(
-                            p0: Drawable?,
-                            p1: Any?,
-                            target: com.bumptech.glide.request.target.Target<Drawable>?,
-                            p3: DataSource?,
-                            p4: Boolean
+                                p0: Drawable?,
+                                p1: Any?,
+                                target: com.bumptech.glide.request.target.Target<Drawable>?,
+                                p3: DataSource?,
+                                p4: Boolean
                         ): Boolean {
                             //do something when picture already loaded
                             return false
@@ -284,213 +287,225 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
 
 
         constraint_click?.setOnClickListener(
-            View.OnClickListener {
-                //ReuseFunctions.preventTwoClick(gridView)
+                View.OnClickListener {
+                    //ReuseFunctions.preventTwoClick(gridView)
 
-                if (type == Constants.TYPE_FAVOURITE) {
-                    if (favListFilter[position].dict_video_id != 0 && favListFilter[position].learning_tut_video_id == 0 &&
-                        favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id == 0
-                    ) {
-                         fav_video_type = Constants.FAV_DICTIONARY
-                    } else if (favListFilter[position].dict_video_id == 0 && favListFilter[position].learning_tut_video_id != 0 &&
-                        favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id == 0
-                    ) {
-                        fav_video_type = Constants.FAV_LEARNING_TUT
+                    if (type == Constants.TYPE_FAVOURITE) {
+                        if (favListFilter[position].dict_video_id != 0 && favListFilter[position].learning_tut_video_id == 0 &&
+                                favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id == 0
+                        ) {
+                            fav_video_type = Constants.FAV_DICTIONARY
+                        } else if (favListFilter[position].dict_video_id == 0 && favListFilter[position].learning_tut_video_id != 0 &&
+                                favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id == 0
+                        ) {
+                            fav_video_type = Constants.FAV_LEARNING_TUT
 
-                    } else if (favListFilter[position].dict_video_id == 0 && favListFilter[position].learning_tut_video_id == 0 &&
-                        favListFilter[position].tut_video_id != 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id == 0
-                    ) {
-                        fav_video_type = Constants.FAV_TEACHER_TUT
+                        } else if (favListFilter[position].dict_video_id == 0 && favListFilter[position].learning_tut_video_id == 0 &&
+                                favListFilter[position].tut_video_id != 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id == 0
+                        ) {
+                            fav_video_type = Constants.FAV_TEACHER_TUT
 
-                    } else if (favListFilter[position].dict_video_id == 0 && favListFilter[position].learning_tut_video_id == 0 &&
-                        favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id != 0 && favListFilter[position].story_video_id == 0
-                    ) {
-                        fav_video_type = Constants.FAV_SKILL
+                        } else if (favListFilter[position].dict_video_id == 0 && favListFilter[position].learning_tut_video_id == 0 &&
+                                favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id != 0 && favListFilter[position].story_video_id == 0
+                        ) {
+                            fav_video_type = Constants.FAV_SKILL
 
-                    } else if (favListFilter[position].dict_video_id == 0 && favListFilter[position].learning_tut_video_id == 0 &&
-                        favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id != 0
-                    ) {
-                        fav_video_type = Constants.FAV_STORY
+                        } else if (favListFilter[position].dict_video_id == 0 && favListFilter[position].learning_tut_video_id == 0 &&
+                                favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id != 0
+                        ) {
+                            fav_video_type = Constants.FAV_STORY
 
-                    }
-
-
-
-                    //setList for preview
-                    var isDecrement =false
-                    var newPos = 0
-                    if (position != 0) {
-                        isDecrement = true
-                        newPos = position
-                        newPos--
-                    }else{
-                        isDecrement = false
-                    }
-                    //because selected index also required
-                    try {
-
-                        var newIndexSortedList = ListSorting.sortListFavourite(isDecrement,
-                            favListFilter[newPos].indexPosition,
-                            favListFilter
-                        )
-
-
-                        if (5 >= favListFilter.size) {
-                            //not index found
-                        } else {
-                            newIndexSortedList = newIndexSortedList.subList(0, 6)
                         }
-                        //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
-                        ProgressHelper.getInstance(context)?.setFavList(newIndexSortedList)
 
 
-                        ReuseFunctions.startNewActivityDataModelParam(
-                            context,
-                            VideoPreviewFavouriteActivity::class.java,
-                            favListFilter[position],
-                            fav_video_type
-                        )
-                    } catch (e: IndexOutOfBoundsException) {
-                        e.printStackTrace()
-                    }
-
-                } else if (type == Constants.TYPE_TEACHER_TUTORIAL || type == Constants.TYPE_LEARNING_TUTORIAL_REAL) {
-                    try {
-                        val intent = Intent(context, SubjectTopicListActivity::class.java)
-                        intent.putExtra("GRADE_ID", sublistFilter[position].grade_id)
-                        intent.putExtra("GRADE_NAME", subjectName)
-                        intent.putExtra("SUBJECT_ID", sublistFilter[position].id)
-                        intent.putExtra("SUBJECT_NAME", sublistFilter[position].title)
-                        intent.putExtra(Constants.CETAGORY_TYPE, type)
-                        context.startActivity(intent)
-
-                    } catch (e: IndexOutOfBoundsException) {
-                        e.printStackTrace()
-                    }
-                } else if (type == Constants.TYPE_LEARNING_TUTORIAL) {
-                    var isDecrement =false
-                    var newPos = 0
-                    if (position != 0) {
-                        isDecrement = true
-                        newPos = position
-                        newPos--
-                    }else{
-                        isDecrement = false
-                    }
-
-                    //because selected index also required
-                    try {
-                        //model.setModelList(diclistFilter)
-                        //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
-                        var newIndexSortedList = ListSorting.sortListLearningTutorial(isDecrement,
-                            learningListFilter[newPos].indexPosition,
-                            learningListFilter)
-
-
-                        if (5 >= learningListFilter.size) {
-                            //not index found
+                        //setList for preview
+                        var isDecrement = false
+                        var newPos = 0
+                        if (position != 0) {
+                            isDecrement = true
+                            newPos = position
+                            newPos--
                         } else {
-                            newIndexSortedList = newIndexSortedList.subList(0, 6)
+                            isDecrement = false
                         }
-                        //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
-                        ProgressHelper.getInstance(context)?.setLearningList(newIndexSortedList)
+                        //because selected index also required
+                        try {
 
-
-                        //ReuseFunctions.preventTwoClick(gridView)
-                        ReuseFunctions.startNewActivityDataModelParam(
-                            context,
-                            VideoPreviewLearningTutorialActivity::class.java,
-                            learningListFilter[position]
-                            , type
-                        )
-                    } catch (e: IndexOutOfBoundsException) {
-                        e.printStackTrace()
-                    }
-                } else if (type == Constants.TYPE_DICTIONARY) {
-                    var isDecrement =false
-                    var newPos = 0
-                    if (position != 0) {
-                        isDecrement = true
-                        newPos = position
-                        newPos--
-                    }else{
-                        isDecrement = false
-                    }
-
-                    //because selected index also required
-                    try {
-                        //model.setModelList(diclistFilter)
-                        //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
-                        var newIndexSortedList = ListSorting.sortList(isDecrement,
-                            diclistFilter[newPos].indexPosition,
-                            diclistFilter
-                        )
-
-
-                        if (5 >= diclist.size) {
-                            //not index found
-                        } else {
-                            newIndexSortedList = newIndexSortedList.subList(0, 6)
-                        }
-                        //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
-                        ProgressHelper.getInstance(context)?.setList(newIndexSortedList)
-
-                        if (type == Constants.TYPE_DICTIONARY)
-                        //ReuseFunctions.preventTwoClick(gridView)
-                            ReuseFunctions.startNewActivityDataModelParam(
-                                context,
-                                VideoPreviewActivity::class.java,
-                                diclistFilter[position]
-                                , type
+                            var newIndexSortedList = ListSorting.sortListFavourite(isDecrement,
+                                    favListFilter[newPos].indexPosition,
+                                    favListFilter
                             )
-                    } catch (e: IndexOutOfBoundsException) {
-                        e.printStackTrace()
-                    }
-                } else if (type == Constants.TYPE_STORIES) {
-                    var isDecrement =false
-                    var newPos = 0
-                    if (position != 0) {
-                        isDecrement = true
-                        newPos = position
-                        newPos--
-                    }else{
-                        isDecrement = false
-                    }
 
-                    //because selected index also required
-                    try {
-                        //model.setModelList(diclistFilter)
-                        //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
-                        var newIndexSortedList = ListSorting.sortListStory(isDecrement,
-                            storyListFilter[newPos].indexPosition,
-                            storyListFilter
-                        )
 
-                        var model:StoryData?
-                        if (5 >= storyListFilter.size) {
-                            //not index found
+                            if (5 >= favListFilter.size) {
+                                //not index found
+                            } else {
+                                newIndexSortedList = newIndexSortedList.subList(0, 6)
+                            }
+                            //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
+                            ProgressHelper.getInstance(context)?.setFavList(newIndexSortedList)
 
-                        } else {
-                            newIndexSortedList = newIndexSortedList.subList(0, 6)
 
+                            ReuseFunctions.startNewActivityDataModelParam(
+                                    context,
+                                    VideoPreviewFavouriteActivity::class.java,
+                                    favListFilter[position],
+                                    fav_video_type
+                            )
+                        } catch (e: IndexOutOfBoundsException) {
+                            e.printStackTrace()
                         }
-                        //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
-                        ProgressHelper.getInstance(context)?.setListStory(newIndexSortedList)
+
+                    } else if (type == Constants.TYPE_TEACHER_TUTORIAL || type == Constants.TYPE_LEARNING_TUTORIAL_REAL) {
+                        try {
+                            val intent = Intent(context, SubjectTopicListActivity::class.java)
+                            intent.putExtra("GRADE_ID", sublistFilter[position].grade_id)
+                            intent.putExtra("GRADE_NAME", subjectName)
+                            intent.putExtra("SUBJECT_ID", sublistFilter[position].id)
+                            intent.putExtra("SUBJECT_NAME", sublistFilter[position].title)
+                            intent.putExtra(Constants.CETAGORY_TYPE, type)
+                            context.startActivity(intent)
+
+                        } catch (e: IndexOutOfBoundsException) {
+                            e.printStackTrace()
+                        }
+                    } else if (type == Constants.TYPE_LEARNING_TUTORIAL) {
+                        var isDecrement = false
+                        var newPos = 0
+                        if (position != 0) {
+                            isDecrement = true
+                            newPos = position
+                            newPos--
+                        } else {
+                            isDecrement = false
+                        }
+
+                        //because selected index also required
+                        try {
+                            //model.setModelList(diclistFilter)
+                            //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
+                            var newIndexSortedList = ListSorting.sortListLearningTutorial(isDecrement,
+                                    learningListFilter[newPos].indexPosition,
+                                    learningListFilter)
 
 
-                        //ReuseFunctions.preventTwoClick(gridView)
-                        ReuseFunctions.startNewActivityDataModelParam(
-                            context,
-                            VideoPreviewStoryActivity::class.java,
-                            storyListFilter[position]
-                            , type
-                        )
-                    } catch (e: IndexOutOfBoundsException) {
-                        e.printStackTrace()
+                            if (5 >= learningListFilter.size) {
+                                //not index found
+                            } else {
+                                newIndexSortedList = newIndexSortedList.subList(0, 6)
+                            }
+                            //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
+                            ProgressHelper.getInstance(context)?.setLearningList(newIndexSortedList)
+
+
+                            //ReuseFunctions.preventTwoClick(gridView)
+                            ReuseFunctions.startNewActivityDataModelParam(
+                                    context,
+                                    VideoPreviewLearningTutorialActivity::class.java,
+                                    learningListFilter[position], type
+                            )
+                        } catch (e: IndexOutOfBoundsException) {
+                            e.printStackTrace()
+                        }
+                    } else if (type == Constants.TYPE_DICTIONARY) {
+                        var isDecrement = false
+                        var newPos = 0
+                        if (position != 0) {
+                            isDecrement = true
+                            newPos = position
+                            newPos--
+                        } else {
+                            isDecrement = false
+                        }
+
+                        //because selected index also required
+                        try {
+                            //model.setModelList(diclistFilter)
+                            //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
+                            var newIndexSortedList = ListSorting.sortList(isDecrement,
+                                    diclistFilter[newPos].indexPosition,
+                                    diclistFilter
+                            )
+
+
+                            if (5 >= diclist.size) {
+                                //not index found
+                            } else {
+                                newIndexSortedList = newIndexSortedList.subList(0, 6)
+                            }
+                            //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
+                            ProgressHelper.getInstance(context)?.setList(newIndexSortedList)
+
+                            if (type == Constants.TYPE_DICTIONARY)
+                            //ReuseFunctions.preventTwoClick(gridView)
+                                ReuseFunctions.startNewActivityDataModelParam(
+                                        context,
+                                        VideoPreviewActivity::class.java,
+                                        diclistFilter[position], type
+                                )
+                        } catch (e: IndexOutOfBoundsException) {
+                            e.printStackTrace()
+                        }
+                    } else if (type == Constants.TYPE_STORIES) {
+                        var isDecrement = false
+                        var newPos = 0
+                        if (position != 0) {
+                            isDecrement = true
+                            newPos = position
+                            newPos--
+                        } else {
+                            isDecrement = false
+                        }
+
+                        //because selected index also required
+                        try {
+                            //model.setModelList(diclistFilter)
+                            //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
+                            var newIndexSortedList = ListSorting.sortListStory(isDecrement,
+                                    storyListFilter[newPos].indexPosition,
+                                    storyListFilter
+                            )
+
+                            var model: StoryData?
+                            if (5 >= storyListFilter.size) {
+                                //not index found
+
+                            } else {
+                                newIndexSortedList = newIndexSortedList.subList(0, 6)
+
+                            }
+
+                          val  alternativelist =  f(overAllstoryList,newIndexSortedList);
+                            Log.e("",""+alternativelist.size)
+
+
+                            //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
+                            ProgressHelper.getInstance(context)?.setListStory(newIndexSortedList)
+
+
+                            if(isEnglishVersion){
+                                ProgressHelper.getInstance(context)?.setEnglishListStory(newIndexSortedList)
+                                ProgressHelper.getInstance(context)?.setUrduListStory(alternativelist)
+
+
+                            }else{
+                                ProgressHelper.getInstance(context)?.setEnglishListStory(alternativelist)
+                                ProgressHelper.getInstance(context)?.setUrduListStory(newIndexSortedList)
+                            }
+
+
+                            //ReuseFunctions.preventTwoClick(gridView)
+                            ReuseFunctions.startNewActivityDataModelParam(
+                                    context,
+                                    VideoPreviewStoryActivity::class.java,
+                                    storyListFilter[position], type,isEnglishVersion
+                            )
+                        } catch (e: IndexOutOfBoundsException) {
+                            e.printStackTrace()
+                        }
                     }
-                }
 
-            }
+                }
         )
 
         return gridView
@@ -667,4 +682,18 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
         }
     }
 
+    private fun intersect(A: List<String>, B: List<String>): List<String>? {
+        val rtnList: MutableList<String> = LinkedList()
+        for (dto in A) {
+            if (B.contains(dto)) {
+                rtnList.add(dto)
+            }
+        }
+        return rtnList
+    }
+
+
+    fun f(mainModelList: List<StoryData>, selectedList: List<StoryData>) : List<StoryData> {
+        return mainModelList.filter { selectedList.map { it.parent }.contains ( it.id ) }
+    }
 }

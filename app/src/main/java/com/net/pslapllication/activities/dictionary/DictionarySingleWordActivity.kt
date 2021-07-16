@@ -230,7 +230,7 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
     }
 
 
-    private fun setStoryRecycler(data: List<StoryData>?) {
+    private fun setStoryRecycler(data: List<StoryData>?,overAllData:List<StoryData>) {
         if (adapterLarge != null) {
             if (isCatAlreadyExist(name!!,this)){
                 adapterLarge!!.downloded(true)
@@ -238,6 +238,8 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                 adapterLarge!!.downloded(false)
             }
             adapterLarge!!.setStories(data)
+            adapterLarge!!.setAllStories(overAllData)
+            adapterLarge!!.changeLanguage(true)
             adapterLarge!!.notifyDataSetChanged()
         }
     }
@@ -413,27 +415,33 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                                     if(i != null && i.language != null){
                                       if(i.language.equals("english")){
                                         listEnglishStories?.add(i)
-                                          if(i.linked_video != null && i.linked_video.language != null && i.linked_video.language.equals("english")){
-                                              listEnglishStories?.add(i)
 
-                                          }
                                     } else if(i.language.equals("urdu")){
                                         listUrduStories?.add(i)
-                                          if(i.linked_video != null && i.linked_video.language != null && i.linked_video.language.equals("urdu")){
-                                              listUrduStories?.add(i)
 
-                                          }
                                     }else{
-                                          listEnglishStories?.add(i)
+                                          listUrduStories?.add(i)
                                       }
+                                    }else{
+                                        listUrduStories?.add(i)
+
                                     }
 
                             }
+                                for (i in listEnglishStories.indices) {
+                                    Log.e("word",i.toString()+"")
+                                    listEnglishStories[i].indexPosition = i
+                                }
+                                for (i in listUrduStories.indices) {
+                                    Log.e("word",i.toString()+"")
+                                    listUrduStories[i].indexPosition = i
+                                }
+                                setStoryRecycler(listEnglishStories, listStories!!)
+
                             }
 
 
 
-                            setStoryRecycler(listEnglishStories)
                         }
                     }
                     Constants.SESSION_ERROR_CODE -> {
@@ -794,10 +802,15 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                                 val sortedAppsList1: List<StoryData> =
                                     listEnglishStories!!.sortedBy { it.title }
                                 adapterLarge!!.setStories(sortedAppsList1)
+                                adapterLarge!!.setAllStories(listStories!!)
+
+
                             }else{
                                 val sortedAppsList1: List<StoryData> =
                                     listUrduStories!!.sortedBy { it.title }
                                 adapterLarge!!.setStories(sortedAppsList1)
+                                adapterLarge!!.setAllStories(listStories!!)
+
                             }
 
 
@@ -848,10 +861,14 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                                 val reverseSortedAppsList: List<StoryData> =
                                     listEnglishStories!!.sortedByDescending { it.title }
                                 adapterLarge!!.setStories(reverseSortedAppsList)
+                                adapterLarge!!.setAllStories(listStories!!)
+
                             }else{
                                 val reverseSortedAppsList: List<StoryData> =
                                     listUrduStories!!.sortedByDescending { it.title }
                                 adapterLarge!!.setStories(reverseSortedAppsList)
+                                adapterLarge!!.setAllStories(listStories!!)
+
                             }
 
 
@@ -876,8 +893,12 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                     } else if (type == Constants.TYPE_STORIES) {
                         if(isEnglishVersion){
                             adapterLarge!!.setStories(listEnglishStories!!)
+                            adapterLarge!!.setAllStories(listStories!!)
+
                         }else{
                             adapterLarge!!.setStories(listUrduStories!!)
+                            adapterLarge!!.setAllStories(listStories!!)
+
 
                         }
                         adapterLarge!!.notifyDataSetChanged()
@@ -961,13 +982,20 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
             if (tab.position == 0) {
                 isEnglishVersion =  true
                 setTabIcon(tabIcons1)
+                adapterLarge!!.changeLanguage(true)
+
                 adapterLarge!!.setStories(listEnglishStories)
+                adapterLarge!!.setAllStories(listStories!!)
+
 
             } else if (tab.position == 1) {
                 isEnglishVersion =  false
 
                 setTabIcon(tabIcons2)
+                adapterLarge!!.changeLanguage(false)
                 adapterLarge!!.setStories(listUrduStories)
+                adapterLarge!!.setAllStories(listStories!!)
+
 
             }
 

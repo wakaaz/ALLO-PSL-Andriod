@@ -862,10 +862,11 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                          val request = DownloadManager.Request(Download_Uri)
                          request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                          request.setAllowedOverRoaming(false)
-                         request.setTitle(" " + model.name )
+                         request.setTitle(" " + model.name)
                          request.setDescription("Downloading " + model.name + ".pdf")
                          request.setVisibleInDownloadsUi(true)
                          request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "/PSL/" + "/" + model.name + ".pdf")
+                         registerReceiver(onComplete,  IntentFilter (DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
 
                         val  refid = downloadManager.enqueue(request)
@@ -878,7 +879,7 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                     Toast.makeText(this, "Select the Lesson", Toast.LENGTH_SHORT).show()
                 }
 
-
+                dialogDownloadPDF!!.dismiss()
 
 
             }
@@ -934,6 +935,8 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 }
             }
             dialogView.btn_download.setOnClickListener {
+                dialogDownloadBottom!!.dismiss()
+
                 checkPermission()
             }
             dialogDownloadBottom!!.setContentView(dialogView)
@@ -2077,6 +2080,24 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                     }catch (e: Exception){
                         e.printStackTrace()
                     }
+                }
+            }
+        }
+    }
+    var onComplete: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if(intent.action == DownloadManager.ACTION_DOWNLOAD_COMPLETE){
+                intent.extras?.let {
+
+                    //retrieving the file
+                    val downloadedFileId = it.getLong(DownloadManager.EXTRA_DOWNLOAD_ID)
+                    val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                    val uri: Uri = downloadManager.getUriForDownloadedFile(downloadedFileId)
+
+                    //opening it
+                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    context.startActivity(intent)
                 }
             }
         }

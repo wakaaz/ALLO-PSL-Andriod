@@ -479,7 +479,7 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                             context,
                             VideoPreviewStoryActivity::class.java,
                             storyListFilter[position]
-                            , type
+                            , type,false
                         )
                     } catch (e: IndexOutOfBoundsException) {
                         e.printStackTrace()

@@ -129,6 +129,8 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
     var tempOrignalModel:Any? =  null
     //list
     public var list: List<StoryData>? = null
+    public var englishlist: List<StoryData>? = null
+    public var urdulist: List<StoryData>? = null
 
     //others
     private lateinit var dialog_quality: BottomSheetDialog
@@ -149,13 +151,15 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
         checkConnectionQuality()
         nestedScrollView.isEnableScrolling = false
         setAdapter()
+        englishlist = ProgressHelper.getInstance(context)?.getEnglishListStory()
+        urdulist = ProgressHelper.getInstance(context)?.getUrduListStory()
         getIntentData()
 
         setListener()
         setAlreadyFavourite()
         setDownloadLesson()
         checkAutoPlaySwitch()
-        checkLanguageVersion()
+        checkLanguageVersion(false)
         Handler().postDelayed({
             if (isVideoAlreadyExist((selectedModel as StoryData?)!!.filename)) {
                 constraint_download.setCompoundDrawablesWithIntrinsicBounds(
@@ -198,6 +202,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
             /********get categoty type*********/
             categoryType =
                 intent.getStringExtra(Constants.CETAGORY_TYPE)!!
+            isEnglishVersion = intent.getBooleanExtra(Constants.IS_LANGUAGE, false)
             when (categoryType) {
                 Constants.TYPE_FAVOURITE -> {
                 }
@@ -215,7 +220,13 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
             /********get complete list data*********/
 
             Handler().postDelayed({
-                list = ProgressHelper.getInstance(context)?.getListStory()
+
+                if(isEnglishVersion){
+                    list = englishlist
+
+                }else{
+                    list =  urdulist
+                }
                 if (list?.size != 0) {
                     val recyclerList = list!!.drop(1)
 
@@ -431,14 +442,54 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
             SharedPreferenceClass.getInstance(this)?.setAutoPLayToggle(isChecked)
         }
     }
-    private fun checkLanguageVersion() {
+    private fun checkLanguageVersion(isaction:Boolean) {
         if (selectedModel != null) {
-            if ((selectedModel as StoryData?)!!.linked_video != null) {
-                btn_watch_version.visibility =  View.VISIBLE
-                btn_watch_version.setOnClickListener(this)
-            }else{
-                li_lesson.visibility =  View.GONE
+            val id = (selectedModel as StoryData?)!!.parent
 
+            if (isEnglishVersion) {
+                val value = urdulist?.filter { it.id == id }
+
+                if (value != null && value.size > 0) {
+
+                    btn_watch_version.visibility = View.VISIBLE
+                    tv_watch.text = "Watch Urdu version"
+
+                    btn_watch_version.setOnClickListener(this)
+                } else {
+                    btn_watch_version.visibility = View.GONE
+                }
+
+
+            }else{
+                val value = englishlist?.filter { it.id == id }
+
+                if (value != null && value.size > 0) {
+
+                    btn_watch_version.visibility = View.VISIBLE
+                    tv_watch.text = "Watch English version"
+                    btn_watch_version.setOnClickListener(this)
+
+
+
+                } else {
+                    btn_watch_version.visibility = View.GONE
+                }
+
+            }
+
+            setTitleText((selectedModel as StoryData?)!!)
+            if(isaction){
+               videoview.visibility = View.VISIBLE
+            constraint_centerscreen.visibility = View.GONE
+            image_btn_menu.visibility = View.GONE
+            constraint_dimview.visibility = View.VISIBLE
+            progress.visibility = View.VISIBLE
+            if (selectedModel != null) {
+                val videoUrl: String =
+                        URLDecoder.decode((selectedModel as StoryData?)!!.p720p.url)
+                setplayer(videoUrl)
+            }
+            videoview.start()
             }
 
         }
@@ -531,6 +582,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
             }
             R.id.img_btn_pre -> {
                 setNextPreVideo(-1)
+
             }
             R.id.image_btn_menu -> {
                 openBottomSheetQuality()
@@ -554,14 +606,33 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
             R.id.btn_watch_version -> {
                 if(isEnglishVersion){
                     isEnglishVersion =  false
-                    adapter?.changeVersion(isEnglishVersion)
-                    changeSelectVideoLanguage()
+
+
+                    if (selectedModel != null) {
+                        val id = (selectedModel as StoryData?)!!.parent
+                        val value = urdulist?.filter { it.id == id }
+
+                        if (value != null && value.size > 0) {
+                            selectedModel = value.get(0)
+                        }
+                    }
+                    list = urdulist
+
+                    adapter?.changeVersion(list!!,isEnglishVersion)
+                    checkLanguageVersion(true)
                 }else{
                     isEnglishVersion =  true
-                    adapter?.changeVersion(isEnglishVersion)
-                    changeSelectVideoLanguage()
+                      if (selectedModel != null) {
+                        val id = (selectedModel as StoryData?)!!.parent
+                        val value = englishlist?.filter { it.id == id }
 
-
+                        if (value != null && value.size > 0) {
+                            selectedModel = value.get(0)
+                        }
+                    }
+                    list = englishlist
+                    adapter?.changeVersion(list!!,isEnglishVersion)
+                    checkLanguageVersion(true)
                 }
             }
             R.id.img_btn_full_screen -> {
@@ -1868,6 +1939,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
                             URLDecoder.decode((selectedModel as StoryData?)!!.p720p.url)
                         setplayer(videoUrl)
                         videoview.start()
+                        changeSelectVideoLanguage()
                         setTitleText((selectedModel as StoryData?)!!)
                         if (list != null) {
                             val finalList =

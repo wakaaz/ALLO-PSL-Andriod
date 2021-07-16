@@ -137,13 +137,15 @@ class ReuseFunctions {
             context: Context,
             nextClass: Class<out Any>,
             tutorialData: StoryData,
-            type: String
+            type: String,isEnglish:Boolean
         ) {
             val bundle = Bundle()
             bundle.putSerializable(Constants.SELECTED_DICTIONARY_LIST_MODEL, tutorialData)
             val intent = Intent(context, nextClass)
             intent.putExtras(bundle)
             intent.putExtra(Constants.CETAGORY_TYPE, type)
+            intent.putExtra(Constants.IS_LANGUAGE, isEnglish)
+
             context.startActivity(intent)
         }
  fun startNewActivityDataModelParam(

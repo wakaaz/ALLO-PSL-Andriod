@@ -18,7 +18,7 @@ data class StoryData (
 	@SerializedName("480p") val p480p : p480p,
 	@SerializedName("360p") val p360p : p360p,
 	@SerializedName("240p") val p240p : p240p,
-
+	@SerializedName("parent") val parent : Int,
 	@SerializedName("filename") val filename : String,
 	@SerializedName("poster") val poster : String,
 	@SerializedName("favorite") val favorite : Int,

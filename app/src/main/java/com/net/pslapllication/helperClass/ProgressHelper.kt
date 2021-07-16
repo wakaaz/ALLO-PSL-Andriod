@@ -120,10 +120,29 @@ class ProgressHelper(var context: Context) {
 
         this.dictionaryListCarrierDataModel?.setStoryList(list)
     }
-
     fun getListStory(): List<StoryData> {
         return this.dictionaryListCarrierDataModel?.getStoryList()!!
     }
+
+    fun setEnglishListStory(list: List<StoryData>) {
+
+        this.dictionaryListCarrierDataModel?.setEnglishStoryList(list)
+    }
+    fun getEnglishListStory(): List<StoryData> {
+
+        return this.dictionaryListCarrierDataModel?.getEnglishStoryList()!!
+    }
+
+    fun setUrduListStory(list: List<StoryData>) {
+
+        this.dictionaryListCarrierDataModel?.setUrduStoryList(list)!!
+    }
+    fun getUrduListStory(): List<StoryData> {
+
+        return this.dictionaryListCarrierDataModel?.getUrduStoryList()!!
+    }
+
+
 
     fun getViewModel(): WordsViewModel {
 

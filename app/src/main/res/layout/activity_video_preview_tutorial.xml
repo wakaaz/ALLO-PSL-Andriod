@@ -258,21 +258,44 @@
 
 
 
-            <Button
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:text="View"
-                android:visibility="gone"
-                android:textColor="@color/white"
-                android:layout_margin="@dimen/_10ssp"
-                android:id="@+id/btn_watch_version"
                 app:layout_constraintTop_toBottomOf="@+id/view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/button_radius_round"
+                android:layout_margin="@dimen/_10ssp"
+                android:id="@+id/btn_watch_version"
+android:visibility="gone"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_downloadlesson"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginRight="@dimen/_25sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@+id/tv_watch"
 
-                />
+                    />
+
+                <TextView
+                    android:id="@+id/tv_watch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_semibold"
+                    android:text="NEXT"
+                    android:textColor="@color/white"
+
+                    android:textSize="@dimen/_13sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -572,21 +595,30 @@
                     android:layout_height="@dimen/_35sdp"
                     android:layout_weight="1"
                     android:layout_marginRight="@dimen/_5sdp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/button_radius_round"
                     android:text="Download Lesson"
+                    android:drawableLeft="@drawable/ic_downloadlesson"
                     android:textColor="@color/white"
                     android:id="@+id/btn_download_lesson"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+
+                    android:textSize="@dimen/_10ssp"
 
                     />
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_35sdp"
                     android:layout_weight="1"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/button_radius_round"
                     android:text="View Lesson"
                     android:textColor="@color/white"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:id="@+id/btn_view_lesson"
+                    android:drawableLeft="@drawable/ic_viewlesson"
+                    android:paddingLeft="20dip"
+                    android:paddingRight="20dip"
+                    android:textSize="@dimen/_10ssp"
 
                     />
 
