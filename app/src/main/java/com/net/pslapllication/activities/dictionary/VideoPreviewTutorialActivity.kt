@@ -2090,14 +2090,24 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 intent.extras?.let {
 
                     //retrieving the file
-                    val downloadedFileId = it.getLong(DownloadManager.EXTRA_DOWNLOAD_ID)
-                    val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-                    val uri: Uri = downloadManager.getUriForDownloadedFile(downloadedFileId)
+                    try {
+                        val downloadedFileId = it.getLong(DownloadManager.EXTRA_DOWNLOAD_ID)
 
-                    //opening it
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    context.startActivity(intent)
+                        val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+                        val uri: Uri = downloadManager.getUriForDownloadedFile(downloadedFileId)
+
+                            //opening it
+                        val intent = Intent(Intent.ACTION_VIEW, uri)
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            context.startActivity(intent)
+
+                    } catch (e: IllegalStateException) {
+                      Log.e("exception",""+e)
+                    }
+
+
+
+
                 }
             }
         }

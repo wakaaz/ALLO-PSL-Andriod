@@ -109,7 +109,7 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
         tabLayout_dic.visibility =View.VISIBLE
         tabLayout_dic.addTab(tabLayout_dic.newTab().setText("English"))
         tabLayout_dic.addTab(tabLayout_dic.newTab().setText("Urdu"))
-        setTabIcon(tabIcons1)
+       // setTabIcon(tabIcons1)
         tabLayout_dic.addOnTabSelectedListener(this)
     }
 
@@ -419,7 +419,8 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
                                     } else if(i.language.equals("urdu")){
                                         listUrduStories?.add(i)
 
-                                    }else{
+                                    }
+                                    else{
                                           listUrduStories?.add(i)
                                       }
                                     }else{
@@ -981,7 +982,7 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
 
             if (tab.position == 0) {
                 isEnglishVersion =  true
-                setTabIcon(tabIcons1)
+              //  setTabIcon(tabIcons1)
                 adapterLarge!!.changeLanguage(true)
 
                 adapterLarge!!.setStories(listEnglishStories)
@@ -991,7 +992,7 @@ class DictionarySingleWordActivity : BaseActivity(), View.OnClickListener,
             } else if (tab.position == 1) {
                 isEnglishVersion =  false
 
-                setTabIcon(tabIcons2)
+                //setTabIcon(tabIcons2)
                 adapterLarge!!.changeLanguage(false)
                 adapterLarge!!.setStories(listUrduStories)
                 adapterLarge!!.setAllStories(listStories!!)

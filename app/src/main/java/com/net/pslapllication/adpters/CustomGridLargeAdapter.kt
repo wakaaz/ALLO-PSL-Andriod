@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -394,6 +395,7 @@ class CustomGridLargeAdapter(private val context: Context, var type: String) : B
             tv_word.typeface = ResourcesCompat.getFont(context, R.font.lato_semibold)
             tv_no_videos.typeface = ResourcesCompat.getFont(context, R.font.lato_regular)
             try {
+                Log.e("poster",""+URLDecoder.decode(tutGradeSubVideoListFilter[position].poster+"|"+position))
                 Glide.with(context)
                     .load(URLDecoder.decode(tutGradeSubVideoListFilter[position].poster))
                     .into(imageViewRecent)

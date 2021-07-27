@@ -796,7 +796,7 @@ class VideoPreviewOfflineActivity : BaseActivity(), View.OnClickListener,
 
 
             dialogView.tv_main.text = (selectedModel as DictionaryDataAPI?)!!.english_word
-            if((selectedModel as DictionaryData?)!!.urdu_word.isEmpty()){
+            if((selectedModel as DictionaryDataAPI?)!!.urdu_word.isEmpty()){
                 dialogView.tv_translate.visibility = View.GONE
             }
             dialogView.tv_translate.text = (selectedModel as DictionaryDataAPI?)!!.urdu_word

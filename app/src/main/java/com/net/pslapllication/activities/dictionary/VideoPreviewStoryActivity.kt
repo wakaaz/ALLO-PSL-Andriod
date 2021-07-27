@@ -125,7 +125,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
     private var selectedSpeedString = "Normal"
 
     //data model
-    var selectedModel: Any? = null
+    var selectedModel: Any?  = null
     var tempOrignalModel:Any? =  null
     //list
     public var list: List<StoryData>? = null
@@ -228,9 +228,15 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
                     list =  urdulist
                 }
                 if (list?.size != 0) {
-                    val recyclerList = list!!.drop(1)
+                    val inputid = (selectedModel as StoryData).id
+                    val index = list!!.indexOfFirst { it.id == inputid } // -1 if not found
+                    if (index >= 0) {
+                        val recyclerList = list!!.drop(index+1)
+                        // do something with user
+                        setNextVideosList(recyclerList!!)
 
-                    setNextVideosList(recyclerList!!)
+                    }
+
                 }
             }, 500)
 
@@ -518,12 +524,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
     }
 
     fun changeSelectVideoLanguage(){
-        if (isEnglishVersion){
-            selectedModel = tempOrignalModel
-        }else{
-            selectedModel = (selectedModel as StoryData?)?.linked_video
 
-        }
 
         if (selectedModel != null && (selectedModel as StoryData?)?.p720p?.url != null) {
             try {
@@ -607,7 +608,6 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
                 if(isEnglishVersion){
                     isEnglishVersion =  false
 
-
                     if (selectedModel != null) {
                         val id = (selectedModel as StoryData?)!!.parent
                         val value = urdulist?.filter { it.id == id }
@@ -618,8 +618,18 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
                     }
                     list = urdulist
 
-                    adapter?.changeVersion(list!!,isEnglishVersion)
-                    checkLanguageVersion(true)
+                    val inputid = (selectedModel as StoryData).id
+                    val index = list!!.indexOfFirst { it.id == inputid } // -1 if not found
+                    if (index >= 0) {
+
+                        val recyclerList = list!!.drop(index+1)
+                        // do something with user
+                        adapter?.changeVersion(recyclerList!!,isEnglishVersion)
+                        checkLanguageVersion(true)
+
+                    }
+
+
                 }else{
                     isEnglishVersion =  true
                       if (selectedModel != null) {
@@ -631,8 +641,15 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
                         }
                     }
                     list = englishlist
-                    adapter?.changeVersion(list!!,isEnglishVersion)
-                    checkLanguageVersion(true)
+                    val inputid = (selectedModel as StoryData).id
+                    val index = list!!.indexOfFirst { it.id == inputid } // -1 if not found
+                    if (index >= 0) {
+                        val recyclerList = list!!.drop(index+1)
+                        // do something with user
+                        adapter?.changeVersion(recyclerList!!,isEnglishVersion)
+                        checkLanguageVersion(true)
+
+                    }
                 }
             }
             R.id.img_btn_full_screen -> {
@@ -1857,9 +1874,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
     override fun onVideoSelect(selectedModelVideo: StoryData) {
 
         selectedModel = selectedModelVideo
-        if(!isEnglishVersion){
-            selectedModel = selectedModelVideo.linked_video
-        }
+
         if (selectedModel != null && (selectedModel as StoryData?)?.p720p?.url != null) {
             try {
                 var StoryDataTemp: StoryData? = null
@@ -1932,14 +1947,18 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
 
                     try {
                         val data = list!!.filter { it.indexPosition == nextVideo }
-                        selectedModel = data[0]
+                        val model =  data.get(0)
+                        selectedModel = model
+                        Log.e("naem",model.title)
+                        Log.e("naem",""+(selectedModel as StoryData).title)
+
                         StoryDataTemp = selectedModel as StoryData
                         var newIndex = list!!.indexOf(StoryDataTemp)
                         val videoUrl: String =
                             URLDecoder.decode((selectedModel as StoryData?)!!.p720p.url)
                         setplayer(videoUrl)
                         videoview.start()
-                        changeSelectVideoLanguage()
+                        //changeSelectVideoLanguage()
                         setTitleText((selectedModel as StoryData?)!!)
                         if (list != null) {
                             val finalList =

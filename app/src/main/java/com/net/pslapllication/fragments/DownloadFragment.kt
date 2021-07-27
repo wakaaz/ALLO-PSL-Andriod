@@ -58,7 +58,7 @@ class DownloadFragment : Fragment(), View.OnClickListener, onQualityChangSelecte
         setClickListener(viewlayout!!)
         setDownloadRecycler(viewlayout!!)
         searchBarSetting(viewlayout!!)
-        viewlayout!!.img_btn_download.visibility = View.VISIBLE
+      //  viewlayout!!.img_btn_download.visibility = View.VISIBLE
         checkPermission(viewlayout!!)
         return viewlayout
     }

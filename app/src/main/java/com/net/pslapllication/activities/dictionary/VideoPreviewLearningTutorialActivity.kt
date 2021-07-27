@@ -419,7 +419,7 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
 
     private  fun setDownloadLesson(){
         if (selectedModel != null) {
-            if ((selectedModel as TutorialData?)!!.documents != null && (selectedModel as LearningData?)!!.documents.size  > 0) {
+            if ((selectedModel as LearningData?)!!.documents != null && (selectedModel as LearningData?)!!.documents.size  > 0) {
                 li_lesson.visibility =  View.VISIBLE
 
             }else{

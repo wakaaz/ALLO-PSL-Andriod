@@ -449,8 +449,16 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
 
     private  fun setDownloadLesson(){
         if (selectedModel != null) {
-            if ((selectedModel as TutorialData?)!!.documents != null && (selectedModel as DictionaryData?)!!.documents.size  > 0) {
-                li_download.visibility =  View.VISIBLE
+            if ((selectedModel as DictionaryData?)!!.documents != null && (selectedModel as DictionaryData?)!!.documents.size  > 0) {
+
+              val url =  (selectedModel as DictionaryData?)!!.documents.get(0).url
+              if(url.isEmpty()){
+                  li_download.visibility =  View.GONE
+
+              }else{
+                  li_download.visibility =  View.VISIBLE
+
+              }
 
             }else{
                 li_download.visibility =  View.GONE
@@ -470,8 +478,16 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
 
 
     private fun setTitleText(selectedModel: DictionaryData) {
-        txt_title.text = ReuseFunctions.firstLetterCap(selectedModel.english_word)
-        tv_main.text = ReuseFunctions.firstLetterCap(selectedModel.english_word)
+        if(selectedModel.english_word.equals("-")){
+            txt_title.text = ReuseFunctions.firstLetterCap(selectedModel.urdu_word)
+
+            tv_main.text = ReuseFunctions.firstLetterCap(selectedModel.english_word)
+        }else{
+            txt_title.text = ReuseFunctions.firstLetterCap(selectedModel.english_word)
+
+            tv_main.text = ReuseFunctions.firstLetterCap(selectedModel.english_word)
+        }
+
         tv_translate.text = " " + selectedModel!!.urdu_word
 
     }
