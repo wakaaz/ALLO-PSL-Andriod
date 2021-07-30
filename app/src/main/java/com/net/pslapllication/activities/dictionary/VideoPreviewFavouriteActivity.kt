@@ -150,7 +150,6 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
         nestedScrollView.isEnableScrolling = false
         setAdapter()
         getIntentData()
-
         setListener()
         setAlreadyFavourite()
         checkAutoPlaySwitch()
@@ -207,6 +206,8 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
                 intent.getSerializableExtra(Constants.SELECTED_DICTIONARY_LIST_MODEL) as Data
             if (selectedModel != null) {
                 setTitleText((selectedModel as Data))
+                setShareAvailable()
+
             }
 
              /********get complete list data*********/
@@ -225,10 +226,10 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
              */
             when (categoryType) {
                 Constants.FAV_STORY -> {
-                    p240url = (selectedModel as Data).dictionary.p240p.url
-                    p360url = (selectedModel as Data).dictionary.p360p.url
-                    p480url = (selectedModel as Data).dictionary.p480p.url
-                    p720url = (selectedModel as Data).dictionary.p720p.url
+                    p240url = (selectedModel as Data).story.p240p.url
+                    p360url = (selectedModel as Data).story.p360p.url
+                    p480url = (selectedModel as Data).story.p480p.url
+                    p720url = (selectedModel as Data).story.p720p.url
                 }
                 Constants.FAV_DICTIONARY -> {
                     p240url = (selectedModel as Data).dictionary.p240p.url
@@ -445,6 +446,57 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
             }
         }
     }
+
+    private fun setShareAvailable() {
+
+        var youtubelink : String? = null
+        var vimoelink : String? = null
+
+        when (categoryType) {
+            Constants.FAV_STORY -> {
+                youtubelink =  (selectedModel as Data).story.youtube_link;
+                vimoelink = (selectedModel as Data).story.vimeo_link;
+
+
+            }
+            Constants.FAV_DICTIONARY -> {
+
+                youtubelink =  (selectedModel as Data).dictionary.youtube_link;
+                vimoelink = (selectedModel as Data).dictionary.vimeo_link;
+
+            }
+            Constants.FAV_TEACHER_TUT -> {
+                youtubelink =  (selectedModel as Data).tutorial.youtube_link;
+                vimoelink = (selectedModel as Data).tutorial.vimeo_link;
+
+            }
+            Constants.FAV_LEARNING_TUT -> {
+                youtubelink =  (selectedModel as Data).learningTutorial.youtube_link;
+                vimoelink = (selectedModel as Data).learningTutorial.vimeo_link;
+
+            }
+            Constants.FAV_SKILL -> {
+                youtubelink =  (selectedModel as Data).lesson.youtube_link;
+                vimoelink = (selectedModel as Data).lesson.vimeo_link;
+
+            }
+        }
+
+        if(!vimoelink.isNullOrEmpty()){
+            constraint_vimeo.visibility =  View.VISIBLE
+
+        }else{
+            constraint_vimeo.visibility =  View.GONE
+
+        }
+        if(!youtubelink.isNullOrEmpty()){
+         constraint_youtube.visibility =  View.VISIBLE
+        }else{
+            constraint_youtube.visibility =  View.GONE
+
+        }
+    }
+
 
     private fun checkAutoPlaySwitch() {
         switch_next.isChecked = SharedPreferenceClass.getInstance(this)?.getAutoPLayToggle()!!
@@ -1457,9 +1509,14 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
             } else {
                 if ((selectedModel as Data?) != null)
                     try {
+
+                        var filename = (selectedModel as Data?)!!.videoname
+                        if(filename.contains(" ")) {
+                            filename = filename.replace(" ", "_")
+                        }
                         newDownload(
                             URLDecoder.decode(selected_url),
-                            (selectedModel as Data?)!!.videoname,
+                            filename,
                             (selectedModel as Data?)!!.postermain
                         )
                     } catch (e: UnsupportedEncodingException) {
@@ -1485,9 +1542,13 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
                         ReuseFunctions.showToast(this, "Select one category")
                     } else {
                         try {
+                            var filename = (selectedModel as Data?)!!.videoname
+                            if(filename.contains(" ")) {
+                                filename = filename.replace(" ", "_")
+                            }
                             newDownload(
                                 URLDecoder.decode(selected_url),
-                                (selectedModel as Data?)!!.videoname,
+                                filename,
                                 (selectedModel as Data?)!!.postermain
                             )
                         } catch (e: UnsupportedEncodingException) {
@@ -1768,6 +1829,7 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
                 setplayer(videoUrl)
                 videoview.start()
                 setTitleText((selectedModel as Data))
+                setShareAvailable()
                 if (list != null) {
                     val finalList = ListSorting.sortListFavourite(
                         newIndex,
@@ -1829,6 +1891,8 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
                         setplayer(videoUrl)
                         videoview.start()
                         setTitleText((selectedModel as Data?)!!)
+                        setShareAvailable()
+
                         if (list != null) {
                             val finalList =
                                 ListSorting.sortListFavourite(

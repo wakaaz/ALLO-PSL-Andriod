@@ -1482,10 +1482,18 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
                 ReuseFunctions.showToast(this, "Select one category")
             } else {
                 if ((selectedModel as DictionaryData?) != null)
+
                     try {
+                        var filename = (selectedModel as DictionaryData?)!!.english_word
+                        if(filename.equals("-")){
+                            filename =  (selectedModel as DictionaryData?)!!.urdu_word
+                        }
+                        if(filename.contains(" ")) {
+                            filename = filename.replace(" ", "_")
+                        }
                         newDownload(
                             URLDecoder.decode(selected_url),
-                            (selectedModel as DictionaryData?)!!.filename,
+                            filename,
                             (selectedModel as DictionaryData?)!!.poster
                         )
                     } catch (e: UnsupportedEncodingException) {
@@ -1511,9 +1519,16 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
                         ReuseFunctions.showToast(this, "Select one category")
                     } else {
                         try {
+                            var filename = (selectedModel as DictionaryData?)!!.english_word
+                            if(filename.equals("-")){
+                                filename =  (selectedModel as DictionaryData?)!!.urdu_word
+                            }
+                            if(filename.contains(" ")) {
+                                filename = filename.replace(" ", "_")
+                            }
                             newDownload(
                                 URLDecoder.decode(selected_url),
-                                (selectedModel as DictionaryData?)!!.filename,
+                                filename,
                                 (selectedModel as DictionaryData?)!!.poster
                             )
                         } catch (e: UnsupportedEncodingException) {

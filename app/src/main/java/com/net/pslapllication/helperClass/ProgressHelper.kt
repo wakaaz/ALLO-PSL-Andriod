@@ -145,14 +145,11 @@ class ProgressHelper(var context: Context) {
 
 
     fun getViewModel(): WordsViewModel {
-
-            return dictionaryListCarrierDataModel!!.getViewModel()
-
-
+        return dictionaryListCarrierDataModel!!.getViewModel()
     }
 
     fun setViewModel(viewModel: WordsViewModel) {
-         this.dictionaryListCarrierDataModel!!.setViewModel(viewModel)
+        this.dictionaryListCarrierDataModel!!.setViewModel(viewModel)
 
     }
 

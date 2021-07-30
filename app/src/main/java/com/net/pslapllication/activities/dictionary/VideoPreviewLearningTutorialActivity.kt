@@ -1410,9 +1410,13 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
             } else {
                 if ((selectedModel as LearningData?) != null)
                     try {
+                        var filename = (selectedModel as LearningData?)!!.title
+                        if(filename.contains(" ")) {
+                            filename = filename.replace(" ", "_")
+                        }
                         newDownload(
                             URLDecoder.decode(selected_url),
-                            (selectedModel as LearningData?)!!.filename,
+                            filename,
                             (selectedModel as LearningData?)!!.poster
                         )
                     } catch (e: UnsupportedEncodingException) {
@@ -1438,9 +1442,13 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
                         ReuseFunctions.showToast(this, "Select one category")
                     } else {
                         try {
+                            var filename = (selectedModel as LearningData?)!!.title
+                            if(filename.contains(" ")) {
+                                filename = filename.replace(" ", "_")
+                            }
                             newDownload(
                                 URLDecoder.decode(selected_url),
-                                (selectedModel as LearningData?)!!.filename,
+                                filename,
                                 (selectedModel as LearningData?)!!.poster
                             )
                         } catch (e: UnsupportedEncodingException) {
