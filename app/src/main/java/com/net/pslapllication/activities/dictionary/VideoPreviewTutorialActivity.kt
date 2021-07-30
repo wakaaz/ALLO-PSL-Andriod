@@ -78,6 +78,7 @@ import kotlinx.android.synthetic.main.activity_video_preview_tutorial.reload_lay
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.switch_next
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.tv_main
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.videoview
+import kotlinx.android.synthetic.main.bottom_layout_download_video.*
 import kotlinx.android.synthetic.main.bottom_layout_download_video.view.*
 import kotlinx.android.synthetic.main.bottom_layout_download_video.view.tv_down_video
 import kotlinx.android.synthetic.main.bottom_layout_video_option.view.*
@@ -909,9 +910,11 @@ class VideoPreviewTutorialActivity : BaseActivity(), View.OnClickListener,
                 dialogView.tv_translate.visibility = View.GONE
            // }
             //dialogView.tv_translate.text = (selectedModel as TutorialData?)!!.urdu_word
-            dialogView.tv_high.text = (selectedModel as TutorialData?)!!.p720p!!.url
-            dialogView.tv_medium.text = (selectedModel as TutorialData?)!!.p480p.url
-            dialogView.tv_low.text = (selectedModel as TutorialData?)!!.p240p.url
+            dialogView.con_size.visibility = View.VISIBLE
+
+            dialogView.tv_high.text = (selectedModel as TutorialData?)!!.p720p!!.filesize
+            dialogView.tv_medium.text = (selectedModel as TutorialData?)!!.p480p.filesize
+            dialogView.tv_low.text = (selectedModel as TutorialData?)!!.p240p.filesize
             dialogView.radiogroup.setOnCheckedChangeListener { arg0, arg1 ->
                 selectedId = dialogView.radiogroup.checkedRadioButtonId
                 try {

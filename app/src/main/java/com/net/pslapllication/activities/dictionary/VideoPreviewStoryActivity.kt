@@ -85,6 +85,7 @@ import kotlinx.android.synthetic.main.layout_videoview_error.*
 import kotlinx.android.synthetic.main.playerbarlayout.*
 import kotlinx.android.synthetic.main.toolbaar_layout.*
 import  kotlinx.android.synthetic.main.activity_video_preview_tutorial.layout_next
+import kotlinx.android.synthetic.main.bottom_layout_download_video.*
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -942,6 +943,7 @@ class VideoPreviewStoryActivity : BaseActivity(), View.OnClickListener,
            // if((selectedModel as DictionaryData?)!!.urdu_word.isEmpty()){
                 dialogView.tv_translate.visibility = View.GONE
            // }
+            dialogView.con_size.visibility = View.VISIBLE
              dialogView.tv_high.text = (selectedModel as StoryData?)!!.p720p.filesize
             dialogView.tv_medium.text = (selectedModel as StoryData?)!!.p480p.filesize
             dialogView.tv_low.text = (selectedModel as StoryData?)!!.p240p.filesize

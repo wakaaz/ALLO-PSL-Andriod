@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.GridView
 import androidx.annotation.NonNull
@@ -13,6 +14,8 @@ import com.net.pslapllication.R
 import com.net.pslapllication.adpters.CustomGridAdapter
 import com.net.pslapllication.data.DictionaryListModel
 import com.net.pslapllication.data.DownloadListModel
+import com.net.pslapllication.room.DownloadRepository
+import com.net.pslapllication.room.WordsDatabase
 import com.net.pslapllication.util.Constants
 import com.net.pslapllication.util.ReuseFunctions
 import kotlinx.android.synthetic.main.activity_cat_downloads.tv_sort
@@ -96,6 +99,9 @@ class CatDownloadsActivity : AppCompatActivity(),View.OnClickListener {
           )*/
         if (file.exists()) {
             try {
+                val downloadDao =  WordsDatabase.getInstance(applicationContext).downloadDao()
+                var downloadRepository : DownloadRepository = DownloadRepository(downloadDao!!)
+
                 var filename :String = ""
                 val fileCat = file.listFiles()
                 if (fileCat?.size != 0) {
@@ -104,11 +110,19 @@ class CatDownloadsActivity : AppCompatActivity(),View.OnClickListener {
                         if (index!=-1){
                             filename = file[i].name.substring(0,index)
                         }*/
+
+                        var picture = fileCat[i].absolutePath
+                        Log.e("name",fileCat[i].nameWithoutExtension+"")
+                        var model = downloadRepository.getSingleDownload(fileCat[i].nameWithoutExtension)
+                        if(model != null && !model.link.isNullOrEmpty()){
+                            picture = model.link
+                        }
+
                         dicWordList.add(
                             DownloadListModel(
                                 i,
                                 fileCat[i].nameWithoutExtension,
-                                fileCat[i].absolutePath,
+                                picture,
                                 "00:10",
                                 false,
                                 i

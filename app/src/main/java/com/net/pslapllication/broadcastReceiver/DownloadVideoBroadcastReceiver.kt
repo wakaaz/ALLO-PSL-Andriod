@@ -13,6 +13,8 @@ import com.net.pslapllication.model.dictionary.DictionaryData
 import com.net.pslapllication.model.learningtutorial.LearningData
 import com.net.pslapllication.model.stories.StoryData
 import com.net.pslapllication.model.tutorial.TutorialData
+import com.net.pslapllication.room.DownloadRepository
+import com.net.pslapllication.room.WordsDatabase
 import com.net.pslapllication.util.Constants
 import com.net.pslapllication.util.SharedPreferenceClass
 import java.io.File
@@ -117,6 +119,21 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
           }
           Constants.singleVidoedownloadList = listDownload*/
 
+            var download_id = downloadReference.toInt()
+            var title =  fileName
+
+            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                download_id,
+                title,
+                thumbnail,
+                "",
+                true
+            )
+            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+            downloadRepository.insertWords(model)
+
+
         hashMap[downloadReference] = dictionaryData!!
         Constants.constantHashMap = hashMap
         Constants.idLong = downloadReference
@@ -174,6 +191,26 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+
+                            var download_id = list[i].downloadReference.toInt()
+                            var title =  list[i].english_word
+                            if(title.equals("-")){
+                                title =  list[i].urdu_word
+                            }
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
+
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -219,6 +256,24 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = list[i].downloadReference.toInt()
+                            var title =  list[i].english_word
+                            if(title.equals("-")){
+                                title =  list[i].urdu_word
+                            }
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -264,6 +319,24 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = list[i].downloadReference.toInt()
+                            var title =  list[i].english_word
+                            if(title.equals("-")){
+                                title =  list[i].urdu_word
+                            }
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -309,6 +382,25 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = list[i].downloadReference.toInt()
+                            var title =  list[i].english_word
+                            if(title.equals("-")){
+                                title =  list[i].urdu_word
+                            }
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -379,6 +471,21 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -424,6 +531,21 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -469,6 +591,21 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -514,6 +651,21 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -580,6 +732,23 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+
+
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             HashMapLearningData[downloadReference] = list[i]
@@ -625,6 +794,21 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             HashMapLearningData[downloadReference] = list[i]
@@ -670,6 +854,21 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             HashMapLearningData[downloadReference] = list[i]
@@ -715,6 +914,21 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             HashMapLearningData[downloadReference] = list[i]
@@ -768,6 +982,23 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+
+
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -801,6 +1032,21 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -834,6 +1080,21 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]
@@ -867,6 +1128,23 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                     Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
                                 )
                             }
+                            var download_id = 0
+                            var title =  list[i].title
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+                            val model = com.net.pslapllication.room.datamodel.DownloadData(0,
+                                download_id,
+                                title.toLowerCase(),
+                                list[i].poster,
+                                "",
+                                true
+                            )
+
+
+                            val downloadDao = WordsDatabase.getInstance(context).downloadDao()
+                            var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                            downloadRepository.insertWords(model)
                             downloadReference = downloadManager!!.enqueue(request)
 
                             hashMap[downloadReference] = list[i]

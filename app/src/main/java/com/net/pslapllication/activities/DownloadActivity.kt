@@ -15,6 +15,10 @@ import com.net.pslapllication.helperClass.ProgressHelper
 import com.net.pslapllication.interfaces.OnProgressResultListener
 import com.net.pslapllication.model.dictionary.DictionaryData
 import com.net.pslapllication.model.stories.StoryData
+import com.net.pslapllication.room.DownloadRepository
+import com.net.pslapllication.room.WordsDatabase
+import com.net.pslapllication.room.WordsRepository
+import com.net.pslapllication.room.datamodel.DownloadData
 import com.net.pslapllication.util.Constants
 import com.net.pslapllication.util.MainClass
 import com.net.pslapllication.util.ReuseFunctions
@@ -237,7 +241,20 @@ class DownloadActivity : AppCompatActivity(), OnProgressResultListener, View.OnC
                     hashMapStoryData[referenceId]!!.isDownloaded = true
                     hashMapStoryData[referenceId]!!.downloadprogress = 100
                     keysList!!.indexOf(referenceId)
+
+                    // Add Poster in local db
+
+                   /* val data =  hashMapStoryData[referenceId]
+                    if (data != null){
+                        var download_id = referenceId.toInt()
+                        val model =  DownloadData(0,download_id,data.title,data.poster,"",true)
+                        val downloadDao = WordsDatabase.getInstance(application).downloadDao()
+                        var downloadRepository : DownloadRepository = DownloadRepository(downloadDao)
+                        downloadRepository.insertWords(model)
+
+                    }*/
                     Handler().postDelayed({
+
                         hashMapStoryData.remove(referenceId)
                         Constants.constantHashMapStoryData = hashMapStoryData
                         downloadAdapter!!.setStoryData(hashMapStoryData)
@@ -246,6 +263,7 @@ class DownloadActivity : AppCompatActivity(), OnProgressResultListener, View.OnC
                     hashMap[referenceId]!!.isDownloaded = true
                     hashMap[referenceId]!!.downloadprogress = 100
                     keysList!!.indexOf(referenceId)
+
                     Handler().postDelayed({
                         hashMap.remove(referenceId)
                         Constants.constantHashMap = hashMap

@@ -77,6 +77,8 @@
                 android:background="@drawable/seach_bg_border"
                 android:ellipsize="end"
                 android:fontFamily="@font/lato_regular"
+                android:drawableLeft="@drawable/ic_search"
+                android:drawablePadding="@dimen/_5sdp"
                 android:hint="Search Dictionary Words"
                 android:imeOptions="actionSearch"
                 android:inputType="textAutoComplete|textAutoCorrect"

@@ -1,5 +1,6 @@
 package com.net.pslapllication.room.datamodel
 
+import androidx.annotation.NonNull
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
 import com.net.pslapllication.model.dictionary.*
@@ -7,8 +8,8 @@ import java.io.Serializable
 
 @Entity(tableName = "WORDSTABLE")
 data class DictionaryDataAPI(
-
     @PrimaryKey
+    @NonNull
     @SerializedName("id") val id: Int,
     @ColumnInfo
     @SerializedName("category_id") val category_id: Int,

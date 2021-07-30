@@ -479,10 +479,22 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                 MediaStore.Video.Thumbnails.MINI_KIND
             )
              imageViewRecent.setImageBitmap(bMap)*/
-            Glide
-                .with(context)
-                .load(File(downloadlistFilter[position].wordTyhumb).toString())
-                .into(imageViewRecent)
+
+
+            var path =  File(downloadlistFilter[position].wordTyhumb)
+            if(path.exists()){
+                Glide
+                    .with(context)
+                    .load(File(downloadlistFilter[position].wordTyhumb).toString())
+                    .into(imageViewRecent)
+            }else{
+                Glide
+                    .with(context)
+                    .load(URLDecoder.decode(downloadlistFilter[position].wordTyhumb, "UTF-8"))
+                    .into(imageViewRecent)
+            }
+
+
             val requestOptions = RequestOptions()
             /*Glide.with(context)
                 .load("video_url")

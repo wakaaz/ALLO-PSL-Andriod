@@ -25,6 +25,8 @@ import com.net.pslapllication.data.DictionaryListModel
 import com.net.pslapllication.data.DownloadListModel
 import com.net.pslapllication.interfaces.onQualityChangSelectedListener
 import com.net.pslapllication.interfaces.onVideoDeleteInterface
+import com.net.pslapllication.room.DownloadRepository
+import com.net.pslapllication.room.WordsDatabase
 import com.net.pslapllication.util.Constants
 import com.net.pslapllication.util.ReuseFunctions
 import com.net.pslapllication.util.WrappingGridView
@@ -120,17 +122,31 @@ class DownloadFragment : Fragment(), View.OnClickListener, onQualityChangSelecte
             try {
                 val file = file.listFiles()
                 var filename: String = ""
+
+                val downloadDao = activity?.let {
+                    WordsDatabase.getInstance(it).downloadDao()
+                }
+                var downloadRepository : DownloadRepository = DownloadRepository(downloadDao!!)
+
                 if (file?.size != 0) {
                     for (i in file!!.indices) {
                         /*val index:Int = file[i].name.indexOf("-")
                         if (index!=-1){
                             filename = file[i].name.substring(0,index)
                         }*/
+
+                            var picture = file[i].absolutePath
+                            var model = downloadRepository.getSingleDownload(file[i].nameWithoutExtension)
+                            if(model != null && !model.link.isNullOrEmpty()){
+                                picture = model.link
+                            }
+
+
                         dicWordList.add(
                             DownloadListModel(
                                 i,
                                 file[i].nameWithoutExtension,
-                                file[i].absolutePath,
+                                picture,
                                 "00:10",
                                 false,
                                 i

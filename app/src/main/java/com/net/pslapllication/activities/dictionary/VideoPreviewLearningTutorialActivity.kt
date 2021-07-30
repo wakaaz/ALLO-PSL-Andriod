@@ -79,6 +79,7 @@ import kotlinx.android.synthetic.main.bottom_layout_video_option.view.*
 import kotlinx.android.synthetic.main.bottom_layout_video_option.view.bottom_sheet_quality
 import kotlinx.android.synthetic.main.bottom_layout_video_quality_list.view.*
 import  kotlinx.android.synthetic.main.activity_video_preview_tutorial.layout_next
+import kotlinx.android.synthetic.main.bottom_layout_download_video.*
 
 import kotlinx.android.synthetic.main.layout_videoview_error.*
 import kotlinx.android.synthetic.main.playerbarlayout.*
@@ -810,10 +811,12 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
            // if((selectedModel as DictionaryData?)!!.urdu_word.isEmpty()){
                 dialogView.tv_translate.visibility = View.GONE
           //  }
+            dialogView.con_size.visibility = View.VISIBLE
+
             //dialogView.tv_translate.text = (selectedModel as LearningData?)!!.urdu_word
-            dialogView.tv_high.text = (selectedModel as LearningData?)!!.p720p!!.url
-            dialogView.tv_medium.text = (selectedModel as LearningData?)!!.p480p.url
-            dialogView.tv_low.text = (selectedModel as LearningData?)!!.p240p.url
+            dialogView.tv_high.text = (selectedModel as LearningData?)!!.p720p!!.filesize
+            dialogView.tv_medium.text = (selectedModel as LearningData?)!!.p480p.filesize
+            dialogView.tv_low.text = (selectedModel as LearningData?)!!.p240p.filesize
             dialogView.radiogroup.setOnCheckedChangeListener { arg0, arg1 ->
                 selectedId = dialogView.radiogroup.checkedRadioButtonId
                 try {

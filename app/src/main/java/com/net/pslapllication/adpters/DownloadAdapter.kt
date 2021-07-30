@@ -1,6 +1,7 @@
 package com.net.pslapllication.adpters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,6 +61,8 @@ class DownloadAdapter(var context: Context, var type: String) :
                 setpopUp(context, holder.mainConstraints, position)
             }
             try {
+                Log.e("poster",listStory!![position].poster+"")
+
                 Glide.with(context).load(URLDecoder.decode(listStory!![position].poster))
                     .into(holder.imageViewDownload);
             } catch (e: Exception) {
@@ -75,6 +78,7 @@ class DownloadAdapter(var context: Context, var type: String) :
                 setpopUp(context, holder.mainConstraints, position)
             }
             try {
+                Log.e("poster",list!![position].poster+"")
                 Glide.with(context).load(URLDecoder.decode(list!![position].poster))
                     .into(holder.imageViewDownload);
             } catch (e: Exception) {

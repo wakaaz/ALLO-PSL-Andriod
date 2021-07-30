@@ -14,8 +14,8 @@ interface DownloadDao {
     fun getAllDownload(): LiveData<List<DownloadData>>
 
 
-    @Query("SELECT * FROM DOWNLOADTABLE")
-    fun getSingleDownload(download_id: Int): List<DownloadData>
+    @Query("SELECT * FROM DOWNLOADTABLE WHERE name = :name")
+    fun getSingleDownload(name:String): DownloadData
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addSingleDownload(entity: DownloadData?)

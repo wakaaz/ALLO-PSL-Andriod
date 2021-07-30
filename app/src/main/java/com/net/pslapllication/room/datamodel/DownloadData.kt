@@ -7,8 +7,7 @@ import java.io.Serializable
 
 @Entity(tableName = "DOWNLOADTABLE")
 data class DownloadData(
-    @PrimaryKey
-    @SerializedName("id") val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Long,
     @ColumnInfo
     @SerializedName("download_id") val download_id: Int,
     @ColumnInfo
@@ -19,4 +18,4 @@ data class DownloadData(
     @SerializedName("path") val path: String,
     @ColumnInfo
     @SerializedName("status") val status: Boolean
-) : Serializable
+)

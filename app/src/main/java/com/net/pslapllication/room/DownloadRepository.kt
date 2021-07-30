@@ -23,8 +23,8 @@ class DownloadRepository(private val downloadDao: DownloadDao) {
         DeleteListAsyncTask(downloadDao).execute()
     }
 
-    fun getFilteredDownload(download_id: Int):  List<DownloadData> {
-        var allFilteredDownload = downloadDao.getSingleDownload(download_id)
+    fun getSingleDownload(name: String):  DownloadData {
+        var allFilteredDownload = downloadDao.getSingleDownload(name)
         return allFilteredDownload
     }
 

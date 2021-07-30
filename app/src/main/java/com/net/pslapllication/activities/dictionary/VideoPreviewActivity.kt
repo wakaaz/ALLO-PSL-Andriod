@@ -73,8 +73,10 @@ import kotlinx.android.synthetic.main.activity_video_preview.recycler_next
 import kotlinx.android.synthetic.main.activity_video_preview.reload_layout
 import kotlinx.android.synthetic.main.activity_video_preview.switch_next
 import kotlinx.android.synthetic.main.activity_video_preview.tv_main
+import kotlinx.android.synthetic.main.activity_video_preview.tv_translate
 import kotlinx.android.synthetic.main.activity_video_preview.videoview
 import kotlinx.android.synthetic.main.activity_video_preview_tutorial.*
+import kotlinx.android.synthetic.main.bottom_layout_download_video.*
 import kotlinx.android.synthetic.main.bottom_layout_download_video.view.*
 import kotlinx.android.synthetic.main.bottom_layout_download_video.view.tv_down_video
 import kotlinx.android.synthetic.main.bottom_layout_video_option.*
@@ -857,6 +859,8 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
             if((selectedModel as DictionaryData?)!!.urdu_word.isEmpty()){
                 dialogView.tv_translate.visibility = View.GONE
             }
+            dialogView.con_size.visibility = View.VISIBLE
+
             dialogView.tv_translate.text = (selectedModel as DictionaryData?)!!.urdu_word
             dialogView.tv_high.text = (selectedModel as DictionaryData?)!!.p720p.filesize
             dialogView.tv_medium.text = (selectedModel as DictionaryData?)!!.p480p.filesize
