@@ -398,6 +398,24 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
         if (selectedModel != null) {
             if ((selectedModel as LearningData?)!!.favorite != null && (selectedModel as LearningData?)!!.favorite == 0) {
                 //do nothing default UI
+
+
+                //do nothing default UI
+                setDefaultTextColors(
+                        constraint_favourite,
+                        constraint_share,
+                        constraint_download,
+                        constraint_vimeo,
+                        constraint_youtube
+                )
+                setImageDrawables(
+                        R.drawable.ic_favorite_grey,
+                        R.drawable.ic_share_grey,
+                        R.drawable.ic_file_download_grey,
+                        R.drawable.ic_vimeo_grey,
+                        R.drawable.ic_youtube_grey
+                )
+                favClick = false
             } else {
                 setButtonTextColors(
                     constraint_favourite,
@@ -416,8 +434,42 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
                 favClick = true
             }
         }
+        checkdownload()
     }
+    fun checkdownload(){
+        if (isVideoAlreadyExist((selectedModel as LearningData?)!!.filename)) {
+            constraint_download.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    resources.getDrawable(R.drawable.ic_video_downloaded),
+                    null,
+                    null
+            );
 
+            constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+            constraint_download.text = resources.getString(R.string.downloaded)
+
+        }else if(getIntent().getBooleanExtra("isdownload", false)){
+            constraint_download.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    resources.getDrawable(R.drawable.ic_video_downloaded),
+                    null,
+                    null
+            );
+
+            constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+            constraint_download.text = resources.getString(R.string.downloaded)
+        } else{
+            constraint_download.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    resources.getDrawable(R.drawable.ic_file_download_grey),
+                    null,
+                    null
+            )
+
+            constraint_download.setTextColor(resources.getColor(R.color.text_video_option_grey))
+            constraint_download.text = "Download"
+        }
+    }
     private  fun setDownloadLesson(){
         if (selectedModel != null) {
             if ((selectedModel as LearningData?)!!.documents != null && (selectedModel as LearningData?)!!.documents.size  > 0) {
@@ -783,12 +835,15 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
 
 
     private fun shareSheet() {
-        val sharingIntent = Intent(Intent.ACTION_SEND)
-        sharingIntent.type = "text/plain"
-        val shareBody = URLDecoder.decode((selectedModel as LearningData?)!!.shareablURL)
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
-        startActivity(Intent.createChooser(sharingIntent, "Share via"))
+        if((selectedModel as LearningData?)!!.shareablURL != null){
+            val sharingIntent = Intent(Intent.ACTION_SEND)
+            sharingIntent.type = "text/plain"
+            val shareBody = URLDecoder.decode((selectedModel as LearningData?)!!.shareablURL)
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here")
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+            startActivity(Intent.createChooser(sharingIntent, "Share via"))
+        }
+
     }
 
     private fun openDownloadBottomSheet() {
@@ -1736,6 +1791,7 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
                 setNormalVideoViews()
                 setplayer(videoUrl)
                 videoview.start()
+                setAlreadyFavourite()
                 setTitleText((selectedModel as LearningData))
                 if (list != null) {
                     val finalList = ListSorting.sortListLearningTutorial(
@@ -1787,6 +1843,7 @@ class VideoPreviewLearningTutorialActivity : BaseActivity(), View.OnClickListene
                             URLDecoder.decode((selectedModel as LearningData?)!!.p720p!!.url)
                         setplayer(videoUrl)
                         videoview.start()
+                        setAlreadyFavourite()
                         setTitleText((selectedModel as LearningData?)!!)
                         if (list != null) {
                             val finalList =

@@ -90,16 +90,20 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setTitle("PSL Application")
         request.setDescription(fileName)
+        var dummyfilename = ""
+        if(!fileName!!.contains(".mp4")){
+            dummyfilename = fileName+".mp4"
+        }
         var file = File(
             context.getExternalFilesDir(null)!!.getAbsolutePath() +
-                    Constants.FOLDER_NAME, fileName + ""
+                    Constants.FOLDER_NAME, dummyfilename + ""
         )
         if (file.exists()) {
             file.delete()
         } else {
             request.setDestinationInExternalPublicDir(
                 Environment.DIRECTORY_DOWNLOADS,
-                Constants.FOLDER_NAME + fileName + ""
+                Constants.FOLDER_NAME + dummyfilename + ""
             )
         }
 
@@ -108,7 +112,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
 
 
         val dictionaryData: DictionaryData? = DictionaryData()
-        dictionaryData?.filename = fileName!!
+        dictionaryData?.filename = dummyfilename!!
         dictionaryData?.poster = thumbnail!!
         dictionaryData?.downloadReference = downloadReference
 

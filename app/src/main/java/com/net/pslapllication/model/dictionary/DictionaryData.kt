@@ -34,7 +34,7 @@ data class DictionaryData(
     @ColumnInfo
     @SerializedName("poster") var poster: String,
     @ColumnInfo
-    @SerializedName("favorite") val favorite: Int,
+    @SerializedName("favorite") var favorite: Int,
     @ColumnInfo
     var indexPosition: Int,
     @ColumnInfo

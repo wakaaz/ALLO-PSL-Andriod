@@ -97,10 +97,23 @@ class DownloadFragment : Fragment(), View.OnClickListener, onQualityChangSelecte
         searchView.setOnQueryTextListener(object :
             SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
+                if (adapter != null) {
+                    adapter!!.filter.filter(query)
+                }
+                if (adapterCat != null) {
+                    adapterCat!!.filter.filter(query)
+                }
                 return false
+
             }
 
             override fun onQueryTextChange(query: String): Boolean {
+                if (adapter != null) {
+                    adapter!!.filter.filter(query)
+                }
+                if (adapterCat != null) {
+                    adapterCat!!.filter.filter(query)
+                }
                 return false
             }
         })
@@ -136,9 +149,10 @@ class DownloadFragment : Fragment(), View.OnClickListener, onQualityChangSelecte
                         }*/
 
                             var picture = file[i].absolutePath
+                            var thumnail = ""
                             var model = downloadRepository.getSingleDownload(file[i].nameWithoutExtension)
                             if(model != null && !model.link.isNullOrEmpty()){
-                                picture = model.link
+                                thumnail = model.link
                             }
 
 
@@ -147,7 +161,7 @@ class DownloadFragment : Fragment(), View.OnClickListener, onQualityChangSelecte
                                 i,
                                 file[i].nameWithoutExtension,
                                 picture,
-                                "00:10",
+                                    thumnail,
                                 false,
                                 i
                             )

@@ -330,9 +330,13 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                         }
                         //because selected index also required
                         try {
+                            var indexposition = favListFilter[newPos].indexPosition
 
+                            if(favListFilter.size == 1){
+                                indexposition = newPos
+                            }
                             var newIndexSortedList = ListSorting.sortListFavourite(isDecrement,
-                                    favListFilter[newPos].indexPosition,
+                                    indexposition,
                                     favListFilter
                             )
 
@@ -384,8 +388,15 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                         try {
                             //model.setModelList(diclistFilter)
                             //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
+
+
+                            var indexposition = learningListFilter[newPos].indexPosition
+
+                            if(learningListFilter.size == 1){
+                                indexposition = newPos
+                            }
                             var newIndexSortedList = ListSorting.sortListLearningTutorial(isDecrement,
-                                    learningListFilter[newPos].indexPosition,
+                                    indexposition,
                                     learningListFilter)
 
 
@@ -422,8 +433,16 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                         try {
                             //model.setModelList(diclistFilter)
                             //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
+
+
+
+                            var indexposition = diclistFilter[newPos].indexPosition
+
+                            if(diclistFilter.size == 1){
+                                indexposition = newPos
+                            }
                             var newIndexSortedList = ListSorting.sortList(isDecrement,
-                                    diclistFilter[newPos].indexPosition,
+                                    indexposition,
                                     diclistFilter
                             )
 
@@ -461,8 +480,15 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                         try {
                             //model.setModelList(diclistFilter)
                             //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
-                            var newIndexSortedList = ListSorting.sortListStory(isDecrement,
-                                    storyListFilter[newPos].indexPosition,
+
+
+                                var indexposition = storyListFilter[newPos].indexPosition
+
+                                if(storyListFilter.size == 1){
+                                    indexposition = newPos
+                                }
+                                var newIndexSortedList = ListSorting.sortListStory(isDecrement,
+                                        indexposition,
                                     storyListFilter
                             )
 

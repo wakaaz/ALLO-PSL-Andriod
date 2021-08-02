@@ -429,6 +429,21 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
         if (selectedModel != null) {
             if ((selectedModel as DictionaryData?)!!.favorite != null && (selectedModel as DictionaryData?)!!.favorite == 0) {
                 //do nothing default UI
+                setDefaultTextColors(
+                        constraint_favourite,
+                        constraint_share,
+                        constraint_download,
+                        constraint_vimeo,
+                        constraint_youtube
+                )
+                setImageDrawables(
+                        R.drawable.ic_favorite_grey,
+                        R.drawable.ic_share_grey,
+                        R.drawable.ic_file_download_grey,
+                        R.drawable.ic_vimeo_grey,
+                        R.drawable.ic_youtube_grey
+                )
+                favClick = false
             } else {
                 setButtonTextColors(
                     constraint_favourite,
@@ -447,8 +462,42 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
                 favClick = true
             }
         }
+        checkdownload()
     }
+    fun checkdownload(){
+        if (isVideoAlreadyExist((selectedModel as DictionaryData?)!!.filename)) {
+            constraint_download.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    resources.getDrawable(R.drawable.ic_video_downloaded),
+                    null,
+                    null
+            );
 
+            constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+            constraint_download.text = resources.getString(R.string.downloaded)
+
+        }else if(getIntent().getBooleanExtra("isdownload", false)){
+            constraint_download.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    resources.getDrawable(R.drawable.ic_video_downloaded),
+                    null,
+                    null
+            );
+
+            constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+            constraint_download.text = resources.getString(R.string.downloaded)
+        } else{
+            constraint_download.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    resources.getDrawable(R.drawable.ic_file_download_grey),
+                    null,
+                    null
+            )
+
+            constraint_download.setTextColor(resources.getColor(R.color.text_video_option_grey))
+            constraint_download.text = "Download"
+        }
+    }
     private  fun setDownloadLesson(){
         if (selectedModel != null) {
             if ((selectedModel as DictionaryData?)!!.documents != null && (selectedModel as DictionaryData?)!!.documents.size  > 0) {
@@ -1824,6 +1873,7 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
                 setNormalVideoViews()
                 setplayer(videoUrl)
                 videoview.start()
+                setAlreadyFavourite()
                 setTitleText((selectedModel as DictionaryData))
                 if (list != null) {
                     val finalList = ListSorting.sortList(
@@ -1878,6 +1928,7 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
                             URLDecoder.decode((selectedModel as DictionaryData?)!!.p720p.url)
                         setplayer(videoUrl)
                         videoview.start()
+                        setAlreadyFavourite()
                         setTitleText((selectedModel as DictionaryData?)!!)
                         if (list != null) {
                             val finalList =

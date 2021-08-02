@@ -516,9 +516,16 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
 
             }
             Constants.FAV_DICTIONARY -> {
-                txt_title.text =
-                    ReuseFunctions.firstLetterCap(selectedModel.dictionary.english_word)
-                tv_main.text = ReuseFunctions.firstLetterCap(selectedModel.dictionary.english_word)
+                if(selectedModel.dictionary.english_word.contains("-")){
+                    txt_title.text =
+                            ReuseFunctions.firstLetterCap(selectedModel.dictionary.urdu_word)
+                    tv_main.text = ReuseFunctions.firstLetterCap(selectedModel.dictionary.urdu_word)
+                }else{
+                    txt_title.text =
+                            ReuseFunctions.firstLetterCap(selectedModel.dictionary.english_word)
+                    tv_main.text = ReuseFunctions.firstLetterCap(selectedModel.dictionary.english_word)
+                }
+
             }
             Constants.FAV_TEACHER_TUT -> {
                 txt_title.text = ReuseFunctions.firstLetterCap(selectedModel.tutorial.title)

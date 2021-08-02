@@ -481,18 +481,18 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
              imageViewRecent.setImageBitmap(bMap)*/
 
 
-            var path =  File(downloadlistFilter[position].wordTyhumb)
+            /*var path =  File(downloadlistFilter[position].wordTyhumb)
             if(path.exists()){
                 Glide
                     .with(context)
                     .load(File(downloadlistFilter[position].wordTyhumb).toString())
                     .into(imageViewRecent)
-            }else{
+            }else{*/
                 Glide
                     .with(context)
-                    .load(URLDecoder.decode(downloadlistFilter[position].wordTyhumb, "UTF-8"))
+                    .load(URLDecoder.decode(downloadlistFilter[position].wordDetail, "UTF-8"))
                     .into(imageViewRecent)
-            }
+          //  }
 
 
             val requestOptions = RequestOptions()
@@ -732,6 +732,23 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                     }
 
                     filterResults.values = storyTypeListFilter
+                }else if (type ==  Constants.TYPE_DOWNLOAD){
+                    val charSearch = constraint.toString()
+                    if (charSearch.isEmpty()) {
+                        downloadlistFilter = downloadlist
+                    } else {
+                        val resultList = ArrayList<DownloadListModel>()
+                        for (row: DownloadListModel in downloadlist) {
+                            if (row.wordName.toLowerCase(Locale.ROOT)
+                                            .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                            ) {
+                                resultList.add(row)
+                            }
+                        }
+                        downloadlistFilter = resultList
+                    }
+
+                    filterResults.values = downloadlistFilter
                 }
 
                 return filterResults
@@ -751,6 +768,8 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                     tutGradeSubVideoListFilter = results?.values as List<TutorialData>
                 } else if (type == Constants.TYPE_LEARNING_TUTORIAL) {
                     learningTutListFilter = results?.values as List<Life_skills>
+                }else if (type ==  Constants.TYPE_DOWNLOAD){
+                    downloadlistFilter = results?.values as List<DownloadListModel>
                 }
 
                 notifyDataSetChanged()

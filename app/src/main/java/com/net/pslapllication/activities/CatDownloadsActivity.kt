@@ -112,10 +112,11 @@ class CatDownloadsActivity : AppCompatActivity(),View.OnClickListener {
                         }*/
 
                         var picture = fileCat[i].absolutePath
+                        var thumnail = ""
                         Log.e("name",fileCat[i].nameWithoutExtension+"")
                         var model = downloadRepository.getSingleDownload(fileCat[i].nameWithoutExtension)
                         if(model != null && !model.link.isNullOrEmpty()){
-                            picture = model.link
+                            thumnail = model.link
                         }
 
                         dicWordList.add(
@@ -123,7 +124,7 @@ class CatDownloadsActivity : AppCompatActivity(),View.OnClickListener {
                                 i,
                                 fileCat[i].nameWithoutExtension,
                                 picture,
-                                "00:10",
+                                    thumnail,
                                 false,
                                 i
                             )
