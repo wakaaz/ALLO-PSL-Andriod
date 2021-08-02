@@ -66,6 +66,7 @@ class VideoPreviewFavouriteAdapter(var context: Context, var type: String, var n
             favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id == 0
         ) {
             holder.tv_main?.text = favListFilter[position].learningTutorial.title
+            holder.tv_translate?.text = ""
             // tv_translate?.text = favListFilter[position].dictionary.urdu_word
             if (!favListFilter[position].learningTutorial.poster.equals("")) {
                 val poster: String = URLDecoder.decode(favListFilter[position].learningTutorial.poster)
@@ -76,6 +77,7 @@ class VideoPreviewFavouriteAdapter(var context: Context, var type: String, var n
             favListFilter[position].tut_video_id != 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id == 0
         ) {
             holder.tv_main?.text = favListFilter[position].tutorial.title
+            holder.tv_translate?.text = ""
             // tv_translate?.text = favListFilter[position].dictionary.urdu_word
             if (!favListFilter[position].tutorial.poster.equals("")) {
                 val poster: String = URLDecoder.decode(favListFilter[position].tutorial.poster)
@@ -86,6 +88,7 @@ class VideoPreviewFavouriteAdapter(var context: Context, var type: String, var n
             favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id != 0 && favListFilter[position].story_video_id == 0
         ) {
             holder.tv_main?.text = favListFilter[position].lesson.title
+            holder.tv_translate?.text = ""
             // tv_translate?.text = favListFilter[position].dictionary.urdu_word
             if (!favListFilter[position].lesson.poster.equals("")) {
                 val poster: String = URLDecoder.decode(favListFilter[position].lesson.poster)
@@ -96,6 +99,7 @@ class VideoPreviewFavouriteAdapter(var context: Context, var type: String, var n
             favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id != 0
         ) {
             holder.tv_main?.text = favListFilter[position].story.title
+            holder.tv_translate?.text = ""
             // tv_translate?.text = favListFilter[position].dictionary.urdu_word
             if (!favListFilter[position].story.poster.equals("")) {
                 val poster: String = URLDecoder.decode(favListFilter[position].story.poster)

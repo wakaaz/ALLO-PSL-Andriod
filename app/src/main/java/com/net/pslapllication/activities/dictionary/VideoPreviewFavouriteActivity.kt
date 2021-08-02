@@ -187,6 +187,68 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
         recycler_next.adapter = adapter
     }
 
+
+    fun checkcategory(){
+        if ((selectedModel as Data).dict_video_id != 0 && (selectedModel as Data).learning_tut_video_id == 0 &&
+                (selectedModel as Data).tut_video_id == 0 && (selectedModel as Data).lesson_video_id == 0 && (selectedModel as Data).story_video_id == 0
+        ) {
+            categoryType = Constants.FAV_DICTIONARY
+        } else if ((selectedModel as Data).dict_video_id == 0 && (selectedModel as Data).learning_tut_video_id != 0 &&
+                (selectedModel as Data).tut_video_id == 0 && (selectedModel as Data).lesson_video_id == 0 && (selectedModel as Data).story_video_id == 0
+        ) {
+            categoryType = Constants.FAV_LEARNING_TUT
+
+        } else if ((selectedModel as Data).dict_video_id == 0 && (selectedModel as Data).learning_tut_video_id == 0 &&
+                (selectedModel as Data).tut_video_id != 0 && (selectedModel as Data).lesson_video_id == 0 && (selectedModel as Data).story_video_id == 0
+        ) {
+            categoryType = Constants.FAV_TEACHER_TUT
+
+        } else if ((selectedModel as Data).dict_video_id == 0 && (selectedModel as Data).learning_tut_video_id == 0 &&
+                (selectedModel as Data).tut_video_id == 0 && (selectedModel as Data).lesson_video_id != 0 && (selectedModel as Data).story_video_id == 0
+        ) {
+            categoryType = Constants.FAV_SKILL
+
+        } else if ((selectedModel as Data).dict_video_id == 0 && (selectedModel as Data).learning_tut_video_id == 0 &&
+                (selectedModel as Data).tut_video_id == 0 && (selectedModel as Data).lesson_video_id == 0 && (selectedModel as Data).story_video_id != 0
+        ) {
+            categoryType = Constants.FAV_STORY
+
+        }
+
+        when (categoryType) {
+            Constants.FAV_STORY -> {
+                p240url = (selectedModel as Data).story.p240p.url
+                p360url = (selectedModel as Data).story.p360p.url
+                p480url = (selectedModel as Data).story.p480p.url
+                p720url = (selectedModel as Data).story.p720p.url
+            }
+            Constants.FAV_DICTIONARY -> {
+                p240url = (selectedModel as Data).dictionary.p240p.url
+                p360url = (selectedModel as Data).dictionary.p360p.url
+                p480url = (selectedModel as Data).dictionary.p480p.url
+                p720url = (selectedModel as Data).dictionary.p720p.url
+            }
+            Constants.FAV_TEACHER_TUT -> {
+                p240url = (selectedModel as Data).tutorial.p240p.url
+                p360url = (selectedModel as Data).tutorial.p360p.url
+                p480url = (selectedModel as Data).tutorial.p480p.url
+                p720url = (selectedModel as Data).tutorial.p720p.url
+            }
+            Constants.FAV_LEARNING_TUT -> {
+                p240url = (selectedModel as Data).learningTutorial.p240p.url
+                p360url = (selectedModel as Data).learningTutorial.p360p.url
+                p480url = (selectedModel as Data).learningTutorial.p480p.url
+                p720url = (selectedModel as Data).learningTutorial.p720p.url
+            }
+            Constants.FAV_SKILL -> {
+                p240url = (selectedModel as Data).lesson.p240p.url
+                p360url = (selectedModel as Data).lesson.p360p.url
+                p480url = (selectedModel as Data).lesson.p480p.url
+                p720url = (selectedModel as Data).lesson.p720p.url
+            }
+        }
+    }
+
     private fun getIntentData() {
         if (intent != null &&
             intent.getSerializableExtra(Constants.SELECTED_DICTIONARY_LIST_MODEL) != null &&
@@ -224,38 +286,7 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
             /**
              * video urls
              */
-            when (categoryType) {
-                Constants.FAV_STORY -> {
-                    p240url = (selectedModel as Data).story.p240p.url
-                    p360url = (selectedModel as Data).story.p360p.url
-                    p480url = (selectedModel as Data).story.p480p.url
-                    p720url = (selectedModel as Data).story.p720p.url
-                }
-                Constants.FAV_DICTIONARY -> {
-                    p240url = (selectedModel as Data).dictionary.p240p.url
-                    p360url = (selectedModel as Data).dictionary.p360p.url
-                    p480url = (selectedModel as Data).dictionary.p480p.url
-                    p720url = (selectedModel as Data).dictionary.p720p.url
-                }
-                Constants.FAV_TEACHER_TUT -> {
-                    p240url = (selectedModel as Data).tutorial.p240p.url
-                    p360url = (selectedModel as Data).tutorial.p360p.url
-                    p480url = (selectedModel as Data).tutorial.p480p.url
-                    p720url = (selectedModel as Data).tutorial.p720p.url
-                }
-                Constants.FAV_LEARNING_TUT -> {
-                    p240url = (selectedModel as Data).learningTutorial.p240p.url
-                    p360url = (selectedModel as Data).learningTutorial.p360p.url
-                    p480url = (selectedModel as Data).learningTutorial.p480p.url
-                    p720url = (selectedModel as Data).learningTutorial.p720p.url
-                }
-                Constants.FAV_SKILL -> {
-                    p240url = (selectedModel as Data).lesson.p240p.url
-                    p360url = (selectedModel as Data).lesson.p360p.url
-                    p480url = (selectedModel as Data).lesson.p480p.url
-                    p720url = (selectedModel as Data).lesson.p720p.url
-                }
-            }
+            checkcategory()
         }
     }
 
@@ -447,6 +478,45 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
         }
     }
 
+    fun checkdownload(){
+        var filename = (selectedModel as Data?)!!.videoname+".mp4"
+        if(filename.contains(" ")){
+            filename = filename.replace(" ","_")
+        }
+
+        if (isVideoAlreadyExist(filename)) {
+            constraint_download.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    resources.getDrawable(R.drawable.ic_video_downloaded),
+                    null,
+                    null
+            );
+
+            constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+            constraint_download.text = resources.getString(R.string.downloaded)
+
+        }else if(getIntent().getBooleanExtra("isdownload", false)){
+            constraint_download.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    resources.getDrawable(R.drawable.ic_video_downloaded),
+                    null,
+                    null
+            );
+
+            constraint_download.setTextColor(resources.getColor(R.color.colorPrimaryDark))
+            constraint_download.text = resources.getString(R.string.downloaded)
+        } else{
+            constraint_download.setCompoundDrawablesWithIntrinsicBounds(
+                    null,
+                    resources.getDrawable(R.drawable.ic_file_download_grey),
+                    null,
+                    null
+            )
+
+            constraint_download.setTextColor(resources.getColor(R.color.text_video_option_grey))
+            constraint_download.text = "Download"
+        }
+    }
     private fun setShareAvailable() {
 
         var youtubelink : String? = null
@@ -482,15 +552,16 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
             }
         }
 
-        if(!vimoelink.isNullOrEmpty()){
-            constraint_vimeo.visibility =  View.VISIBLE
+        if(!vimoelink.isNullOrEmpty() && !vimoelink.equals("0")){
+          //  constraint_vimeo.visibility =  View.VISIBLE
 
         }else{
             constraint_vimeo.visibility =  View.GONE
 
         }
-        if(!youtubelink.isNullOrEmpty()){
-         constraint_youtube.visibility =  View.VISIBLE
+        Log.e("youtubelink",""+vimoelink+"|"+youtubelink)
+        if(!youtubelink.isNullOrEmpty()  && !youtubelink.equals("0")){
+         //constraint_youtube.visibility =  View.VISIBLE
         }else{
             constraint_youtube.visibility =  View.GONE
 
@@ -906,10 +977,42 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
           //  if((selectedModel as Data?)!!.urdu_word.isEmpty()){
                 dialogView.tv_translate.visibility = View.GONE
            // }
+            dialogView.con_size.visibility =  View.VISIBLE
             //dialogView.tv_translate.text = (selectedModel as Data?)!!.urdu_word
-           /* dialogView.tv_high.text = p720url.filesize
-            dialogView.tv_medium.text = (selectedModel as Data?)!!.p480p.filesize
-            dialogView.tv_low.text = (selectedModel as Data?)!!.p240p.filesize*/
+
+            when (categoryType) {
+                Constants.FAV_STORY -> {
+
+                    dialogView.tv_high.text = (selectedModel as Data).story.p720p.filesize
+                    dialogView.tv_medium.text = (selectedModel as Data).story.p480p.filesize
+                    dialogView.tv_low.text = (selectedModel as Data).story.p240p.filesize
+                }
+                Constants.FAV_DICTIONARY -> {
+
+                    dialogView.tv_high.text = (selectedModel as Data).dictionary.p720p.filesize
+                    dialogView.tv_medium.text = (selectedModel as Data).dictionary.p480p.filesize
+                    dialogView.tv_low.text = (selectedModel as Data).dictionary.p240p.filesize
+                }
+                Constants.FAV_TEACHER_TUT -> {
+
+                    dialogView.tv_high.text = (selectedModel as Data).tutorial.p720p.filesize
+                    dialogView.tv_medium.text = (selectedModel as Data).tutorial.p480p.filesize
+                    dialogView.tv_low.text = (selectedModel as Data).tutorial.p240p.filesize
+                }
+                Constants.FAV_LEARNING_TUT -> {
+
+                    dialogView.tv_high.text = (selectedModel as Data).learningTutorial.p720p.filesize
+                    dialogView.tv_medium.text = (selectedModel as Data).learningTutorial.p480p.filesize
+                    dialogView.tv_low.text = (selectedModel as Data).learningTutorial.p240p.filesize
+                }
+                Constants.FAV_SKILL -> {
+
+                    dialogView.tv_high.text = (selectedModel as Data).lesson.p720p.filesize
+                    dialogView.tv_medium.text = (selectedModel as Data).lesson.p480p.filesize
+                    dialogView.tv_low.text = (selectedModel as Data).lesson.p240p.filesize
+                }
+            }
+
             dialogView.radiogroup.setOnCheckedChangeListener { arg0, arg1 ->
                 selectedId = dialogView.radiogroup.checkedRadioButtonId
                 try {
@@ -1825,6 +1928,7 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
 
     override fun onVideoSelect(selectedModelVideo: Data) {
         selectedModel = selectedModelVideo
+        checkcategory()
         if (selectedModel != null && p720url != null) {
             try {
                 var DataTemp: Data? = null
@@ -1837,6 +1941,7 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
                 videoview.start()
                 setTitleText((selectedModel as Data))
                 setShareAvailable()
+                checkdownload()
                 if (list != null) {
                     val finalList = ListSorting.sortListFavourite(
                         newIndex,
@@ -1891,12 +1996,15 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
                     try {
                         val data = list!!.filter { it.indexPosition == nextVideo }
                         selectedModel = data[0]
+                        checkcategory()
                         DataTemp = selectedModel as Data
                         var newIndex = list!!.indexOf(DataTemp)
                         val videoUrl: String =
                             URLDecoder.decode(p720url)
+
                         setplayer(videoUrl)
                         videoview.start()
+                        checkdownload()
                         setTitleText((selectedModel as Data?)!!)
                         setShareAvailable()
 

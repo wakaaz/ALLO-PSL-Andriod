@@ -123,7 +123,16 @@ class SearchedWordsAdapter(var context: Context,var listener : OnQuerryChangeLis
                     if (5 >= diclist.size) {
                         //not index found
                     } else {
-                        newIndexSortedList = newIndexSortedList.subList(0, 6)
+
+                       val dummylist = newIndexSortedList.subList(0, 6)
+                        val readylist:List<DictionaryDataAPI> =  arrayListOf<DictionaryDataAPI>()
+                        for (item in dummylist.indices) {
+                            // body of loop
+                            var modelitem = dummylist[item]
+                            modelitem.indexPosition = item
+                            //dummylist.get(item) = modelitem
+                        }
+                        newIndexSortedList =  readylist
                     }
                     //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                     ProgressHelper.getInstance(context)?.setListOffline(newIndexSortedList)
