@@ -526,7 +526,7 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                     // val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
                     var newIndexSortedList = ListSorting.sortListDownload(
                         isDecrement,
-                        downloadlistFilter[newPos].indexPosition,
+                            newPos,
                         downloadlistFilter
                     )
 
@@ -534,7 +534,12 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                     if (5 >= downloadlistFilter.size) {
                         //not index found
                     } else {
-                        newIndexSortedList = newIndexSortedList.subList(0, 6)
+                        if(newIndexSortedList.size < 7){
+
+                        }else{
+                            newIndexSortedList = newIndexSortedList.subList(0, 6)
+
+                        }
                     }
                     //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                     ProgressHelper.getInstance(context).setDownloadList(newIndexSortedList)

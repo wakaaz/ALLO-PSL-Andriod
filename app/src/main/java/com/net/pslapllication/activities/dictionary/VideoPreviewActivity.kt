@@ -1920,8 +1920,18 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
                     var dictionaryDataTemp: DictionaryData? = null
 
                     try {
-                        val data = list!!.filter { it.indexPosition == nextVideo }
-                        selectedModel = data[0]
+
+                        var lastindex:Int = list?.size!! - 1
+                        var lastindexpostion:Int  = list?.get(lastindex)?.indexPosition!!
+
+                        if(nextVideo > lastindexpostion){
+                            selectedModel = list!![0]
+                        }else{
+                            val data = list!!.filter { it.indexPosition == nextVideo }
+                            selectedModel = data[0]
+
+                        }
+
                         dictionaryDataTemp = selectedModel as DictionaryData
                         var newIndex = list!!.indexOf(dictionaryDataTemp)
                         val videoUrl: String =

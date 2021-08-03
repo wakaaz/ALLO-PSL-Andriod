@@ -90,7 +90,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setTitle("PSL Application")
         request.setDescription(fileName)
-        var dummyfilename = ""
+        var dummyfilename = fileName
         if(!fileName!!.contains(".mp4")){
             dummyfilename = fileName+".mp4"
         }
@@ -125,6 +125,10 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
 
             var download_id = downloadReference.toInt()
             var title =  fileName
+
+            if(title.contains(".mp4")){
+                title =  title.replace(".mp4","")
+            }
 
             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                 download_id,

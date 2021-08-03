@@ -113,12 +113,16 @@ class CatDownloadsActivity : AppCompatActivity(),View.OnClickListener {
 
                         var picture = fileCat[i].absolutePath
                         var thumnail = ""
-                        Log.e("name",fileCat[i].nameWithoutExtension+"")
-                        var model = downloadRepository.getSingleDownload(fileCat[i].nameWithoutExtension)
+                         var filename = fileCat[i].nameWithoutExtension
+
+                        if(filename.contains(" ")){
+                            filename =  filename.replace(" ","_")
+                        }
+                        var model = downloadRepository.getSingleDownload(filename)
                         if(model != null && !model.link.isNullOrEmpty()){
                             thumnail = model.link
                         }
-
+                        Log.e("name",fileCat[i].nameWithoutExtension+"|"+thumnail)
                         dicWordList.add(
                             DownloadListModel(
                                 i,

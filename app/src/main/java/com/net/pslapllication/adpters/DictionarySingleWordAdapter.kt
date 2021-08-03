@@ -323,7 +323,7 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                     try {
 
                         var newIndexSortedList = ListSorting.sortListFavourite(isDecrement,
-                            favListFilter[newPos].indexPosition,
+                                newPos,
                             favListFilter
                         )
 
@@ -376,7 +376,7 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                         //model.setModelList(diclistFilter)
                         //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
                         var newIndexSortedList = ListSorting.sortListLearningTutorial(isDecrement,
-                            learningListFilter[newPos].indexPosition,
+                                newPos,
                             learningListFilter)
 
 
@@ -415,7 +415,7 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                         //model.setModelList(diclistFilter)
                         //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
                         var newIndexSortedList = ListSorting.sortList(isDecrement,
-                            position,
+                                newPos,
                             diclistFilter
                         )
 
@@ -460,7 +460,7 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                         //model.setModelList(diclistFilter)
                         //       val dictionaryListCarrierDataModel:DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
                         var newIndexSortedList = ListSorting.sortListStory(isDecrement,
-                            storyListFilter[newPos].indexPosition,
+                                newPos,
                             storyListFilter
                         )
 

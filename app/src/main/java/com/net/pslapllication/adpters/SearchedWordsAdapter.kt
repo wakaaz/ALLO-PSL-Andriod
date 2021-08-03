@@ -124,15 +124,18 @@ class SearchedWordsAdapter(var context: Context,var listener : OnQuerryChangeLis
                         //not index found
                     } else {
 
-                       val dummylist = newIndexSortedList.subList(0, 6)
-                       val readylist:ArrayList<DictionaryDataAPI> =  ArrayList<DictionaryDataAPI>()
-                        for (item in dummylist.indices) {
-                            // body of loop
-                            var modelitem = dummylist[item]
-                            modelitem.indexPosition = item
-                            readylist.add(modelitem)
-                        }
-                        newIndexSortedList =  readylist
+
+                            val dummylist = newIndexSortedList.subList(0, 6)
+                            val readylist:ArrayList<DictionaryDataAPI> =  ArrayList<DictionaryDataAPI>()
+                            for (item in dummylist.indices) {
+                                // body of loop
+                                var modelitem = dummylist[item]
+                                modelitem.indexPosition = item
+                                readylist.add(modelitem)
+                            }
+                            newIndexSortedList =  readylist
+
+
                     }
                     //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                     ProgressHelper.getInstance(context)?.setListOffline(newIndexSortedList)

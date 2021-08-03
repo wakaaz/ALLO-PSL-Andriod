@@ -150,12 +150,13 @@ class DownloadFragment : Fragment(), View.OnClickListener, onQualityChangSelecte
 
                             var picture = file[i].absolutePath
                             var thumnail = ""
+
                             var model = downloadRepository.getSingleDownload(file[i].nameWithoutExtension)
                             if(model != null && !model.link.isNullOrEmpty()){
                                 thumnail = model.link
                             }
 
-
+                        Log.e("picture",""+thumnail)
                         dicWordList.add(
                             DownloadListModel(
                                 i,
