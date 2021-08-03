@@ -125,19 +125,17 @@ class SearchedWordsAdapter(var context: Context,var listener : OnQuerryChangeLis
                     } else {
 
                        val dummylist = newIndexSortedList.subList(0, 6)
-                        val readylist:List<DictionaryDataAPI> =  arrayListOf<DictionaryDataAPI>()
+                       val readylist:ArrayList<DictionaryDataAPI> =  ArrayList<DictionaryDataAPI>()
                         for (item in dummylist.indices) {
                             // body of loop
                             var modelitem = dummylist[item]
                             modelitem.indexPosition = item
-                            //dummylist.get(item) = modelitem
+                            readylist.add(modelitem)
                         }
                         newIndexSortedList =  readylist
                     }
                     //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                     ProgressHelper.getInstance(context)?.setListOffline(newIndexSortedList)
-
-
                     //ReuseFunctions.preventTwoClick(gridView)
                     ReuseFunctions.startNewActivityDataModelParam(
                         context,
