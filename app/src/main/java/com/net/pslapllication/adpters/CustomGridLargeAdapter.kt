@@ -27,6 +27,7 @@ import com.net.pslapllication.model.preferences.Dictionary_categories
 import com.net.pslapllication.model.preferences.Life_skills
 import com.net.pslapllication.model.preferences.Story_types
 import com.net.pslapllication.model.preferences.Tut_grades
+import com.net.pslapllication.model.stories.StoryData
 import com.net.pslapllication.model.tutorial.TutorialData
 import com.net.pslapllication.util.Constants
 import com.net.pslapllication.util.ListSorting
@@ -436,8 +437,27 @@ class CustomGridLargeAdapter(private val context: Context, var type: String) : B
 
                     if (5 >= tutGradeSubVideoListFilter.size) {
                         //not index found
+
+                        val dummylist = newIndexSortedList
+                        val readylist:ArrayList<TutorialData> =  ArrayList<TutorialData>()
+                        for (item in dummylist.indices) {
+                            // body of loop
+                            var modelitem = dummylist[item]
+                            modelitem.indexPosition = item
+                            readylist.add(modelitem)
+                        }
+                        newIndexSortedList =readylist
+
                     } else {
-                        newIndexSortedList = newIndexSortedList.subList(0, 6)
+                        val dummylist = newIndexSortedList.subList(0, 6)
+                        val readylist:ArrayList<TutorialData> =  ArrayList<TutorialData>()
+                        for (item in dummylist.indices) {
+                            // body of loop
+                            var modelitem = dummylist[item]
+                            modelitem.indexPosition = item
+                            readylist.add(modelitem)
+                        }
+
                     }
                     //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                     ProgressHelper.getInstance(context)?.setTutorialList(newIndexSortedList)

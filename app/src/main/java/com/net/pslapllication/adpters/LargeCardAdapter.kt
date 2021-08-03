@@ -23,6 +23,7 @@ import com.net.pslapllication.model.favouriteList.Data
 import com.net.pslapllication.model.learningtutorial.LearningData
 import com.net.pslapllication.model.preferences.Subjects
 import com.net.pslapllication.model.stories.StoryData
+import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 import com.net.pslapllication.util.Constants
 import com.net.pslapllication.util.ListSorting
 import com.net.pslapllication.util.ReuseFunctions
@@ -396,14 +397,34 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                                 indexposition = newPos
                             }
                             var newIndexSortedList = ListSorting.sortListLearningTutorial(isDecrement,
-                                    indexposition,
+                                    newPos,
                                     learningListFilter)
 
 
                             if (5 >= learningListFilter.size) {
                                 //not index found
+                                val dummylist = newIndexSortedList
+                                val readylist:ArrayList<LearningData> =  ArrayList<LearningData>()
+                                for (item in dummylist.indices) {
+                                    // body of loop
+                                    var modelitem = dummylist[item]
+                                    modelitem.indexPosition = item
+                                    readylist.add(modelitem)
+                                }
+                                newIndexSortedList =readylist
+
                             } else {
-                                newIndexSortedList = newIndexSortedList.subList(0, 6)
+
+                                val dummylist = newIndexSortedList.subList(0, 6)
+                                val readylist:ArrayList<LearningData> =  ArrayList<LearningData>()
+                                for (item in dummylist.indices) {
+                                    // body of loop
+                                    var modelitem = dummylist[item]
+                                    modelitem.indexPosition = item
+                                    readylist.add(modelitem)
+                                }
+                                newIndexSortedList = readylist
+
                             }
                             //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                             ProgressHelper.getInstance(context)?.setLearningList(newIndexSortedList)
@@ -488,7 +509,7 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                                     indexposition = newPos
                                 }
                                 var newIndexSortedList = ListSorting.sortListStory(isDecrement,
-                                        indexposition,
+                                        newPos,
                                     storyListFilter
                             )
 
@@ -497,7 +518,18 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                                 //not index found
 
                             } else {
-                                newIndexSortedList = newIndexSortedList.subList(0, 6)
+
+
+
+                                val dummylist = newIndexSortedList.subList(0, 6)
+                                val readylist:ArrayList<StoryData> =  ArrayList<StoryData>()
+                                for (item in dummylist.indices) {
+                                    // body of loop
+                                    var modelitem = dummylist[item]
+                                    modelitem.indexPosition = item
+                                    readylist.add(modelitem)
+                                }
+                                newIndexSortedList =readylist
 
                             }
 

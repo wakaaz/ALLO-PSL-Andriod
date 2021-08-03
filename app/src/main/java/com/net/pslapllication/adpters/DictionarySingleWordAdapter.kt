@@ -424,7 +424,18 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                             //not index found
                         } else {
                             if (newIndexSortedList.size >= 7){
-                                newIndexSortedList = newIndexSortedList.subList(0, 6)
+
+
+                                val dummylist = newIndexSortedList.subList(0, 6)
+                                val readylist:ArrayList<DictionaryData> =  ArrayList<DictionaryData>()
+                                for (item in dummylist.indices) {
+                                    // body of loop
+                                    var modelitem = dummylist[item]
+                                    modelitem.indexPosition = item
+                                    readylist.add(modelitem)
+                                }
+                                newIndexSortedList =readylist
+
 
                             }else{
 
