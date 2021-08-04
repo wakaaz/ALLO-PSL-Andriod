@@ -1621,6 +1621,17 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
                     try {
 
                         var filename = (selectedModel as Data?)!!.videoname
+
+                        if ((selectedModel as Data).dict_video_id != 0 && (selectedModel as Data).learning_tut_video_id == 0 &&
+                                (selectedModel as Data).tut_video_id == 0 && (selectedModel as Data).lesson_video_id == 0 && (selectedModel as Data).story_video_id == 0
+                        ) {
+
+                            if(filename.equals("-")){
+                                filename =  (selectedModel as Data?)!!.dictionary!!.urdu_word
+                            }
+                        }
+
+
                         if(filename.contains(" ")) {
                             filename = filename.replace(" ", "_")
                         }
@@ -1652,7 +1663,19 @@ class VideoPreviewFavouriteActivity : BaseActivity(), View.OnClickListener,
                         ReuseFunctions.showToast(this, "Select one category")
                     } else {
                         try {
+
+
+
                             var filename = (selectedModel as Data?)!!.videoname
+                            if ((selectedModel as Data).dict_video_id != 0 && (selectedModel as Data).learning_tut_video_id == 0 &&
+                                    (selectedModel as Data).tut_video_id == 0 && (selectedModel as Data).lesson_video_id == 0 && (selectedModel as Data).story_video_id == 0
+                            ) {
+
+                                if(filename.equals("-")){
+                                    filename =  (selectedModel as Data?)!!.dictionary!!.urdu_word
+                                }
+                            }
+
                             if(filename.contains(" ")) {
                                 filename = filename.replace(" ", "_")
                             }

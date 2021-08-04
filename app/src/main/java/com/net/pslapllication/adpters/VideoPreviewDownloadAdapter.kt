@@ -55,7 +55,7 @@ class VideoPreviewDownloadAdapter(var context: Context, var type: String, var na
             ResourcesCompat.getFont(context, R.font.jameelnoorinastaleeqregular)
         Glide
             .with(context)
-            .load(File(diclist[position].wordTyhumb).toString())
+            .load(URLDecoder.decode(diclist[position].wordDetail).toString())
             .into(holder.imageView_round)
         holder.bind(diclist[position], type, name,onVideoSelectedListener)
 

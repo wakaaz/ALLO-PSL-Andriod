@@ -177,10 +177,18 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+
+                            var title =  list[i].english_word.toLowerCase()
+                            if(title.equals("-")){
+                                title =  list[i].urdu_word.toLowerCase()
+                            }
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
 
                             /*val file = File(
@@ -196,18 +204,12 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
 
                             var download_id = list[i].downloadReference.toInt()
-                            var title =  list[i].english_word
-                            if(title.equals("-")){
-                                title =  list[i].urdu_word
-                            }
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
                                 title.toLowerCase(),
@@ -242,10 +244,18 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+
+                            var title =  list[i].english_word.toLowerCase()
+                            if(title.equals("-")){
+                                title =  list[i].urdu_word.toLowerCase()
+                            }
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
 
                             /*val file = File(
@@ -261,17 +271,11 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = list[i].downloadReference.toInt()
-                            var title =  list[i].english_word
-                            if(title.equals("-")){
-                                title =  list[i].urdu_word
-                            }
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
                                 title.toLowerCase(),
@@ -305,10 +309,19 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+
+                            var title =  list[i].english_word.toLowerCase()
+                            if(title.equals("-")){
+                                title =  list[i].urdu_word.toLowerCase()
+                            }
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
 
                             /*val file = File(
@@ -324,17 +337,11 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = list[i].downloadReference.toInt()
-                            var title =  list[i].english_word
-                            if(title.equals("-")){
-                                title =  list[i].urdu_word
-                            }
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
                                 title.toLowerCase(),
@@ -368,10 +375,19 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+
+                            var title =  list[i].english_word.toLowerCase()
+                            if(title.equals("-")){
+                                title =  list[i].urdu_word.toLowerCase()
+                            }
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
 
                             /*val file = File(
@@ -387,17 +403,10 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = list[i].downloadReference.toInt()
-                            var title =  list[i].english_word
-                            if(title.equals("-")){
-                                title =  list[i].urdu_word
-                            }
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
 
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
@@ -457,10 +466,15 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
 
                             /*val file = File(
@@ -476,14 +490,11 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title+ ""
                                 )
                             }
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
                                 title.toLowerCase(),
@@ -517,10 +528,16 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+
+
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title+ ""
                             )
 
                             /*val file = File(
@@ -536,14 +553,11 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
                                 title.toLowerCase(),
@@ -577,10 +591,15 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
 
                             /*val file = File(
@@ -596,14 +615,11 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
                                 title.toLowerCase(),
@@ -636,11 +652,20 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
+
+
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+
+
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
 
                             /*val file = File(
@@ -656,14 +681,11 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
                                 title.toLowerCase(),
@@ -718,10 +740,16 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
 
                             /*val file = File(
@@ -737,16 +765,13 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title+ ""
                                 )
                             }
 
 
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
                                 title.toLowerCase(),
@@ -780,10 +805,15 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
+
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title+ ""
                             )
 
                             /*val file = File(
@@ -799,14 +829,11 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
                                 title.toLowerCase(),
@@ -837,13 +864,18 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                             request.setTitle("PSL Application")
                             request.setDescription(list[i].filename)
+
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
 
                             /*val file = File(
@@ -859,17 +891,14 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title+ ""
                                 )
                             }
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
-                                title.toLowerCase(),
+                                title,
                                 list[i].poster,
                                 "",
                                 true
@@ -900,10 +929,14 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                          Constants.CAT_FOLDER_NAME + catName + "/", list[i].filename+"-"+list[i].urdu_word+ "")*/
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
 
                             /*val file = File(
@@ -919,17 +952,14 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 )*/
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
-                                title.toLowerCase(),
+                                title,
                                 list[i].poster,
                                 "",
                                 true
@@ -977,29 +1007,31 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                             request.setTitle("PSL Application")
                             request.setDescription(list[i].filename)
+
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
                             if (file.exists()) {
                                 file.delete()
                             } else {
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title+ ""
                                 )
                             }
 
 
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
-                                title.toLowerCase(),
+                                title,
                                 list[i].poster,
                                 "",
                                 true
@@ -1027,27 +1059,29 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                             request.setTitle("PSL Application")
                             request.setDescription(list[i].filename)
+
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title+ ""
                             )
                             if (file.exists()) {
                                 file.delete()
                             } else {
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
-                                title.toLowerCase(),
+                                title,
                                 list[i].poster,
                                 "",
                                 true
@@ -1075,27 +1109,28 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                             request.setTitle("PSL Application")
                             request.setDescription(list[i].filename)
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
                             if (file.exists()) {
                                 file.delete()
                             } else {
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
-                                title.toLowerCase(),
+                                title,
                                 list[i].poster,
                                 "",
                                 true
@@ -1123,27 +1158,28 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                             request.setTitle("PSL Application")
                             request.setDescription(list[i].filename)
+                            var title =  list[i].title.toLowerCase()
+                            if(title.contains(" ")){
+                                title =  title.replace(" ","_")
+                            }
                             val file = File(
                                 context.getExternalFilesDir(null)!!.getAbsolutePath() +
                                         Constants.CAT_FOLDER_NAME + catName + "/",
-                                list[i].filename + ""
+                                    title + ""
                             )
                             if (file.exists()) {
                                 file.delete()
                             } else {
                                 request.setDestinationInExternalPublicDir(
                                     Environment.DIRECTORY_DOWNLOADS,
-                                    Constants.CAT_FOLDER_NAME + catName + "/" + list[i].filename + ""
+                                    Constants.CAT_FOLDER_NAME + catName + "/" + title + ""
                                 )
                             }
                             var download_id = 0
-                            var title =  list[i].title
-                            if(title.contains(" ")){
-                                title =  title.replace(" ","_")
-                            }
+
                             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                                 download_id,
-                                title.toLowerCase(),
+                                title,
                                 list[i].poster,
                                 "",
                                 true
