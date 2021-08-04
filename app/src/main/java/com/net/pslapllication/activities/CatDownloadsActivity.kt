@@ -118,7 +118,9 @@ class CatDownloadsActivity : AppCompatActivity(),View.OnClickListener {
                         if(filename.contains(" ")){
                             filename =  filename.replace(" ","_")
                         }
-                        var model = downloadRepository.getSingleDownload(filename)
+                        Log.e("name",filename+"|"+thumnail)
+
+                        var model = downloadRepository.getSingleDownload(filename.toLowerCase())
                         if(model != null && !model.link.isNullOrEmpty()){
                             thumnail = model.link
                         }

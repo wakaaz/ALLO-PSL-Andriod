@@ -122,18 +122,39 @@ class SearchedWordsAdapter(var context: Context,var listener : OnQuerryChangeLis
 
                     if (5 >= diclist.size) {
                         //not index found
+                        val dummylist = newIndexSortedList
+                        val readylist:ArrayList<DictionaryDataAPI> =  ArrayList<DictionaryDataAPI>()
+                        for (item in dummylist.indices) {
+                            // body of loop
+                            var modelitem = dummylist[item]
+                            modelitem.indexPosition = item
+                            readylist.add(modelitem)
+                        }
+                        newIndexSortedList =  readylist
                     } else {
 
-
-                            val dummylist = newIndexSortedList.subList(0, 6)
-                            val readylist:ArrayList<DictionaryDataAPI> =  ArrayList<DictionaryDataAPI>()
-                            for (item in dummylist.indices) {
-                                // body of loop
-                                var modelitem = dummylist[item]
-                                modelitem.indexPosition = item
-                                readylist.add(modelitem)
+                            if(newIndexSortedList.size > 7){
+                                val dummylist = newIndexSortedList.subList(0, 6)
+                                val readylist:ArrayList<DictionaryDataAPI> =  ArrayList<DictionaryDataAPI>()
+                                for (item in dummylist.indices) {
+                                    // body of loop
+                                    var modelitem = dummylist[item]
+                                    modelitem.indexPosition = item
+                                    readylist.add(modelitem)
+                                }
+                                newIndexSortedList =  readylist
+                            }else{
+                                val dummylist = newIndexSortedList
+                                val readylist:ArrayList<DictionaryDataAPI> =  ArrayList<DictionaryDataAPI>()
+                                for (item in dummylist.indices) {
+                                    // body of loop
+                                    var modelitem = dummylist[item]
+                                    modelitem.indexPosition = item
+                                    readylist.add(modelitem)
+                                }
+                                newIndexSortedList =  readylist
                             }
-                            newIndexSortedList =  readylist
+
 
 
                     }

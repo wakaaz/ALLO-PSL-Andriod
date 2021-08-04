@@ -151,7 +151,7 @@ class DownloadFragment : Fragment(), View.OnClickListener, onQualityChangSelecte
                             var picture = file[i].absolutePath
                             var thumnail = ""
 
-                            var model = downloadRepository.getSingleDownload(file[i].nameWithoutExtension)
+                            var model = downloadRepository.getSingleDownload(file[i].nameWithoutExtension.toLowerCase())
                             if(model != null && !model.link.isNullOrEmpty()){
                                 thumnail = model.link
                             }

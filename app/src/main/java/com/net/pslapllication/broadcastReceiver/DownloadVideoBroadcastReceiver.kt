@@ -132,7 +132,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
 
             val model = com.net.pslapllication.room.datamodel.DownloadData(0,
                 download_id,
-                title,
+                title.toLowerCase(),
                 thumbnail,
                 "",
                 true

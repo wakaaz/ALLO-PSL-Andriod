@@ -25,6 +25,7 @@ import com.net.pslapllication.model.learningtutorial.LearningData
 import com.net.pslapllication.model.preferences.Story_types
 import com.net.pslapllication.model.preferences.Subjects
 import com.net.pslapllication.model.stories.StoryData
+import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 import com.net.pslapllication.util.Constants
 import com.net.pslapllication.util.ListSorting
 import com.net.pslapllication.util.ReuseFunctions
@@ -97,7 +98,7 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                 favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id == 0
             ) {
                 tv_word?.text = favListFilter[position].learningTutorial.title
-               // tv_translate?.text = favListFilter[position].dictionary.urdu_word
+                tv_translate?.text = ""
                 if (!favListFilter[position].learningTutorial.poster.equals("")) {
                     val poster: String = URLDecoder.decode(favListFilter[position].learningTutorial.poster)
                     Glide.with(context).load(poster)
@@ -107,7 +108,7 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                 favListFilter[position].tut_video_id != 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id == 0
             ) {
                 tv_word?.text = favListFilter[position].tutorial.title
-                // tv_translate?.text = favListFilter[position].dictionary.urdu_word
+                 tv_translate?.text = ""
                 if (!favListFilter[position].tutorial.poster.equals("")) {
                     val poster: String = URLDecoder.decode(favListFilter[position].tutorial.poster)
                     Glide.with(context).load(poster)
@@ -117,6 +118,8 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                 favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id != 0 && favListFilter[position].story_video_id == 0
             ) {
                 tv_word?.text = favListFilter[position].lesson.title
+                tv_translate?.text = ""
+
                 // tv_translate?.text = favListFilter[position].dictionary.urdu_word
                 if (!favListFilter[position].lesson.poster.equals("")) {
                     val poster: String = URLDecoder.decode(favListFilter[position].lesson.poster)
@@ -127,6 +130,8 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
                 favListFilter[position].tut_video_id == 0 && favListFilter[position].lesson_video_id == 0 && favListFilter[position].story_video_id != 0
             ) {
                 tv_word?.text = favListFilter[position].story.title
+                tv_translate?.text = ""
+
                 // tv_translate?.text = favListFilter[position].dictionary.urdu_word
                 if (!favListFilter[position].story.poster.equals("")) {
                     val poster: String = URLDecoder.decode(favListFilter[position].story.poster)
@@ -141,6 +146,8 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
             tv_word?.setLines(1)
             tv_word?.ellipsize = TextUtils.TruncateAt.END
             tv_word?.text = sublistFilter[position].title
+            tv_translate?.text = ""
+
             //tv_word2?.text = favList[position].urdu_word
             tv_no_videos?.visibility = View.VISIBLE
             tv_translate?.visibility = View.GONE
@@ -175,6 +182,8 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
         } else if (type == Constants.TYPE_STORIES) {
             //set text
             tv_word?.text = storyListFilter[position].title
+            tv_translate?.text = ""
+
             tv_word?.setLines(3)
             tv_word?.ellipsize = TextUtils.TruncateAt.END
             tv_translate?.visibility = View.GONE
@@ -209,6 +218,8 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
         } else if (type == Constants.TYPE_LEARNING_TUTORIAL) {
             //set text
             tv_word?.text = learningListFilter[position].title
+            tv_translate?.text = ""
+
             tv_word?.setLines(3)
             tv_word?.ellipsize = TextUtils.TruncateAt.END
             tv_translate?.visibility = View.GONE
@@ -330,8 +341,26 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
 
                         if (5 >= favListFilter.size) {
                             //not index found
+                            val dummylist = newIndexSortedList
+                            val readylist:ArrayList<Data> =  ArrayList<Data>()
+                            for (item in dummylist.indices) {
+                                // body of loop
+                                var modelitem = dummylist[item]
+                                modelitem.indexPosition = item
+                                readylist.add(modelitem)
+                            }
+                            newIndexSortedList =  readylist
                         } else {
-                            newIndexSortedList = newIndexSortedList.subList(0, 6)
+                            val dummylist = newIndexSortedList.subList(0, 6)
+                            val readylist:ArrayList<Data> =  ArrayList<Data>()
+                            for (item in dummylist.indices) {
+                                // body of loop
+                                var modelitem = dummylist[item]
+                                modelitem.indexPosition = item
+                                readylist.add(modelitem)
+                            }
+                            newIndexSortedList =  readylist
+
                         }
                         //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                         ProgressHelper.getInstance(context).setFavList(newIndexSortedList)
@@ -382,8 +411,26 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
 
                         if (5 >= learningListFilter.size) {
                             //not index found
+                            val dummylist = newIndexSortedList
+                            val readylist:ArrayList<LearningData> =  ArrayList<LearningData>()
+                            for (item in dummylist.indices) {
+                                // body of loop
+                                var modelitem = dummylist[item]
+                                modelitem.indexPosition = item
+                                readylist.add(modelitem)
+                            }
+                            newIndexSortedList =  readylist
                         } else {
-                            newIndexSortedList = newIndexSortedList.subList(0, 6)
+                            val dummylist = newIndexSortedList.subList(0, 6)
+                            val readylist:ArrayList<LearningData> =  ArrayList<LearningData>()
+                            for (item in dummylist.indices) {
+                                // body of loop
+                                var modelitem = dummylist[item]
+                                modelitem.indexPosition = item
+                                readylist.add(modelitem)
+                            }
+                            newIndexSortedList =  readylist
+
                         }
                         //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                         ProgressHelper.getInstance(context)?.setLearningList(newIndexSortedList)
@@ -422,6 +469,15 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
 
                         if (5 >= diclist.size) {
                             //not index found
+                            val dummylist = newIndexSortedList
+                            val readylist:ArrayList<DictionaryData> =  ArrayList<DictionaryData>()
+                            for (item in dummylist.indices) {
+                                // body of loop
+                                var modelitem = dummylist[item]
+                                modelitem.indexPosition = item
+                                readylist.add(modelitem)
+                            }
+                            newIndexSortedList =  readylist
                         } else {
                             if (newIndexSortedList.size >= 7){
 
@@ -438,7 +494,15 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
 
 
                             }else{
-
+                                val dummylist = newIndexSortedList
+                                val readylist:ArrayList<DictionaryData> =  ArrayList<DictionaryData>()
+                                for (item in dummylist.indices) {
+                                    // body of loop
+                                    var modelitem = dummylist[item]
+                                    modelitem.indexPosition = item
+                                    readylist.add(modelitem)
+                                }
+                                newIndexSortedList =  readylist
                             }
                         }
                         //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
@@ -478,8 +542,26 @@ class DictionarySingleWordAdapter(var context: Context, var type: String, var na
 
                         if (5 >= storyListFilter.size) {
                             //not index found
+                            val dummylist = newIndexSortedList
+                            val readylist:ArrayList<StoryData> =  ArrayList<StoryData>()
+                            for (item in dummylist.indices) {
+                                // body of loop
+                                var modelitem = dummylist[item]
+                                modelitem.indexPosition = item
+                                readylist.add(modelitem)
+                            }
+                            newIndexSortedList =  readylist
                         } else {
-                            newIndexSortedList = newIndexSortedList.subList(0, 6)
+
+                            val dummylist = newIndexSortedList.subList(0, 6)
+                            val readylist:ArrayList<StoryData> =  ArrayList<StoryData>()
+                            for (item in dummylist.indices) {
+                                // body of loop
+                                var modelitem = dummylist[item]
+                                modelitem.indexPosition = item
+                                readylist.add(modelitem)
+                            }
+                            newIndexSortedList =  readylist
                         }
                         //    ProgressHelper.getInstance(context)?.setModelInstance(dictionaryListCarrierDataModel!!)
                         ProgressHelper.getInstance(context)?.setListStory(newIndexSortedList)
