@@ -28,6 +28,7 @@ import com.net.pslapllication.model.preferences.Life_skills
 import com.net.pslapllication.model.preferences.Story_types
 import com.net.pslapllication.model.preferences.Tut_grades
 import com.net.pslapllication.model.tutorial.TutorialData
+import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 import com.net.pslapllication.util.Constants
 import com.net.pslapllication.util.ListSorting
 import com.net.pslapllication.util.ReuseFunctions
@@ -530,9 +531,18 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                         downloadlistFilter
                     )
 
-
+                    val dummylist = newIndexSortedList
+                    val readylist:ArrayList<DownloadListModel> =  ArrayList<DownloadListModel>()
+                    for (item in dummylist.indices) {
+                        // body of loop
+                        var modelitem = dummylist[item]
+                        modelitem.indexPosition = item
+                        readylist.add(modelitem)
+                    }
+                    newIndexSortedList =  readylist
                     if (5 >= downloadlistFilter.size) {
                         //not index found
+
                     } else {
                         if(newIndexSortedList.size < 7){
 

@@ -296,7 +296,7 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
         val myTextView: TextView =
                 view.findViewById(R.id.tvHeading)
         val text1: String = "SEARCH FROM\nMORE THAN "
-       val text2: String = "3,000\nPSL DICTIONARY\n"
+       val text2: String = "6,000\nPSL DICTIONARY\n"
         val text3: String = "WORDS";
         val mainTxt: String = text1 +text2+text3
 
