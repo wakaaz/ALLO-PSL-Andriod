@@ -111,6 +111,7 @@
                 android:ellipsize="end"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16ssp"
+                android:textAllCaps="true"
                  app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/opsBackBtnInvisible"
                 app:layout_constraintStart_toEndOf="@+id/opsBackBtn"

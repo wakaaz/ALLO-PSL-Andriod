@@ -474,6 +474,7 @@
                         app:cardCornerRadius="@dimen/_5sdp"
                         app:cardElevation="@dimen/_5sdp"
                         app:cardUseCompatPadding="true"
+                        android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 

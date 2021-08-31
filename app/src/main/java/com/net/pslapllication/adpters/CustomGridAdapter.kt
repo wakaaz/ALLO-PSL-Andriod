@@ -672,7 +672,7 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                         val resultList = ArrayList<Dictionary_categories>()
                         for (row: Dictionary_categories in dicwordlist) {
                             if (row.title.toLowerCase(Locale.ROOT)
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }
@@ -689,7 +689,7 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                         val resultList = ArrayList<TutorialData>()
                         for (row: TutorialData in tutGradeSubVideoList) {
                             if (row.title.toLowerCase(Locale.ROOT)
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }
@@ -705,7 +705,7 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                         val resultList = ArrayList<Life_skills>()
                         for (row: Life_skills in learningTutListFilter) {
                             if (row.title.toLowerCase(Locale.ROOT)
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }
@@ -721,7 +721,7 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                         val resultList = ArrayList<Tut_grades>()
                         for (row: Tut_grades in tutGradesList) {
                             if (row.grade.toLowerCase(Locale.ROOT)
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }
@@ -738,7 +738,7 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                         val resultList = ArrayList<Story_types>()
                         for (row: Story_types in storyTypeList) {
                             if (row.title.toLowerCase(Locale.ROOT)
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }
@@ -755,7 +755,7 @@ class CustomGridAdapter(private val context: Context, var type: String) : BaseAd
                         val resultList = ArrayList<DownloadListModel>()
                         for (row: DownloadListModel in downloadlist) {
                             if (row.wordName.toLowerCase(Locale.ROOT)
-                                            .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                            .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }

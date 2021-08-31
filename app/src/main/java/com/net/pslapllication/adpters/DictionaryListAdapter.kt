@@ -104,7 +104,7 @@ class DictionaryListAdapter(var context: Context, var type: String) :
                         val resultList = ArrayList<Dictionary_categories>()
                         for (row: Dictionary_categories in list!!) {
                             if (row.title.toLowerCase(Locale.ROOT)
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }

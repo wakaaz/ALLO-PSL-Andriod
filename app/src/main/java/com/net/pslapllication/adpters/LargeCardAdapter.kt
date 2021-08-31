@@ -643,7 +643,7 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                         val resultList = ArrayList<DictionaryData>()
                         for (row: DictionaryData in diclist) {
                             if (row.english_word.toLowerCase()
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }
@@ -659,7 +659,7 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                         val resultList = ArrayList<Subjects>()
                         for (row: Subjects in sublist) {
                             if (row.title.toLowerCase()
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }
@@ -675,7 +675,7 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                         val resultList = ArrayList<StoryData>()
                         for (row: StoryData in storyList) {
                             if (row.title.toLowerCase()
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }
@@ -691,7 +691,7 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                         val resultList = ArrayList<LearningData>()
                         for (row: LearningData in learningList) {
                             if (row.title.toLowerCase()
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }
@@ -707,7 +707,7 @@ class LargeCardAdapter(var context: Context, var type: String, var name: String)
                         val resultList = ArrayList<Data>()
                         for (row: Data in favList) {
                             if (row.videoname.toLowerCase()
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }

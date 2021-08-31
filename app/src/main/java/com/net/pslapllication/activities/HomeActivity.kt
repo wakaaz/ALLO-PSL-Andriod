@@ -34,6 +34,8 @@ import kotlinx.android.synthetic.main.activity_forgot_password_step2.*
 import kotlinx.android.synthetic.main.activity_home.*
 import retrofit2.Call
 import java.util.*
+import android.content.Intent
+import android.net.Uri
 
 
 class HomeActivity : BaseActivity(), RetrofitResponseListener {
@@ -97,10 +99,10 @@ class HomeActivity : BaseActivity(), RetrofitResponseListener {
                     }
 
                     R.id.nav_psl -> {
-                        Toast.makeText(this, "about", Toast.LENGTH_SHORT).show()
                         /*if(drawer_layout.isDrawerOpen(Gravity.RIGHT)){
                             drawer_layout.closeDrawer(Gravity.RIGHT)
                         }*/
+                        openUrl()
                         return@OnNavigationItemSelectedListener true
                     }
                     R.id.nav_recommend_in -> {
@@ -272,5 +274,10 @@ class HomeActivity : BaseActivity(), RetrofitResponseListener {
         if (!this.isDestroyed) {
             ReuseFunctions.showToast(this, error)
         }
+    }
+
+    fun openUrl(){
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.psl.org.pk/about/about-psl"))
+        startActivity(browserIntent)
     }
 }

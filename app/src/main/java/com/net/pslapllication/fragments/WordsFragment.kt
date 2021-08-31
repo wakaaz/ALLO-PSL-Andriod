@@ -190,7 +190,7 @@ class WordsFragment : Fragment() {
                         val resultList = ArrayList<Data>()
                         for (row: Data in items!!) {
                             if (row.content.toLowerCase(Locale.ROOT)
-                                    .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }

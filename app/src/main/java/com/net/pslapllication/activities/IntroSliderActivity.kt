@@ -11,26 +11,46 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.net.pslapllication.R
+import com.net.pslapllication.interfaces.RetrofitResponseListener
+import com.net.pslapllication.model.login.LoginMainModel
+import com.net.pslapllication.reetrofit.ApiCallClass
+import com.net.pslapllication.reetrofit.ApiService
+import com.net.pslapllication.reetrofit.RetrofitClientInstance
+import com.net.pslapllication.util.Constants
+import com.net.pslapllication.util.ReuseFunctions
 import com.net.pslapllication.util.SharedPreferenceClass
+import com.net.pslapllication.worker.AllWordsWorker
 import kotlinx.android.synthetic.main.activity_intro_slider.*
+import kotlinx.android.synthetic.main.activity_login_screen.*
+import retrofit2.Call
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class IntroSliderActivity : AppCompatActivity() {
+class IntroSliderActivity : BaseActivity() , RetrofitResponseListener {
     private var myViewPagerAdapter: MyViewPagerAdapter? = null
     private var dotsLayout: LinearLayout? = null
     private var layouts: IntArray? = null
-
+    private var isInternetConnected: Boolean = true
+    lateinit var apiService: ApiService
+    lateinit var constraint_bg:RelativeLayout
          override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
 
             setContentView(R.layout.activity_intro_slider)
 
             dotsLayout = findViewById<LinearLayout>(R.id.layoutDots)
+             constraint_bg = findViewById(R.id.constraint_bg)
             // layouts of all intro sliders
             layouts = intArrayOf(R.layout.slide1, R.layout.slide2, R.layout.slide3)
 
@@ -56,6 +76,11 @@ class IntroSliderActivity : AppCompatActivity() {
                     launchHomeScreen()
                 }
             })
+
+            val userType = Constants.USERTYPE_GUEST
+             SharedPreferenceClass.getInstance(this)
+                 ?.setUserType(userType)
+             setGuestLogin()
         }
 /*
          private fun addBottomDots(currentPage: Int) {
@@ -74,6 +99,31 @@ class IntroSliderActivity : AppCompatActivity() {
                 dots[currentPage]!!.setTextColor(resources.getColor(R.color.red))
         }
 */
+
+    private fun setRetrofitListener() {
+        apiService = RetrofitClientInstance.getClient()!!.create(ApiService::class.java)
+
+    }
+
+
+    override fun onNetworkConnectionChanged(isConnected: Boolean) {
+        if (isConnected) {
+            isInternetConnected = isConnected
+            //constraintInternet.visibility = View.GONE
+        } else {
+            if (!this.isDestroyed) {
+                //  constraintInternet.visibility = View.VISIBLE
+                isInternetConnected = isConnected
+                ReuseFunctions.snackMessage(
+                    this.getString(R.string.no_internet_text),
+                    constraint_bg
+                )
+            }
+        }
+        super.onNetworkConnectionChanged(isConnected)
+    }
+
+
   fun addBottomDots(currentPage: Int): Unit {
     val dots = arrayOfNulls<TextView>(layouts!!.size)
     val colorsActive = resources.getIntArray(R.array.array_dot_active)
@@ -168,4 +218,87 @@ class IntroSliderActivity : AppCompatActivity() {
                 container.removeView(view)
             }
         }
+
+
+    private fun setGuestLogin() {
+        if (isInternetConnected) {
+
+            val call = ApiCallClass.apiService.getLogInGuest("")
+            ApiCallClass.retrofitCall(this, call as Call<Any>)
+        } else {
+            if (!this.isDestroyed) {
+                ReuseFunctions.snackMessage(
+                    this.getString(R.string.no_internet_text),
+                    constraint_bg
+                )
+            }
+        }
     }
+
+    override fun onSuccess(model: Any?) {
+        if (model as LoginMainModel? != null) {
+
+            when (model?.code) {
+                Constants.SUCCESS_CODE -> {
+
+                    SharedPreferenceClass.getInstance(this)?.setSession(model?.object1!!.session)
+                    if (SharedPreferenceClass.getInstance(this)?.getUserType()!! == Constants.USERTYPE_GUEST) {
+                        SharedPreferenceClass.getInstance(this)
+                            ?.setFirstName(Constants.USERTYPE_GUEST)
+                    }
+
+                    SharedPreferenceClass.getInstance(this)?.setid(model?.object1!!.id)
+
+                    val currentDate = Calendar.getInstance().time
+                    val df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    val formattedDate: String = df.format(currentDate)
+                    SharedPreferenceClass.getInstance(this)?.setLastDate(formattedDate)
+                    requestWorker()
+                }
+                Constants.EMAIL_NOT_FOUND_ERROR -> {
+                    if (!this.isDestroyed) {
+
+                        ReuseFunctions.snackMessage(
+                            model?.response_msg.toString(),
+                            constraint_bg
+                        )
+                    }
+                }
+                Constants.AUTHENTICATION_ERROR -> {
+                    if (!this.isDestroyed) {
+                        ReuseFunctions.snackMessage(
+                            model?.response_msg.toString(),
+                            constraint_bg
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onFailure(error: String) {
+        if (!this.isDestroyed) {
+            ReuseFunctions.snackMessage(
+                error,
+                constraint_bg
+            )
+        }
+    }
+
+    private fun requestWorker() {
+        if (isInternetConnected) {
+            val constraint: Constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+
+            val oneTimeWorkRequest: OneTimeWorkRequest.Builder = OneTimeWorkRequest.Builder(
+                AllWordsWorker::class.java
+            ).setConstraints(constraint)
+            val myWork: OneTimeWorkRequest = oneTimeWorkRequest.build()
+            val myWorkId: UUID = myWork.id
+
+            WorkManager.getInstance().enqueue(myWork)
+
+        }
+    }
+}

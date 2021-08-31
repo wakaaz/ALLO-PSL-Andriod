@@ -167,7 +167,7 @@ class DownloadedCatAdapter(var context: Context, var onVideoDelete : onVideoDele
                             val resultList = mutableListOf<DictionaryListModel>()
                             for (row: DictionaryListModel in list!!) {
                                 if (row.wordName.toLowerCase(Locale.ROOT)
-                                                .startsWith(charSearch.toLowerCase(Locale.ROOT))
+                                                .contains(charSearch.toLowerCase(Locale.ROOT))
                                 ) {
                                     resultList.add(row)
                                 }

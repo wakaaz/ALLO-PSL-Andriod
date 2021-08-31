@@ -51,18 +51,19 @@ class SplashActivity : BaseActivity() {
     private fun setSplash() {
         Handler().postDelayed(
             {
-                if (SharedPreferenceClass.getInstance(this)?.getIntroLaunch()!! &&
+                /*if (SharedPreferenceClass.getInstance(this)?.getIntroLaunch()!! &&
                     SharedPreferenceClass.getInstance(this)?.getisLogin()!!
                 ) {
                     ReuseFunctions.startNewActivity(this, HomeActivity::class.java)
                 } else if (SharedPreferenceClass.getInstance(this)?.getisLogin()!!) {
                     ReuseFunctions.startNewActivity(this, IntroSliderActivity::class.java)
-                } else if (SharedPreferenceClass.getInstance(this)?.getIntroLaunch()!!) {
+                } else*/
+                if (SharedPreferenceClass.getInstance(this)?.getIntroLaunch()!!) {
                     ReuseFunctions.startNewActivity(this, HomeActivity::class.java)
                 } else {
                     ReuseFunctions.startNewActivity(
                         this,
-                        LoginScreen::class.java
+                        IntroSliderActivity::class.java
                     )
                 }
                 this.finish()
