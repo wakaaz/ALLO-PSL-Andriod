@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.net.pslapllication.R
@@ -17,6 +18,7 @@ import com.net.pslapllication.activities.authentication.LoginScreen
 import com.net.pslapllication.data.Data
 import com.net.pslapllication.fragments.CategoriesFragment
 import com.net.pslapllication.fragments.WordsFragment
+import com.net.pslapllication.helperClass.ProgressHelper
 import com.net.pslapllication.interfaces.RetrofitResponseListener
 import com.net.pslapllication.model.dictionary.DictionaryData
 import com.net.pslapllication.model.dictionary.DictionaryMainModel
@@ -25,6 +27,8 @@ import com.net.pslapllication.model.preferences.PreferenceMainModel
 import com.net.pslapllication.reetrofit.ApiCallClass
 import com.net.pslapllication.reetrofit.ApiService
 import com.net.pslapllication.reetrofit.RetrofitClientInstance
+import com.net.pslapllication.room.WordViewModelFactory
+import com.net.pslapllication.room.WordsViewModel
 import com.net.pslapllication.util.Constants
 import com.net.pslapllication.util.ReuseFunctions
 import com.net.pslapllication.util.SharedPreferenceClass
@@ -49,6 +53,8 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
         setTabData()
         setListener()
         searchBarSetting()
+
+
     }
 
     private fun setListener() {
@@ -161,7 +167,9 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
                     callCat!!.cancel()
                 replaceFragment(WordsFragment())
                 setTabIcon(tabIcons2)
-                requestDataWords()
+
+
+
             }
 
 
@@ -324,7 +332,7 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
 
     }
 
-    private fun setData(listData: List<DictionaryData>) {
+    private fun  setData(listData: List<DictionaryData>) {
         var fragment = supportFragmentManager.findFragmentById(R.id.frameLayout)
         if (fragment is WordsFragment) {
              var dictionaryCategoriesList = listData.sortedBy { it.english_word }

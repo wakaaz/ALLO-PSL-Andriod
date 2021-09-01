@@ -11,7 +11,8 @@ import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 interface WordsDao {
     @Query("SELECT * FROM WORDSTABLE")
     fun getAllWords(): LiveData<List<DictionaryDataAPI>>
-
+    @Query("SELECT * FROM  WORDSTABLE  ORDER BY  english_word  ASC LIMIT 50 OFFSET  :offset")
+    fun getOffsetWords(offset:Int): List<DictionaryDataAPI>
     @Query("SELECT * FROM WORDSTABLE")
     fun getAllWordsCollection(): List<DictionaryDataAPI>
 
