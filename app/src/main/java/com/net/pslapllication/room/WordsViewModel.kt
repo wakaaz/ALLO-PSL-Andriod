@@ -18,6 +18,7 @@ class WordsViewModel(application: Application) :AndroidViewModel(application){
     var allWords : LiveData<List<DictionaryDataAPI>>
     var allWordsCollection : List<DictionaryDataAPI>
     var allFilteredWords :  List<DictionaryDataAPI>? = null
+    var filteredWords :  List<DictionaryData>? = null
     var dataWords = MutableLiveData<List<DictionaryData>>()
     var dataliveWords :LiveData<List<DictionaryData>> = dataWords
 
@@ -57,6 +58,16 @@ class WordsViewModel(application: Application) :AndroidViewModel(application){
 
          return allFilteredWords!!
      }
+
+    fun getFilteredItems(querryText : String):List<DictionaryData>{
+        filteredWords =  wordsRepository.getFilteredItems(querryText)
+
+        return filteredWords!!
+    }
+    fun updateFav(id: Int, fav: Int){
+        wordsRepository.updateFav(id,fav)
+    }
+
     fun insertWords(wordsEntity: DictionaryDataAPI){
          Log.d("roomDbStatus","viewmodel "+wordsEntity.english_word)
          wordsRepository.insertWords(wordsEntity)

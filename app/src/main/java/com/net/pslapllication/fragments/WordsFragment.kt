@@ -36,6 +36,10 @@ import java.net.URLDecoder
 import java.util.*
 import kotlin.collections.ArrayList
 import android.widget.TextView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.net.pslapllication.adpters.AutoCompleteAdapter
+import com.google.android.material.snackbar.Snackbar
+
 
 
 
@@ -47,6 +51,7 @@ class WordsFragment : Fragment() {
     private var act: Activity? = null
     public var adapter: Adapter? = null
     public var recyclerAdapter: RecyclerAdapter? = null
+    public var autoCompleteAdapter: AutoCompleteAdapter? = null
     private var prePosition = 0
     public var mainDictionaryList: List<DictionaryData>? = null
 
@@ -55,6 +60,7 @@ class WordsFragment : Fragment() {
     lateinit var wordsViewModel: WordsViewModel
 
     private var alphabetString: String? = ""
+    lateinit var btnFloat : FloatingActionButton
 
 
     val parentlist: MutableList<Data> = java.util.ArrayList()
@@ -62,33 +68,88 @@ class WordsFragment : Fragment() {
 
 
      var   datalist :  List<DictionaryDataAPI>?  =  null
+    lateinit var recycler :RecyclerView
+    lateinit var lyMain :FrameLayout
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_words, container, false)
+        btnFloat = view.findViewById(R.id.btnFloat)
+        recycler =  view.findViewById<RecyclerView>(R.id.list)
+        lyMain =  view.findViewById<FrameLayout>(R.id.lyMain)
         view.shimmer_layout.startShimmerAnimation()
-
         act = activity
-
-
+        recyclerAdapter = RecyclerAdapter(act!!, parentlist, childList!!)
 
 
 
         view.scroller!!.setTextView(view.section_title)
         view.scroller!!.setOnTouchingLetterChangedListener { s ->
             Handler(act!!.mainLooper).post {
-                if (s == FastScroller.HEART) {
-                    prePosition = 0
-                    view.list!!.setSelectionFromTop(0, 0)
-                } else {
-                    if (adapter != null) {
-                        val p: Int = adapter!!.getPositionForSection(s)
-                        prePosition = if (p == 0) prePosition else p
-                        list!!.setSelectionFromTop(prePosition, 0)
+                var viewModel = ProgressHelper.getInstance(act!!).getViewModel()
+                if (viewModel != null) {
+                    val list1: List<DictionaryData>? = viewModel?.getFilteredItems(s)
+                    val temlist: MutableList<Data> = java.util.ArrayList()
+
+
+                    for (i in list1!!.indices) {
+
+
+                        var titleStr = list1[i].english_word.substring(0, 1)
+                        var check = false
+                            if (i==0){
+                                check =  true
+                        }
+
+                        var model = Data(
+                            i,
+                            list1[i].english_word.substring(0, 1)
+                                .toUpperCase(Locale.ROOT),
+                            list1[i].english_word,
+                            check,
+                            list1[i].id,
+                            "",
+                            list1[i].urdu_word
+                        )
+
+
+
+
+                        temlist.add(
+                            model
+                        )
+
+
                     }
+
+                   val filterAdapter = RecyclerAdapter(act!!, temlist, list1!!)
+
+
+                    val  linearLayoutManager = LinearLayoutManager(context)
+                    recycler.layoutManager =  linearLayoutManager
+                    recycler.adapter = filterAdapter
+                    val snackbar = Snackbar
+                        .make(lyMain, "Selected Alphabet : " + s, Snackbar.LENGTH_INDEFINITE)
+                        .setAction("REMOVE") {
+                            setupAdapter(view)
+                        }
+
+                    snackbar.show()
                 }
+                //  Handler(act!!.mainLooper).post {
+//                if (s == FastScroller.HEART) {
+//                    prePosition = 0
+//                    view.list!!.setSelectionFromTop(0, 0)
+//                } else {
+//                    if (recyclerAdapter != null) {
+//                        val p: Int = recyclerAdapter!!.getPositionForSection(s)
+//                        prePosition = if (p == 0) prePosition else p
+//                        recycler!!.setSelectionFromTop(prePosition, 0)
+//                    }
+//                }
+                //  }
             }
         }
         ProgressHelper.getInstance(activity!!).getViewModel().dataliveWords.observe(viewLifecycleOwner,
@@ -108,6 +169,7 @@ class WordsFragment : Fragment() {
 //        val viewModelFactory = WordViewModelFactory(activity!!.applicationContext)
 //        wordsViewModel = ViewModelProvider(this, viewModelFactory).get(WordsViewModel::class.java)
 
+
         return view
 
     }
@@ -116,17 +178,17 @@ class WordsFragment : Fragment() {
         list: List<Data>?,
         dictionaryCategoriesList: List<DictionaryData>
     ) {
-        if (view != null) {
-            mainDictionaryList = dictionaryCategoriesList
-            items = list
-            adapter = Adapter(act!!, items, mainDictionaryList!!)
-            view!!.list!!.adapter = adapter
-
-
-            view!!.shimmer_layout.stopShimmerAnimation()
-            view!!.shimmer_layout.visibility =  View.GONE
-
-        }
+//        if (view != null) {
+//            mainDictionaryList = dictionaryCategoriesList
+//            items = list
+//            adapter = Adapter(act!!, items, mainDictionaryList!!)
+//            view!!.list!!.adapter = adapter
+//
+//
+//            view!!.shimmer_layout.stopShimmerAnimation()
+//            view!!.shimmer_layout.visibility =  View.GONE
+//
+//        }
     }
 
     class Adapter(
@@ -370,6 +432,13 @@ class WordsFragment : Fragment() {
            }
        }
 
+        fun getPositionForSection(s: String): Int {
+            for (i in filteredList!!.indices) {
+                if (filteredList!![i].index == s) return i
+            }
+            return 0
+        }
+
         override fun getFilter(): Filter {
             return object : Filter() {
                 override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -412,10 +481,7 @@ class WordsFragment : Fragment() {
 
 
      fun setupAdapter(view: View){
-         recyclerAdapter = RecyclerAdapter(act!!, parentlist, childList!!)
-
-         var recycler =  view.findViewById<RecyclerView>(R.id.list)
-        val  linearLayoutManager = LinearLayoutManager(context)
+         val  linearLayoutManager = LinearLayoutManager(context)
          recycler.layoutManager =  linearLayoutManager
          recycler.adapter = recyclerAdapter
          view.shimmer_layout.stopShimmerAnimation()
@@ -426,6 +492,7 @@ class WordsFragment : Fragment() {
              override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                  super.onScrollStateChanged(recyclerView, newState)
                  val totalItemCount = recyclerView.layoutManager!!.itemCount
+
                  val lastVisiblePosition: Int = linearLayoutManager.findLastVisibleItemPosition()
                  if (lastVisiblePosition == childList!!.size - 1) {
                      Log.e("value",""+offset)
@@ -434,7 +501,19 @@ class WordsFragment : Fragment() {
                  }
 
              }
+
+             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                 super.onScrolled(recyclerView, dx, dy)
+                 if (dy < 0) {
+                     btnFloat.show()
+                 }
+             }
          })
+
+         btnFloat.setOnClickListener {
+             recycler.scrollToPosition(0)
+             btnFloat.hide()
+         }
 
      }
     fun splitHeader(dataList:List<DictionaryData>){
@@ -602,7 +681,7 @@ class WordsFragment : Fragment() {
 
             }
 
-            //     parentlist.addAll(list)
+             // parentlist.addAll(list)
                 childList?.addAll(dictionaryCategoriesList)
 
                recyclerAdapter!!.notifyDataSetChanged()

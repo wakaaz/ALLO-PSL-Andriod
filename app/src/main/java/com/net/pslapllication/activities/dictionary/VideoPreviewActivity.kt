@@ -672,8 +672,10 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
                 if (selectedModel != null)
                     if (!favClick) {
                         addToFav()
+                            ProgressHelper.getInstance(this!!).getViewModel().updateFav((selectedModel as DictionaryData?)!!.id,1)
                     } else {
                         removeFromfav()
+                            ProgressHelper.getInstance(this!!).getViewModel().updateFav((selectedModel as DictionaryData?)!!.id,0)
                     }
             }
 

@@ -3,6 +3,7 @@ package com.net.pslapllication.room.datamodel
 import androidx.annotation.NonNull
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
+import com.net.pslapllication.model.VideoDocuments
 import com.net.pslapllication.model.dictionary.*
 import java.io.Serializable
 
@@ -46,13 +47,19 @@ data class DictionaryDataAPI(
 
     var isDownloaded: Boolean = false,
 
-    var catName: String?
+    var catName: String?,
+
+    @ColumnInfo
+    @SerializedName("shareablURL") var shareablURL: String
+
 ) : Serializable {
+
+
     constructor() : this(
         0, 0,
         "", "", "", "", "", "",
         p1080pOffline("", ""), p720pOffline("", ""), p480pOffline("", ""),
         p360pOffline("", ""), p240pOffline("", ""),
-        0, 0, 0, 0, false, ""
-    )
+        0, 0, 0, 0, false, "","")
+
 }

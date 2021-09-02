@@ -2,9 +2,14 @@ package com.net.pslapllication.activities.dictionary
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
@@ -14,7 +19,9 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.net.pslapllication.R
 import com.net.pslapllication.activities.BaseActivity
+import com.net.pslapllication.activities.SearchResultActivity
 import com.net.pslapllication.activities.authentication.LoginScreen
+import com.net.pslapllication.adpters.AutoCompleteAdapter
 import com.net.pslapllication.data.Data
 import com.net.pslapllication.fragments.CategoriesFragment
 import com.net.pslapllication.fragments.WordsFragment
@@ -29,16 +36,18 @@ import com.net.pslapllication.reetrofit.ApiService
 import com.net.pslapllication.reetrofit.RetrofitClientInstance
 import com.net.pslapllication.room.WordViewModelFactory
 import com.net.pslapllication.room.WordsViewModel
+import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 import com.net.pslapllication.util.Constants
+import com.net.pslapllication.util.ListSorting
 import com.net.pslapllication.util.ReuseFunctions
 import com.net.pslapllication.util.SharedPreferenceClass
 import kotlinx.android.synthetic.main.activity_dictionary_tab_list.*
+import kotlinx.android.synthetic.main.fragment_home_new.view.*
 import retrofit2.Call
 import java.util.*
 
 class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.OnClickListener,
     RetrofitResponseListener {
-
     private val tabIcons1 = intArrayOf(R.drawable.ic_categories_tab, R.drawable.ic_words_grey_tab)
     private val tabIcons2 = intArrayOf(R.drawable.ic_categories_grey_tab, R.drawable.ic_words_tab)
     lateinit var apiService: ApiService
@@ -46,15 +55,17 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
     private var isInternetConnected: Boolean = false
     public var callCat: Call<PreferenceMainModel>?=null
     public var callWords: Call<DictionaryMainModel>?=null
+    lateinit var searchView_tab : SearchView
+    lateinit var autoCompleteTextView : AutoCompleteTextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dictionary_tab_list)
+        autoCompleteTextView = findViewById(R.id.autoCompleteTextView)
+        searchView_tab = findViewById(R.id.searchView_tab)
         setTabData()
         setListener()
         searchBarSetting()
-
-
     }
 
     private fun setListener() {
@@ -157,18 +168,26 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
                 this ,R.font.lato_heavy)*/
 
             if (tab.position == 0) {
+                searchView_tab.visibility = View.VISIBLE
+                autoCompleteTextView.visibility = View.INVISIBLE
                 if (callWords != null)
                     callWords!!.cancel()
                 replaceFragment(CategoriesFragment())
                 setTabIcon(tabIcons1)
                 requestDataCat()
             } else if (tab.position == 1) {
+                searchView_tab.visibility = View.INVISIBLE
+                autoCompleteTextView.visibility = View.VISIBLE
                 if (callCat != null)
                     callCat!!.cancel()
                 replaceFragment(WordsFragment())
                 setTabIcon(tabIcons2)
-
-
+                ProgressHelper.getInstance(this).getViewModel().allWords.observe(this,
+                    androidx.lifecycle.Observer {
+                        if (it!!.isNotEmpty()) {
+                            autoCompleteSearch(it)
+                        }
+                    })
 
             }
 
@@ -482,5 +501,53 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
         }
 
         super.onResume()
+    }
+
+    private fun autoCompleteSearch(listData: List<DictionaryDataAPI>) {
+            val adapter =
+                AutoCompleteAdapter(this, android.R.layout.simple_list_item_1, listData!!)
+            autoCompleteTextView.setAdapter(adapter)
+            autoCompleteTextView.threshold = 1
+            autoCompleteTextView.setTextColor(Color.BLACK)
+            autoCompleteTextView.setOnItemClickListener() { parent, _, position, id ->
+                val selectedPoi = parent.adapter.getItem(position) as DictionaryDataAPI?
+
+                var newIndexSortedList = emptyList<DictionaryDataAPI>()
+
+                    ProgressHelper.getInstance(this)?.setListOffline(newIndexSortedList)
+
+                    selectedPoi?.let {
+                        ReuseFunctions.startNewActivityDataModelParam(
+                            this,
+                            VideoPreviewOfflineActivity::class.java,
+                            it, Constants.TYPE_DICTIONARY
+                        )
+                    }
+
+
+
+                //autoCompleteTextView.setText(selectedPoi?.english_word)
+
+               // newActivity(selectedPoi?.english_word.toString())
+                autoCompleteTextView.text.clear()
+
+            }//click end
+            autoCompleteTextView.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                    newActivity(v.text.toString())
+                    autoCompleteTextView.text.clear()
+                    return@OnEditorActionListener true
+                }
+                false
+            })
+
+
+    }
+    private fun newActivity(searchString :String){
+            var intent = Intent(this, SearchResultActivity::class.java)
+            intent.putExtra(Constants.SEARCHEDWORD, searchString)
+            startActivity(intent)
+
     }
 }

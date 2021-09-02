@@ -75,6 +75,56 @@ class WordsRepository(private val wordsDao: WordsDao) {
         var allFilteredWords  = wordsDao.getAllFilteredWords(query)
         return allFilteredWords
     }
+
+    fun updateFav(id: Int, fav: Int){
+        wordsDao.updateFav(id,fav)
+    }
+
+    fun getFilteredItems(query: String):  List<DictionaryData> {
+        var allFilteredWords  = wordsDao.getFilteredItems(query)
+        var listData: MutableList<DictionaryData> = ArrayList()
+
+        for (i in allFilteredWords.indices){
+            listData.add(DictionaryData(
+                allFilteredWords[i].id,
+                allFilteredWords[i].category_id,
+                allFilteredWords[i].filename,
+                allFilteredWords[i].english_word,
+                allFilteredWords[i].urdu_word,
+                allFilteredWords[i].youtube_link,
+                allFilteredWords[i].vimeo_link,
+                p1080p(
+                    allFilteredWords[i].p1080p?.filesizep1080,
+                    allFilteredWords[i].p1080p?.urlp1080
+                ),
+
+                p720p(
+                    allFilteredWords[i].p720p!!.filesizep720,
+                    allFilteredWords[i].p720p!!.urlp720
+                ),
+                p480p(
+                    allFilteredWords[i].p480p.filesizep480,
+                    allFilteredWords[i].p480p.urlp480
+                ),
+                p360p(
+                    allFilteredWords[i].p360p.filesizep360p,
+                    allFilteredWords[i].p360p.urlp360p
+                ),
+                p240p(
+                    allFilteredWords[i].p240p.filesizep240,
+                    allFilteredWords[i].p240p.urlp240
+                ),
+                allFilteredWords[i].poster,
+                allFilteredWords[i].favorite,
+                allFilteredWords[i].indexPosition,
+                allFilteredWords[i].downloadReference,
+                allFilteredWords[i].downloadprogress,
+                allFilteredWords[i].isDownloaded,"","",listOf( VideoDocuments( "", "" ))
+            ))
+        }
+        return  listData
+    }
+
     /*fun getFilteredWords(querryString: String):List<DictionaryDataAPI> {
        // return wordsDao.getAllFilteredWords(querryString)
           var list = GetFilteredWordsAsyncTask(wordsDao).execute(querryString)

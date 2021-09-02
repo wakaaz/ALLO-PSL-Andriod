@@ -8,7 +8,7 @@ import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 import com.net.pslapllication.room.datamodel.DownloadData
 import kotlinx.coroutines.CoroutineScope
 
-@Database(entities = [DictionaryDataAPI::class, DownloadData::class],version = 4)
+@Database(entities = [DictionaryDataAPI::class, DownloadData::class],version = 5)
 abstract class WordsDatabase: RoomDatabase() {
     abstract fun wordsDao():WordsDao
     abstract fun downloadDao():DownloadDao

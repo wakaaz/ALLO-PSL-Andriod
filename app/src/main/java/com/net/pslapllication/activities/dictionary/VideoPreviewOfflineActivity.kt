@@ -48,6 +48,7 @@ import com.net.pslapllication.model.stories.StoryData
 import com.net.pslapllication.model.tutorial.TutorialData
 import com.net.pslapllication.reetrofit.ApiService
 import com.net.pslapllication.reetrofit.RetrofitClientInstance
+import com.net.pslapllication.room.WordsViewModel
 import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 import com.net.pslapllication.util.*
 import kotlinx.android.synthetic.main.activity_video_preview.*
@@ -213,6 +214,10 @@ class VideoPreviewOfflineActivity : BaseActivity(), View.OnClickListener,
                 if (list?.size!=0){
                     val recyclerList = list!!.drop(1)
 
+                    setNextVideosList(recyclerList)
+                }
+                else {
+                    val recyclerList = list!!
                     setNextVideosList(recyclerList)
                 }
             },500)
@@ -616,8 +621,10 @@ class VideoPreviewOfflineActivity : BaseActivity(), View.OnClickListener,
                 if (selectedModel != null)
                     if (!favClick) {
                         addToFav()
+                        ProgressHelper.getInstance(this!!).getViewModel().updateFav((selectedModel as DictionaryDataAPI?)!!.id,1)
                     } else {
                         removeFromfav()
+                        ProgressHelper.getInstance(this!!).getViewModel().updateFav((selectedModel as DictionaryDataAPI?)!!.id,0)
                     }
             }
 
@@ -777,6 +784,7 @@ class VideoPreviewOfflineActivity : BaseActivity(), View.OnClickListener,
                     "0",
                     "0"
                 )
+
             }
             Constants.TYPE_TEACHER_TUTORIAL -> {
                 addInFavouriteCall(

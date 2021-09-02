@@ -99,6 +99,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/searchView_dic_words" />
 
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:background="@drawable/seach_bg_border"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawablePadding="@dimen/_4sdp"
+        android:ellipsize="end"
+        android:fontFamily="@font/lato_regular"
+        android:hint="Search"
+        android:imeOptions="actionSearch"
+        android:inputType="textAutoComplete|textAutoCorrect"
+        android:lines="1"
+        android:maxLines="1"
+        android:paddingRight="@dimen/_16sdp"
+        android:paddingLeft="@dimen/_16sdp"
+        android:singleLine="true"
+        android:visibility="invisible"
+        android:textSize="@dimen/_13sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout_dic" />
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
