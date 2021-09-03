@@ -70,6 +70,7 @@ class WordsFragment : Fragment() {
      var   datalist :  List<DictionaryDataAPI>?  =  null
     lateinit var recycler :RecyclerView
     lateinit var lyMain :FrameLayout
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -130,13 +131,13 @@ class WordsFragment : Fragment() {
                     val  linearLayoutManager = LinearLayoutManager(context)
                     recycler.layoutManager =  linearLayoutManager
                     recycler.adapter = filterAdapter
-                    val snackbar = Snackbar
-                        .make(lyMain, "Selected Alphabet : " + s, Snackbar.LENGTH_INDEFINITE)
+                   val snackbar = Snackbar.make(lyMain, "Selected Alphabet : " + s, Snackbar.LENGTH_INDEFINITE)
                         .setAction("REMOVE") {
                             setupAdapter(view)
                         }
 
                     snackbar.show()
+                    ProgressHelper.getInstance(act!!)?.setOnSnackBarCreated(snackbar)
                 }
                 //  Handler(act!!.mainLooper).post {
 //                if (s == FastScroller.HEART) {

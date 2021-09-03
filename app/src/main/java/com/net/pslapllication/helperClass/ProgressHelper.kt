@@ -2,7 +2,9 @@ package com.net.pslapllication.helperClass
 
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.net.pslapllication.data.Data
 import com.net.pslapllication.data.DictionaryListModel
 import com.net.pslapllication.data.DownloadListModel
@@ -157,5 +159,12 @@ class ProgressHelper(var context: Context) {
         return this.dictionaryListCarrierDataModel?.getList()!!
     }
 
+    fun setOnSnackBarCreated(snackbar: Snackbar){
+        this.dictionaryListCarrierDataModel!!.setSnackBar(snackbar)
+    }
+
+    fun getOnSnackBarCreated() : Snackbar {
+        return this.dictionaryListCarrierDataModel?.getSnackBar()!!
+    }
 
 }

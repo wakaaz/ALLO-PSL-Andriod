@@ -22,6 +22,7 @@ class SharedPreferenceClass(context: Context) {
     private val USERTYPE = "USERTYPE"
     private val DOWNLOADTYPE_PROGRESS = "DOWNLOADTYPE_PROGRESS"
     private val LASTDATE = "LASTDATE"
+    private val IS_FIRST_TIME = "IS_FIRST_TIME"
     private var sharedPreferences: SharedPreferences
 
     companion object {
@@ -176,5 +177,13 @@ class SharedPreferenceClass(context: Context) {
 
     fun getLastDate(): String {
         return sharedPreferences.getString(LASTDATE,"")!!
+    }
+
+    fun setFirstTime(isSet: Boolean) {
+        sharedPreferences.edit().putBoolean(IS_FIRST_TIME, isSet).apply()
+    }
+
+    fun getFirstTime(): Boolean {
+        return sharedPreferences.getBoolean(IS_FIRST_TIME, true)
     }
 }

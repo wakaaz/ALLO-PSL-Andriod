@@ -20,11 +20,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.AutoCompleteTextView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import com.github.ybq.android.spinkit.SpinKitView
 import com.net.pslapllication.R
 import com.net.pslapllication.activities.HomeActivity
 import com.net.pslapllication.activities.MainListing
@@ -35,34 +38,61 @@ import com.net.pslapllication.helperClass.ProgressHelper
 import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 import com.net.pslapllication.util.Constants
 import com.net.pslapllication.util.ReuseFunctions
+import com.net.pslapllication.util.SharedPreferenceClass
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home_new.view.*
+import com.github.ybq.android.spinkit.style.DoubleBounce
+
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.Circle
+import com.github.ybq.android.spinkit.style.Wave
 
 
 class HomeFragmentNew : Fragment(), View.OnClickListener {
-    var listData: List<DictionaryDataAPI>? = null
+    //var listData: List<DictionaryDataAPI>? = null
+    lateinit var spinKitView: SpinKitView
+    lateinit var autoCompleteTextView : AutoCompleteTextView
+    lateinit var lyLoading :LinearLayout
       override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the bottom_layout_delete_video for this fragment
-        var view: View = inflater.inflate(R.layout.fragment_home_new, container, false)
-        setClickListener(view)
-        searchBarSetting(view)
+          var view: View = inflater.inflate(R.layout.fragment_home_new, container, false)
+          spinKitView = view.findViewById(R.id.spin_kit)
+          autoCompleteTextView = view.findViewById(R.id.autoCompleteTextView)
+          lyLoading = view.findViewById(R.id.lyLoading)
+          val doubleBounce: Sprite = Wave()
+          spinKitView.setIndeterminateDrawable(doubleBounce)
+          setClickListener(view)
+          searchBarSetting(view)
           setTitle(view)
           setViewAll(view)
+
+          if (SharedPreferenceClass.getInstance(activity!!)?.getFirstTime()!!) {
+              lyLoading.visibility = View.VISIBLE
+              autoCompleteTextView.visibility = View.INVISIBLE
+          } else {
+              lyLoading.visibility = View.INVISIBLE
+              autoCompleteTextView.visibility = View.VISIBLE
+          }
+
          if (activity!=null ) {
              if (ProgressHelper.getInstance(activity!!)!= null && ProgressHelper.getInstance(activity!!).getViewModel()!=null){
              Log.d("datasetNew", "datasetNew1")
              var list = ProgressHelper.getInstance(activity!!).getViewModel().allWords
-             ProgressHelper.getInstance(activity!!).getViewModel().allWords.observe(activity!!,
-                 androidx.lifecycle.Observer {
-                     listData = it
-                     if (it!!.isNotEmpty()) {
 
-                         autoCompleteSearch(view)
+                 ProgressHelper.getInstance(activity!!).getViewModel().allWords.observe(activity!!,
+                     androidx.lifecycle.Observer {
+                     if (it!!.isNotEmpty()) {
+                         lyLoading.visibility = View.INVISIBLE
+                         autoCompleteTextView.visibility = View.VISIBLE
+                         SharedPreferenceClass.getInstance(activity!!)?.setFirstTime(false)
+                         autoCompleteSearch(view,it)
                      }
+
                  })
+
          }
          }else{
              Log.d("datasetNew","datasetNew22")
@@ -71,7 +101,7 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
         return view
     }
 
-    private fun autoCompleteSearch(view: View) {
+    private fun autoCompleteSearch(view: View,listData: List<DictionaryDataAPI>?) {
         if (view != null && activity != null){
             val adapter =
                     AutoCompleteAdapter(activity!!, android.R.layout.simple_list_item_1, listData!!)

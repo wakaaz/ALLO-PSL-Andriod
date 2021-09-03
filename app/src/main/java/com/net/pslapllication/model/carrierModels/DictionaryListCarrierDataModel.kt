@@ -1,4 +1,6 @@
 package com.net.pslapllication.model.carrierModels
+import androidx.lifecycle.LiveData
+import com.google.android.material.snackbar.Snackbar
 import com.net.pslapllication.model.dictionary.DictionaryData
 import com.net.pslapllication.data.Data
 import com.net.pslapllication.data.DictionaryListModel
@@ -27,6 +29,9 @@ class DictionaryListCarrierDataModel : Serializable {
 
     private var subjectList: List<Subjects>? = null
     private var wordsViewModel: WordsViewModel? = null
+    private var snackbar : Snackbar? = null
+   
+
 
     fun getsubjectList(): List<Subjects>? {
         return subjectList
@@ -122,4 +127,13 @@ class DictionaryListCarrierDataModel : Serializable {
     fun setViewModel(wordsViewModel: WordsViewModel) {
         this.wordsViewModel = wordsViewModel
     }
+
+    fun setSnackBar(snackbar: Snackbar){
+        this.snackbar = snackbar
+    }
+
+    fun getSnackBar() : Snackbar{
+        return snackbar!!
+    }
+
 }
