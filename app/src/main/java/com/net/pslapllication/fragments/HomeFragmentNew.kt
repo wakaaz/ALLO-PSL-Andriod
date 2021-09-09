@@ -35,6 +35,7 @@ import com.net.pslapllication.activities.HomeActivity
 import com.net.pslapllication.activities.MainListing
 import com.net.pslapllication.activities.SearchResultActivity
 import com.net.pslapllication.activities.dictionary.DictionaryTabListActivity
+import com.net.pslapllication.activities.dictionary.VideoPreviewOfflineActivity
 import com.net.pslapllication.adpters.AutoCompleteAdapter
 import com.net.pslapllication.helperClass.ProgressHelper
 import com.net.pslapllication.room.datamodel.DictionaryDataAPI
@@ -113,15 +114,26 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
             view.autoCompleteTextView.setTextColor(Color.BLACK)
             view.autoCompleteTextView.setOnItemClickListener() { parent, _, position, id ->
                 val selectedPoi = parent.adapter.getItem(position) as DictionaryDataAPI?
-                view.autoCompleteTextView.setText(selectedPoi?.english_word)
-                newActivity(selectedPoi?.english_word.toString())
 
+                var newIndexSortedList = emptyList<DictionaryDataAPI>()
+
+                ProgressHelper.getInstance(activity!!)?.setListOffline(newIndexSortedList)
+
+                selectedPoi?.let {
+                    ReuseFunctions.startNewActivityDataModelParam(
+                        activity!!,
+                        VideoPreviewOfflineActivity::class.java,
+                        it, Constants.TYPE_DICTIONARY
+                    )
+                }
+                autoCompleteTextView.text.clear()
 
             }//click end
             view.autoCompleteTextView.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
                     newActivity(v.text.toString())
+                    autoCompleteTextView.text.clear()
                     return@OnEditorActionListener true
                 }
                 false
