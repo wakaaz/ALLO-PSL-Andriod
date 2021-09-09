@@ -163,8 +163,8 @@ class ProgressHelper(var context: Context) {
         this.dictionaryListCarrierDataModel!!.setSnackBar(snackbar)
     }
 
-    fun getOnSnackBarCreated() : Snackbar {
-        return this.dictionaryListCarrierDataModel?.getSnackBar()!!
+    fun getOnSnackBarCreated() : Snackbar?{
+        return this.dictionaryListCarrierDataModel?.getSnackBar()
     }
 
 }

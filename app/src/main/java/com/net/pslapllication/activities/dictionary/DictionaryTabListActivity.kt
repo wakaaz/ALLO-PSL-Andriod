@@ -175,8 +175,10 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
                 replaceFragment(CategoriesFragment())
                 setTabIcon(tabIcons1)
                 requestDataCat()
-                val snackbar =  ProgressHelper.getInstance(this).getOnSnackBarCreated()
-                snackbar.dismiss()
+                if(ProgressHelper.getInstance(this).getOnSnackBarCreated() != null){
+                    val snackbar =  ProgressHelper.getInstance(this).getOnSnackBarCreated()
+                    snackbar?.dismiss()
+                }
 
             } else if (tab.position == 1) {
                 searchView_tab.visibility = View.INVISIBLE

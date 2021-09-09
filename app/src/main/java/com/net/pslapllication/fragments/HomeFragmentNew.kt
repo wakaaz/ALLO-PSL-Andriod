@@ -28,6 +28,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.github.ybq.android.spinkit.SpinKitView
+import com.github.ybq.android.spinkit.sprite.Sprite
+import com.github.ybq.android.spinkit.style.Wave
 import com.net.pslapllication.R
 import com.net.pslapllication.activities.HomeActivity
 import com.net.pslapllication.activities.MainListing
@@ -41,11 +43,6 @@ import com.net.pslapllication.util.ReuseFunctions
 import com.net.pslapllication.util.SharedPreferenceClass
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_home_new.view.*
-import com.github.ybq.android.spinkit.style.DoubleBounce
-
-import com.github.ybq.android.spinkit.sprite.Sprite
-import com.github.ybq.android.spinkit.style.Circle
-import com.github.ybq.android.spinkit.style.Wave
 
 
 class HomeFragmentNew : Fragment(), View.OnClickListener {
@@ -53,6 +50,7 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
     lateinit var spinKitView: SpinKitView
     lateinit var autoCompleteTextView : AutoCompleteTextView
     lateinit var lyLoading :LinearLayout
+
       override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,6 +70,8 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
           if (SharedPreferenceClass.getInstance(activity!!)?.getFirstTime()!!) {
               lyLoading.visibility = View.VISIBLE
               autoCompleteTextView.visibility = View.INVISIBLE
+              view.imageview.isClickable = false
+              view.tvViewAll.isEnabled = false
           } else {
               lyLoading.visibility = View.INVISIBLE
               autoCompleteTextView.visibility = View.VISIBLE
@@ -87,8 +87,11 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
                      if (it!!.isNotEmpty()) {
                          lyLoading.visibility = View.INVISIBLE
                          autoCompleteTextView.visibility = View.VISIBLE
-                         SharedPreferenceClass.getInstance(activity!!)?.setFirstTime(false)
                          autoCompleteSearch(view,it)
+                         view.imageview.isClickable = true
+                         view.tvViewAll.isEnabled = true
+                         if (activity != null) SharedPreferenceClass.getInstance(activity!!)?.setFirstTime(false)
+
                      }
 
                  })
@@ -340,7 +343,7 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
     }
 
     fun setViewAll(view: View){
-        val textView:TextView = view.findViewById(R.id.tvViewAll)
+        val tvViewAll:TextView = view.findViewById(R.id.tvViewAll)
         val text = resources.getString(R.string.view_all)
         val ss = SpannableString(text)
         val clickableSpan1 = object:ClickableSpan() {
@@ -358,8 +361,8 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
         }
 
         ss.setSpan(clickableSpan1, 0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        textView.setText(ss)
-        textView.setMovementMethod(LinkMovementMethod.getInstance())
+        tvViewAll.setText(ss)
+        tvViewAll.setMovementMethod(LinkMovementMethod.getInstance())
     }
     fun watchYoutubeVideo(context: Context, id: String) {
         val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))

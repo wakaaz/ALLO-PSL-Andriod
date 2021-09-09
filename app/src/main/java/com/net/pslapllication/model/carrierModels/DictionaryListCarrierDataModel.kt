@@ -132,8 +132,8 @@ class DictionaryListCarrierDataModel : Serializable {
         this.snackbar = snackbar
     }
 
-    fun getSnackBar() : Snackbar{
-        return snackbar!!
+    fun getSnackBar() : Snackbar?{
+        return snackbar
     }
 
 }

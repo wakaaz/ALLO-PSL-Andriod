@@ -137,7 +137,7 @@ class WordsFragment : Fragment() {
                         }
 
                     snackbar.show()
-                    ProgressHelper.getInstance(act!!)?.setOnSnackBarCreated(snackbar)
+                    ProgressHelper.getInstance(act!!).setOnSnackBarCreated(snackbar)
                 }
                 //  Handler(act!!.mainLooper).post {
 //                if (s == FastScroller.HEART) {
