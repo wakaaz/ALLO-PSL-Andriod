@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PSLApllication</string>
+    <string name="app_name">PSL</string>
     <string name="signup_string"><u>Signup</u></string>
     <string name="login_string"><u>Login</u></string>
 

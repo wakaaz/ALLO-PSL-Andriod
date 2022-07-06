@@ -1566,7 +1566,7 @@ class VideoPreviewActivity : BaseActivity(), View.OnClickListener,
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
-            Constants.MY_PERMISSIONS_REQUEST_WRITE_STORAGE -> if (grantResults.size > 0 && permissions[0] == Manifest.permission.WRITE_EXTERNAL_STORAGE) {
+            Constants.MY_PERMISSIONS_REQUEST_WRITE_STORAGE -> if (grantResults.isNotEmpty() && permissions[0] == Manifest.permission.WRITE_EXTERNAL_STORAGE) {
                 // check whether storage permission granted or not.
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     checkFolder()

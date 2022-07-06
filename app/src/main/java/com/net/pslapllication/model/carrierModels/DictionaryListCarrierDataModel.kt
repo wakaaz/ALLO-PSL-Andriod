@@ -15,19 +15,19 @@ import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 import java.io.Serializable
 
 class DictionaryListCarrierDataModel : Serializable {
-    private var modelList: List<DictionaryData>? = null
-    private var modelTutorialList: List<TutorialData>? = null
-    private var modelDictionaryList: List<DownloadListModel>? = null
-    private var modelLearningList: List<LearningData>? = null
-    private var modelListApi: List<DictionaryDataAPI>? = null
-    private var modelFavList: List<com.net.pslapllication.model.favouriteList.Data>? = null
-    private var list: List<Data>? = null
-    private var storyList: List<StoryData>? = null
-    private var englistStoriesList: List<StoryData>? = null
-    private var urduStoriesList: List<StoryData>? = null
+    private var modelList: List<DictionaryData>? =  ArrayList<DictionaryData>()
+    private var modelTutorialList: List<TutorialData>? = ArrayList<TutorialData>()
+    private var modelDictionaryList: List<DownloadListModel>? = ArrayList<DownloadListModel>()
+    private var modelLearningList: List<LearningData>? = ArrayList<LearningData>()
+    private var modelListApi: List<DictionaryDataAPI>? = ArrayList<DictionaryDataAPI>()
+    private var modelFavList: List<com.net.pslapllication.model.favouriteList.Data>? = ArrayList<com.net.pslapllication.model.favouriteList.Data>()
+    private var list: List<Data>? = ArrayList<Data>()
+    private var storyList: List<StoryData>? = ArrayList<StoryData>()
+    private var englistStoriesList: List<StoryData>? = ArrayList<StoryData>()
+    private var urduStoriesList: List<StoryData>? = ArrayList<StoryData>()
 
 
-    private var subjectList: List<Subjects>? = null
+    private var subjectList: List<Subjects>? = ArrayList<Subjects>()
     private var wordsViewModel: WordsViewModel? = null
     private var snackbar : Snackbar? = null
    

@@ -88,7 +88,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
         val request: DownloadManager.Request = DownloadManager.Request(Uri.parse(urlString))
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setTitle("PSL Application")
+        request.setTitle("PSL")
         request.setDescription(fileName)
         var dummyfilename = fileName
         if(!fileName!!.contains(".mp4")){
@@ -172,7 +172,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p240p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -239,7 +239,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p360p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -304,7 +304,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p480p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -370,7 +370,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p720p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -461,7 +461,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p240p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -523,7 +523,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p360p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -586,7 +586,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p480p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -648,7 +648,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p720p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -735,7 +735,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p240p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -800,7 +800,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p360p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -862,7 +862,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p480p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
 
                             var title =  list[i].title.toLowerCase()
@@ -924,7 +924,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p720p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             /* val file = File(
                                  context.getExternalFilesDir(null)!!.getAbsolutePath() +
@@ -1005,7 +1005,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p240p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
 
                             var title =  list[i].title.toLowerCase()
@@ -1057,7 +1057,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p360p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
 
                             var title =  list[i].title.toLowerCase()
@@ -1107,7 +1107,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p480p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             var title =  list[i].title.toLowerCase()
                             if(title.contains(" ")){
@@ -1156,7 +1156,7 @@ open class DownloadVideoBroadcastReceiver : BroadcastReceiver() {
                                 DownloadManager.Request(Uri.parse(URLDecoder.decode(list[i].p720p.url)))
                             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
                             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                            request.setTitle("PSL Application")
+                            request.setTitle("PSL")
                             request.setDescription(list[i].filename)
                             var title =  list[i].title.toLowerCase()
                             if(title.contains(" ")){

@@ -20,7 +20,7 @@ import com.net.pslapllication.room.datamodel.DictionaryDataAPI
 
 class ProgressHelper(var context: Context) {
     private var progressListener: OnProgressResultListener? = null
-    private var dictionaryListCarrierDataModel: DictionaryListCarrierDataModel? = null
+    private var dictionaryListCarrierDataModel: DictionaryListCarrierDataModel? = DictionaryListCarrierDataModel()
 
     companion object {
         private var progressHelper: ProgressHelper? = null

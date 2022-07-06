@@ -1,43 +1,41 @@
 {
   "project_info": {
-    "project_number": "618175796229",
-    "firebase_url": "https://pslapplication-1591016555463.firebaseio.com",
-    "project_id": "pslapplication-1591016555463",
-    "storage_bucket": "pslapplication-1591016555463.appspot.com"
+    "project_number": "737266341845",
+    "project_id": "psl-dictionary",
+    "storage_bucket": "psl-dictionary.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:618175796229:android:86505cd068af390482b86c",
+        "mobilesdk_app_id": "1:737266341845:android:52269e93a64d0657b04f5c",
         "android_client_info": {
-          "package_name": "com.net.pslapllication"
+          "package_name": "com.grappetite.fesf.psl"
         }
       },
       "oauth_client": [
         {
-          "client_id": "618175796229-88o826knr5nn7lgvmd07u8rb4pduleqf.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.net.pslapllication",
-            "certificate_hash": "6a8fc884dc1f5836e742d96fb3b0069876ab443a"
-          }
-        },
-        {
-          "client_id": "618175796229-kaffad777e4s5btmschn16f64c9n5g2g.apps.googleusercontent.com",
+          "client_id": "737266341845-hfks3n7n9ghehbpvaek221phkgjcu5ps.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCh1fZzQPEF2pWw6bf-GA33-anJhZqPjsY"
+          "current_key": "AIzaSyAMdM1hRlJg3f2VfChjxp9RKNP_dW2kC5g"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "618175796229-kaffad777e4s5btmschn16f64c9n5g2g.apps.googleusercontent.com",
+              "client_id": "737266341845-hfks3n7n9ghehbpvaek221phkgjcu5ps.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "737266341845-em96ieqlvbfo39iilp8o10e647e5h53e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "pakistansignlanguage.org"
+              }
             }
           ]
         }
