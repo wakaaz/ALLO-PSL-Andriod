@@ -152,6 +152,7 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
     }
 
     private fun setClickListener(view: View) {
+        view.constraint_dic_cate.setOnClickListener(this)
         view.constraint_dic.setOnClickListener(this)
         view.constraint_tea_tutorial.setOnClickListener(this)
         view.constraint_stories.setOnClickListener(this)
@@ -162,6 +163,25 @@ class HomeFragmentNew : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
+
+            R.id.constraint_dic_cate -> {
+
+                if(activity!=null) {
+                    ReuseFunctions.preventTwoClick(v)
+                    ReuseFunctions.preventTwoClick(view!!.tvViewAll)
+
+                    ReuseFunctions.preventTwoClick(view!!.constraint_dic)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_tea_tutorial)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_stories)
+                    ReuseFunctions.preventTwoClick(view!!.constraint_lea_tutorial)
+                    ReuseFunctions.startNewActivity(
+                        activity!!,
+                        DictionaryTabListActivity::class.java
+                    )
+                }
+            }
+
+
             R.id.constraint_dic -> {
 
                 ReuseFunctions.preventTwoClick(v)

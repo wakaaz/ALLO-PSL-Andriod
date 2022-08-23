@@ -153,6 +153,7 @@
                 app:layout_constraintTop_toBottomOf="@id/autoCompleteTextView"
                 app:layout_constraintStart_toStartOf="@id/autoCompleteTextView"
                 android:id="@+id/tvHeading"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp"
@@ -168,6 +169,7 @@
                 app:layout_constraintStart_toStartOf="@+id/autoCompleteTextView"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:text="@string/view_all"
+                android:visibility="gone"
                 android:textColor="@color/colorPrimary"
                 android:fontFamily="@font/lato_bold"
                 android:id="@+id/tvViewAll"
@@ -198,14 +200,91 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_categories">
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_dic_cate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_5sdp"
+
+                    app:layout_constraintEnd_toStartOf="@+id/constraint_dic"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_5sdp"
+                        app:cardElevation="@dimen/_5sdp"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ripple_effect_drawable"
+                            android:paddingBottom="@dimen/_10sdp">
+
+                            <ImageView
+                                android:id="@+id/image_dic"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_12sdp"
+                                android:src="@drawable/ic_psl_dictionary_icon"
+
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <TextView
+                                android:id="@+id/tv_dic"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:fontFamily="@font/lato_bold"
+                                android:text="PSL"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12ssp"
+                                app:layout_constraintEnd_toStartOf="@id/tv_tv_dic_real"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/image_dic" />
+
+                            <TextView
+                                android:id="@+id/tv_tv_dic_real"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato_bold"
+                                android:text=" Dictionary"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/_12ssp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/tv_dic"
+                                app:layout_constraintTop_toTopOf="@+id/tv_dic" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="0dp"
+                                android:background="@color/colorPrimaryDark"
+                                app:layout_constraintBottom_toBottomOf="@+id/tv_dic"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/tv_dic" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraint_dic"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_5sdp"
 
-                    app:layout_constraintEnd_toStartOf="@+id/constraint_tea_tutorial"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/constraint_dic_cate"
                     app:layout_constraintTop_toTopOf="parent">
 
                   <!--  <androidx.cardview.widget.CardView
@@ -334,77 +413,6 @@
                     </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraint_tea_tutorial"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/constraint_dic"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="@dimen/_5sdp"
-                        app:cardElevation="@dimen/_5sdp"
-                        app:cardUseCompatPadding="true"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/ripple_effect_drawable"
-                            android:paddingBottom="@dimen/_10sdp">
-
-                            <ImageView
-                                android:id="@+id/image_tea_tutorial"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_12sdp"
-                                android:src="@drawable/ic_learning_tutorials"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                            <TextView
-                                android:id="@+id/tv_teacher"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_15sdp"
-                                android:fontFamily="@font/lato_bold"
-                                android:text="Student"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_12ssp"
-                                app:layout_constraintEnd_toStartOf="@id/tv_tuutorial"
-                                app:layout_constraintHorizontal_chainStyle="packed"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/image_tea_tutorial" />
-
-                            <TextView
-                                android:id="@+id/tv_tuutorial"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/lato_bold"
-                                android:text=" Tutorials"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="@dimen/_12ssp"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/tv_teacher"
-                                app:layout_constraintTop_toTopOf="@+id/tv_teacher" />
-
-                            <View
-                                android:layout_width="1dp"
-                                android:layout_height="0dp"
-                                android:background="@color/colorPrimaryDark"
-                                app:layout_constraintBottom_toBottomOf="@+id/tv_teacher"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="@+id/tv_teacher" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </androidx.cardview.widget.CardView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -424,7 +432,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    app:layout_constraintEnd_toStartOf="@+id/constraint_lea_tutorial"
+                    app:layout_constraintEnd_toStartOf="@+id/constraint_tea_tutorial"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -492,8 +500,9 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraint_lea_tutorial"
+                    android:id="@+id/constraint_tea_tutorial"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
@@ -508,7 +517,82 @@
                         app:cardCornerRadius="@dimen/_5sdp"
                         app:cardElevation="@dimen/_5sdp"
                         app:cardUseCompatPadding="true"
-                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ripple_effect_drawable"
+                            android:paddingBottom="@dimen/_10sdp">
+
+                            <ImageView
+                                android:id="@+id/image_tea_tutorial"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_12sdp"
+                                android:src="@drawable/ic_learning_tutorials"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_teacher"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_15sdp"
+                                android:fontFamily="@font/lato_bold"
+                                android:text="Student"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12ssp"
+                                app:layout_constraintEnd_toStartOf="@id/tv_tuutorial"
+                                app:layout_constraintHorizontal_chainStyle="packed"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/image_tea_tutorial" />
+
+                            <TextView
+                                android:id="@+id/tv_tuutorial"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/lato_bold"
+                                android:text=" Tutorials"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="@dimen/_12ssp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/tv_teacher"
+                                app:layout_constraintTop_toTopOf="@+id/tv_teacher" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="0dp"
+                                android:background="@color/colorPrimaryDark"
+                                app:layout_constraintBottom_toBottomOf="@+id/tv_teacher"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/tv_teacher" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint_lea_tutorial"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/constraint_stories"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:visibility="gone"
+                    >
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/_5sdp"
+                        app:cardElevation="@dimen/_5sdp"
+                        app:cardUseCompatPadding="true"
+                        android:visibility="visible"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -573,7 +657,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/constraint_row2">
@@ -585,7 +668,7 @@
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                     app:layout_constraintEnd_toStartOf="@+id/constraint_lea_tutorial1"
+                    app:layout_constraintEnd_toStartOf="@+id/constraint_lea_tutorial1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
