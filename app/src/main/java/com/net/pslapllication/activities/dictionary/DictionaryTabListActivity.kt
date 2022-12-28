@@ -291,12 +291,13 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
         }
     }
 
-    private fun setDataCategories(dictionaryCategoriesList: List<Dictionary_categories>) {
+    private fun setDataCategories(unsortedList: List<Dictionary_categories>) {
         var fragment = supportFragmentManager.findFragmentById(R.id.frameLayout)
         if (fragment is CategoriesFragment) {
 
-            dictionaryCategoriesList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.title })
-
+            val dictionaryCategoriesList =  unsortedList.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.title })
+        /*val sortedList = dictionaryCategoriesList.sortedBy { it.title }
+        Log.e("sortedList",sortedList.size.toString())*/
 
             val list: MutableList<Data> = ArrayList()
 
@@ -519,7 +520,7 @@ class DictionaryTabListActivity : BaseActivity(), OnTabSelectedListener, View.On
 
                 var newIndexSortedList = emptyList<DictionaryDataAPI>()
 
-                    ProgressHelper.getInstance(this)?.setListOffline(newIndexSortedList)
+                ProgressHelper.getInstance(this)?.setListOffline(newIndexSortedList)
 
                     selectedPoi?.let {
                         ReuseFunctions.startNewActivityDataModelParam(

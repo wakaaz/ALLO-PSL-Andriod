@@ -24,7 +24,7 @@ class AllWordsWorker(val context: Context, workerParams: WorkerParameters) :
     override fun doWork(): Result {
         return try {
             apiService = RetrofitClientInstance.getClient()!!.create(ApiService::class.java)
-
+            Log.e("user",SharedPreferenceClass.getInstance(context)!!.getSession()+"|"+ SharedPreferenceClass.getInstance(context)?.getUserType().toString())
             val call1: Call<DictionaryMainModelAPI> = apiService.getAllDictionaryDataDownload(
                 SharedPreferenceClass.getInstance(context)!!.getSession(),
                 SharedPreferenceClass.getInstance(context)?.getUserType().toString(),""

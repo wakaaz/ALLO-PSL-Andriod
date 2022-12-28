@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -240,7 +241,6 @@ class IntroSliderActivity : BaseActivity() , RetrofitResponseListener {
 
             when (model?.code) {
                 Constants.SUCCESS_CODE -> {
-
                     SharedPreferenceClass.getInstance(this)?.setSession(model?.object1!!.session)
                     if (SharedPreferenceClass.getInstance(this)?.getUserType()!! == Constants.USERTYPE_GUEST) {
                         SharedPreferenceClass.getInstance(this)

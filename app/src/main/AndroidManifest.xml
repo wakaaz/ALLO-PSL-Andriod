@@ -155,11 +155,13 @@
         <activity
             android:name=".activities.IntroSliderActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTop"
             android:theme="@style/StatusBarScreenTheme" />
         <activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/StatusBarScreenTheme">
+            android:theme="@style/StatusBarScreenTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -177,7 +179,8 @@
             android:label="@string/app_name" /> <!-- The below code is for android OS version below N -->
         <receiver
             android:name=".networkconnection.ConnectivityReceiver"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

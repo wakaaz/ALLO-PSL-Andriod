@@ -1,6 +1,7 @@
 package com.net.pslapllication.reetrofit
 
 import android.R
+import com.net.pslapllication.BuildConfig
 import com.net.pslapllication.util.MainClass
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
@@ -82,10 +83,17 @@ class RetrofitClientInstance {
                 val trustManager =
                     trustManagers[0] as X509TrustManager
 
-
+                val loggingInterceptor = HttpLoggingInterceptor()
+                loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
                 val builder = OkHttpClient.Builder()
                 builder.sslSocketFactory(sslSocketFactory, trustManager)
                 builder.hostnameVerifier(HostnameVerifier { _, _ -> true })
+                if (BuildConfig.DEBUG) {
+                 builder.addInterceptor(loggingInterceptor)
+                }
+                builder.connectTimeout(5, TimeUnit.MINUTES) // connect timeout
+                    .writeTimeout(5, TimeUnit.MINUTES) // write timeout
+                    .readTimeout(5, TimeUnit.MINUTES);
                 builder.build()
             } catch (e: Exception) {
                 throw RuntimeException(e)

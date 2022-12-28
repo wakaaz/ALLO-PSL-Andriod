@@ -44,7 +44,10 @@ class SplashActivity : BaseActivity() {
 
     override fun onNetworkConnectionChanged(isConnected: Boolean) {
         if (isConnected){
-            requestWorker()
+          val session = SharedPreferenceClass.getInstance(applicationContext)?.getUserType().toString() ?: ""
+          if(session.isNotEmpty()){
+                requestWorker()
+            }
         }
         super.onNetworkConnectionChanged(isConnected)
     }
